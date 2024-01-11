@@ -1,0 +1,66 @@
+---
+title: "RMarkdown Practice"
+output: html_document
+date: "2024-01-11"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## 1. Practicing Arithmetic
+
+```{r}
+x <- c(1, 2, 3, 4, 5)
+```
+
+```{r}
+y <- c(5, 4, 3, 2, 1)
+```
+
+### Addition
+
+```{r}
+x+y
+```
+
+### Subtraction
+
+```{r}
+x-y
+```
+
+### Multiplication
+
+```{r}
+x*y
+```
+
+### Division
+
+```{r}
+x/y
+```
+
+## 2. Experiment with Titles, Text, and Syntax
+
+## Title
+### Title
+#### Title
+# Title
+Title
+
+[BIS 15L Webpage](https://jmledford3115.github.io/datascibiol/)
+
+## 3. Copy and paste Code
+
+```{r}
+#install.packages("tidyverse")
+library("tidyverse")
+```
+
+```{r}
+ggplot(mtcars, aes(x = factor(cyl))) +
+    geom_bar()
+```
