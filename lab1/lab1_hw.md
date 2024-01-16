@@ -16,11 +16,13 @@ Make sure to use the formatting conventions of RMarkdown to make your report nea
 **1. Please complete the [class survey](https://forms.gle/AHHXd3aobaAdkkFg9) if you have not already done so.**  
 Completed
 
-**2. What is the difference between R and RStudio? What is GitHub and why is it useful to programmers?**    
-The difference between R and R Studio is that R is a scripting language (a program), but RStudio is a GUI (Graphical User Interface).  
+**2. What is the difference between R and RStudio? What is GitHub and why is it useful to programmers?**  
+
+The difference between R and RStudio is that R is a scripting language (a program), but RStudio is a development environment in which you can write and develop R programs in a user-friendly way with a Graphical User Interface (GUI).  
 GitHub is an online platform for version control and is useful to programmers for creating, saving, and storing versions of their code and collaborating with other programmers.
 
-**3. Navigate to my [BIS15L](https://github.com/jmledford3115/BIS15LW2021_jledford) repository on GitHub. Notice that near the bottom there is a nice, clean description of the repository. You want this on your repository! It is built by making edits to the `README.md` file using the RMarkdown conventions. Edit your repository's `README.md` file so that you have a clean informative description, including your email address. Be creative! You don't need to just copy mine. There are lots of examples online.**  
+**3. Navigate to my [BIS15L](https://github.com/jmledford3115/BIS15LW2021_jledford) repository on GitHub. Notice that near the bottom there is a nice, clean description of the repository. You want this on your repository! It is built by making edits to the `README.md` file using the RMarkdown conventions. Edit your repository's `README.md` file so that you have a clean informative description, including your email address. Be creative! You don't need to just copy mine. There are lots of examples online.**   
+
 See [Catrinel's README](https://github.com/catjobe/BIS15W2024_cberevoescu)
 
 **4. Calculate the following expressions. Be sure to include each one in a separate code chunk.**
@@ -66,6 +68,7 @@ The calculations of the expressions in question 4 ran following the order of ope
 ```
 
 **6. `Objects` in R are a way in which we can store data or operations. We will talk more about objects next week. For now, make a new object `pi` as 3.14159265359 by running the following code chunk. You should now see the object `pi` in the environment window in the top right.**  
+
 Complete
 
 
@@ -85,6 +88,7 @@ pi <- 3.14159265359
 ```
 
 **8. In order to get help with any command in R, just type a `?` in front the command of interest. Practice this by running the following code chunk.**  
+
 Complete
 
 
