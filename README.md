@@ -3,7 +3,7 @@
 ### Welcome to Catrinel's Data Science Repository!
 
 ## Contact Info
-[Catrinel Berevoescu Email, school](cjberevoescu@ucdavis.edu)
+[Catrinel Berevoescu Email, school](cjberevoescu@ucdavis.edu)  
 [Catrinel Berevoescu Email, personal](catjobe@gmail.com)
 
 ## Description
