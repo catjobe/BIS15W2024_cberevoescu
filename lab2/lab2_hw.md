@@ -182,16 +182,18 @@ mean(jill_avg)
 
 #### 10. Use the data matrix to perform one calculation or operation of your interest.  
 
-What is the average temperature of all of the springs (calculating the mean of the avg_temp column): 
+Finding and listing the springs with the highest average temperatures (all the hot springs with mean temperatures above the median average degrees)  
 
 
 ```r
-overall_avg <- all_temperature_data_matrix[,4]
-mean(overall_avg)
+all_avg <- all_temperature_data_matrix[,4] #specifying the mean temperatures column
+med_all_avg <- median(all_avg) #calculating the median of the average temperatures column
+all_avg[all_avg>=med_all_avg] #finding hot springs with mean temperature above the median
 ```
 
 ```
-## [1] 33.60417
+## Bluebell Spring     Opal Spring  Too Hot Spring    Pearl Spring 
+##        35.65000        34.61667        39.46667        35.46667
 ```
 
 ## Push your final code to GitHub!
