@@ -11,7 +11,7 @@
 
 <meta name="author" content="Catrinel Berevoescu" />
 
-<meta name="date" content="2024-01-17" />
+<meta name="date" content="2024-01-18" />
 
 <title>Lab 2 Homework</title>
 
@@ -382,7 +382,7 @@ pre code {
 
 <h1 class="title toc-ignore">Lab 2 Homework</h1>
 <h4 class="author">Catrinel Berevoescu</h4>
-<h4 class="date">2024-01-17</h4>
+<h4 class="date">2024-01-18</h4>
 
 </div>
 
@@ -474,8 +474,8 @@ scientist_names #column names vector</code></pre>
 </div>
 <div id="calculate-the-mean-temperature-of-all-eight-springs." class="section level4">
 <h4>6. Calculate the mean temperature of all eight springs.</h4>
-<pre class="r"><code>avg_temp &lt;- rowMeans(temperature_data_matrix)
-avg_temp</code></pre>
+<pre class="r"><code>mean_temp &lt;- rowMeans(temperature_data_matrix)
+mean_temp</code></pre>
 <pre><code>##  Bluebell Spring      Opal Spring Riverside Spring   Too Hot Spring 
 ##         35.65000         34.61667         29.85000         39.46667 
 ##   Mystery Spring   Emerald Spring     Black Spring     Pearl Spring 
@@ -483,17 +483,17 @@ avg_temp</code></pre>
 </div>
 <div id="add-this-as-a-new-column-in-the-data-matrix." class="section level4">
 <h4>7. Add this as a new column in the data matrix.</h4>
-<pre class="r"><code>all_temperature_data_matrix &lt;- cbind(temperature_data_matrix, avg_temp)
+<pre class="r"><code>all_temperature_data_matrix &lt;- cbind(temperature_data_matrix,mean_temp)
 all_temperature_data_matrix</code></pre>
-<pre><code>##                   Jill Steve Susan avg_temp
-## Bluebell Spring  36.25 35.40 35.30 35.65000
-## Opal Spring      35.15 35.35 33.35 34.61667
-## Riverside Spring 30.70 29.65 29.20 29.85000
-## Too Hot Spring   39.70 40.05 38.65 39.46667
-## Mystery Spring   31.85 31.40 29.30 30.85000
-## Emerald Spring   30.20 30.65 29.75 30.20000
-## Black Spring     32.90 32.50 32.80 32.73333
-## Pearl Spring     36.80 36.45 33.15 35.46667</code></pre>
+<pre><code>##                   Jill Steve Susan mean_temp
+## Bluebell Spring  36.25 35.40 35.30  35.65000
+## Opal Spring      35.15 35.35 33.35  34.61667
+## Riverside Spring 30.70 29.65 29.20  29.85000
+## Too Hot Spring   39.70 40.05 38.65  39.46667
+## Mystery Spring   31.85 31.40 29.30  30.85000
+## Emerald Spring   30.20 30.65 29.75  30.20000
+## Black Spring     32.90 32.50 32.80  32.73333
+## Pearl Spring     36.80 36.45 33.15  35.46667</code></pre>
 </div>
 <div id="show-susans-value-for-opal-spring-only." class="section level4">
 <h4>8. Show Susan’s value for Opal Spring only.</h4>
@@ -502,8 +502,8 @@ all_temperature_data_matrix</code></pre>
 </div>
 <div id="calculate-the-mean-for-jills-column-only." class="section level4">
 <h4>9. Calculate the mean for Jill’s column only.</h4>
-<pre class="r"><code>jill_avg &lt;- all_temperature_data_matrix[,1]
-mean(jill_avg)</code></pre>
+<pre class="r"><code>jill_temp &lt;- all_temperature_data_matrix[,1]
+mean(jill_temp)</code></pre>
 <pre><code>## [1] 34.19375</code></pre>
 </div>
 <div id="use-the-data-matrix-to-perform-one-calculation-or-operation-of-your-interest." class="section level4">
@@ -512,9 +512,9 @@ your interest.</h4>
 <p>Finding and listing the springs with the highest average temperatures
 (all the hot springs with mean temperatures above the median average hot
 spring temperature):</p>
-<pre class="r"><code>all_avg &lt;- all_temperature_data_matrix[,4] #specifying the mean temperatures column
-med_all_avg &lt;- median(all_avg) #calculating the median of the average temperatures column
-all_avg[all_avg&gt;=med_all_avg] #finding hot springs with mean temperature above the median</code></pre>
+<pre class="r"><code>all_mean &lt;- all_temperature_data_matrix[,4] #specifying the mean temperatures column
+med_all_mean &lt;- median(all_mean) #calculating the median of the mean temperatures column
+all_mean[all_mean&gt;=med_all_mean] #finding hot springs with mean temperature above the median</code></pre>
 <pre><code>## Bluebell Spring     Opal Spring  Too Hot Spring    Pearl Spring 
 ##        35.65000        34.61667        39.46667        35.46667</code></pre>
 </div>

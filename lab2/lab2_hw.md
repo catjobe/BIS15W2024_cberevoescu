@@ -1,7 +1,7 @@
 ---
 title: "Lab 2 Homework"
 author: "Catrinel Berevoescu"
-date: "2024-01-17"
+date: "2024-01-18"
 output:
   html_document: 
     theme: spacelab
@@ -130,8 +130,8 @@ temperature_data_matrix
 
 
 ```r
-avg_temp <- rowMeans(temperature_data_matrix)
-avg_temp
+mean_temp <- rowMeans(temperature_data_matrix)
+mean_temp
 ```
 
 ```
@@ -145,20 +145,20 @@ avg_temp
 
 
 ```r
-all_temperature_data_matrix <- cbind(temperature_data_matrix, avg_temp)
+all_temperature_data_matrix <- cbind(temperature_data_matrix,mean_temp)
 all_temperature_data_matrix
 ```
 
 ```
-##                   Jill Steve Susan avg_temp
-## Bluebell Spring  36.25 35.40 35.30 35.65000
-## Opal Spring      35.15 35.35 33.35 34.61667
-## Riverside Spring 30.70 29.65 29.20 29.85000
-## Too Hot Spring   39.70 40.05 38.65 39.46667
-## Mystery Spring   31.85 31.40 29.30 30.85000
-## Emerald Spring   30.20 30.65 29.75 30.20000
-## Black Spring     32.90 32.50 32.80 32.73333
-## Pearl Spring     36.80 36.45 33.15 35.46667
+##                   Jill Steve Susan mean_temp
+## Bluebell Spring  36.25 35.40 35.30  35.65000
+## Opal Spring      35.15 35.35 33.35  34.61667
+## Riverside Spring 30.70 29.65 29.20  29.85000
+## Too Hot Spring   39.70 40.05 38.65  39.46667
+## Mystery Spring   31.85 31.40 29.30  30.85000
+## Emerald Spring   30.20 30.65 29.75  30.20000
+## Black Spring     32.90 32.50 32.80  32.73333
+## Pearl Spring     36.80 36.45 33.15  35.46667
 ```
 
 #### 8. Show Susan's value for Opal Spring only.
@@ -176,8 +176,8 @@ all_temperature_data_matrix[2,3]
 
 
 ```r
-jill_avg <- all_temperature_data_matrix[,1]
-mean(jill_avg)
+jill_temp <- all_temperature_data_matrix[,1]
+mean(jill_temp)
 ```
 
 ```
@@ -190,9 +190,9 @@ Finding and listing the springs with the highest average temperatures (all the h
 
 
 ```r
-all_avg <- all_temperature_data_matrix[,4] #specifying the mean temperatures column
-med_all_avg <- median(all_avg) #calculating the median of the average temperatures column
-all_avg[all_avg>=med_all_avg] #finding hot springs with mean temperature above the median
+all_mean <- all_temperature_data_matrix[,4] #specifying the mean temperatures column
+med_all_mean <- median(all_mean) #calculating the median of the mean temperatures column
+all_mean[all_mean>=med_all_mean] #finding hot springs with mean temperature above the median
 ```
 
 ```

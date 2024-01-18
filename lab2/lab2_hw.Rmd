@@ -83,14 +83,14 @@ temperature_data_matrix
 #### 6. Calculate the mean temperature of all eight springs.
 
 ```{r}
-avg_temp <- rowMeans(temperature_data_matrix)
-avg_temp
+mean_temp <- rowMeans(temperature_data_matrix)
+mean_temp
 ```
 
 #### 7. Add this as a new column in the data matrix.  
 
 ```{r}
-all_temperature_data_matrix <- cbind(temperature_data_matrix, avg_temp)
+all_temperature_data_matrix <- cbind(temperature_data_matrix,mean_temp)
 all_temperature_data_matrix
 ```
 
@@ -103,8 +103,8 @@ all_temperature_data_matrix[2,3]
 #### 9. Calculate the mean for Jill's column only.  
 
 ```{r}
-jill_avg <- all_temperature_data_matrix[,1]
-mean(jill_avg)
+jill_temp <- all_temperature_data_matrix[,1]
+mean(jill_temp)
 ```
 
 #### 10. Use the data matrix to perform one calculation or operation of your interest.  
@@ -112,9 +112,9 @@ mean(jill_avg)
 Finding and listing the springs with the highest average temperatures (all the hot springs with mean temperatures above the median average hot spring temperature):  
 
 ```{r}
-all_avg <- all_temperature_data_matrix[,4] #specifying the mean temperatures column
-med_all_avg <- median(all_avg) #calculating the median of the average temperatures column
-all_avg[all_avg>=med_all_avg] #finding hot springs with mean temperature above the median
+all_mean <- all_temperature_data_matrix[,4] #specifying the mean temperatures column
+med_all_mean <- median(all_mean) #calculating the median of the mean temperatures column
+all_mean[all_mean>=med_all_mean] #finding hot springs with mean temperature above the median
 ```
 
 ## Push your final code to GitHub!
