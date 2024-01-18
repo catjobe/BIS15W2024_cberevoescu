@@ -1,7 +1,7 @@
 ---
 title: "Lab 2 Homework"
 author: "Catrinel Berevoescu"
-date: "2024-01-16"
+date: "2024-01-17"
 output:
   html_document: 
     theme: spacelab
@@ -15,11 +15,11 @@ Make sure to use the formatting conventions of RMarkdown to make your report nea
 
 #### 1. What is a vector in R?  
 
-A vector is a way of organizing a set of data in R. It is a list of items, of a certain data class, combined/concatenated with the function c().  
+A vector is a data structure, a way of organizing data in R. It is a collection of items, of a certain data class, combined/concatenated with the function c().  
 
 #### 2. What is a data matrix in R?  
 
-A data matrix in R is a collection or series of many stacked vectors.  
+A data matrix is a data structure in R comprised of a collection or series of stacked vectors.  
 
 #### 3. Below are data collected by three scientists (Jill, Steve, Susan in order) measuring temperatures of eight hot springs. Run this code chunk to create the vectors.  
 
@@ -39,16 +39,20 @@ spring_8 <- c(36.80, 36.45, 33.15)
 
 #### 4. Build a data matrix that has the springs as rows and the columns as scientists.  
 
+Creating a new object combining the spring_1 to spring_8 vectors:  
+
 
 ```r
 temperature_data <- c(spring_1, spring_2, spring_3, spring_4, spring_5, spring_6, spring_7, spring_8)
-temperature_data
+temperature_data 
 ```
 
 ```
 ##  [1] 36.25 35.40 35.30 35.15 35.35 33.35 30.70 29.65 29.20 39.70 40.05 38.65
 ## [13] 31.85 31.40 29.30 30.20 30.65 29.75 32.90 32.50 32.80 36.80 36.45 33.15
 ```
+
+Creating the data matrix:  
 
 
 ```r
@@ -75,7 +79,7 @@ Creating Row and Column Vectors:
 
 ```r
 spring_names <- c("Bluebell Spring", "Opal Spring", "Riverside Spring", "Too Hot Spring", "Mystery Spring", "Emerald Spring", "Black Spring", "Pearl Spring") 
-spring_names
+spring_names #row names vector
 ```
 
 ```
@@ -86,14 +90,14 @@ spring_names
 
 ```r
 scientist_names <- c("Jill", "Steve", "Susan")
-scientist_names
+scientist_names #column names vector
 ```
 
 ```
 ## [1] "Jill"  "Steve" "Susan"
 ```
 
-Creating Row and Column Names:  
+Adding Row and Column Names to temperature_data_matrix:  
 
 
 ```r
@@ -182,7 +186,7 @@ mean(jill_avg)
 
 #### 10. Use the data matrix to perform one calculation or operation of your interest.  
 
-Finding and listing the springs with the highest average temperatures (all the hot springs with mean temperatures above the median average degrees)  
+Finding and listing the springs with the highest average temperatures (all the hot springs with mean temperatures above the median average hot spring temperature):  
 
 
 ```r

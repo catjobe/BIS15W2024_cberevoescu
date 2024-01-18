@@ -15,11 +15,11 @@ Make sure to use the formatting conventions of RMarkdown to make your report nea
 
 #### 1. What is a vector in R?  
 
-A vector is a way of organizing a set of data in R. It is a list of items, of a certain data class, combined/concatenated with the function c().  
+A vector is a data structure, a way of organizing data in R. It is a collection of items, of a certain data class, combined/concatenated with the function c().  
 
 #### 2. What is a data matrix in R?  
 
-A data matrix in R is a collection or series of many stacked vectors.  
+A data matrix is a data structure in R comprised of a collection or series of stacked vectors.  
 
 #### 3. Below are data collected by three scientists (Jill, Steve, Susan in order) measuring temperatures of eight hot springs. Run this code chunk to create the vectors.  
 
@@ -38,10 +38,14 @@ spring_8 <- c(36.80, 36.45, 33.15)
 
 #### 4. Build a data matrix that has the springs as rows and the columns as scientists.  
 
+Creating a new object combining the spring_1 to spring_8 vectors:  
+
 ```{r}
 temperature_data <- c(spring_1, spring_2, spring_3, spring_4, spring_5, spring_6, spring_7, spring_8)
-temperature_data
+temperature_data 
 ```
+
+Creating the data matrix:  
 
 ```{r}
 temperature_data_matrix <- matrix(temperature_data, nrow = 8, byrow = T)
@@ -54,15 +58,15 @@ Creating Row and Column Vectors:
 
 ```{r}
 spring_names <- c("Bluebell Spring", "Opal Spring", "Riverside Spring", "Too Hot Spring", "Mystery Spring", "Emerald Spring", "Black Spring", "Pearl Spring") 
-spring_names
+spring_names #row names vector
 ```
 
 ```{r}
 scientist_names <- c("Jill", "Steve", "Susan")
-scientist_names
+scientist_names #column names vector
 ```
 
-Creating Row and Column Names:  
+Adding Row and Column Names to temperature_data_matrix:  
 
 ```{r}
 rownames(temperature_data_matrix) <- spring_names #naming rows
@@ -105,7 +109,7 @@ mean(jill_avg)
 
 #### 10. Use the data matrix to perform one calculation or operation of your interest.  
 
-Finding and listing the springs with the highest average temperatures (all the hot springs with mean temperatures above the median average degrees)  
+Finding and listing the springs with the highest average temperatures (all the hot springs with mean temperatures above the median average hot spring temperature):  
 
 ```{r}
 all_avg <- all_temperature_data_matrix[,4] #specifying the mean temperatures column

@@ -11,7 +11,7 @@
 
 <meta name="author" content="Catrinel Berevoescu" />
 
-<meta name="date" content="2024-01-16" />
+<meta name="date" content="2024-01-17" />
 
 <title>Lab 2 Homework</title>
 
@@ -382,7 +382,7 @@ pre code {
 
 <h1 class="title toc-ignore">Lab 2 Homework</h1>
 <h4 class="author">Catrinel Berevoescu</h4>
-<h4 class="date">2024-01-16</h4>
+<h4 class="date">2024-01-17</h4>
 
 </div>
 
@@ -399,14 +399,14 @@ header above.</p>
 report neat and clean!</p>
 <div id="what-is-a-vector-in-r" class="section level4">
 <h4>1. What is a vector in R?</h4>
-<p>A vector is a way of organizing a set of data in R. It is a list of
-items, of a certain data class, combined/concatenated with the function
-c().</p>
+<p>A vector is a data structure, a way of organizing data in R. It is a
+collection of items, of a certain data class, combined/concatenated with
+the function c().</p>
 </div>
 <div id="what-is-a-data-matrix-in-r" class="section level4">
 <h4>2. What is a data matrix in R?</h4>
-<p>A data matrix in R is a collection or series of many stacked
-vectors.</p>
+<p>A data matrix is a data structure in R comprised of a collection or
+series of stacked vectors.</p>
 </div>
 <div id="below-are-data-collected-by-three-scientists-jill-steve-susan-in-order-measuring-temperatures-of-eight-hot-springs.-run-this-code-chunk-to-create-the-vectors." class="section level4">
 <h4>3. Below are data collected by three scientists (Jill, Steve, Susan
@@ -425,10 +425,12 @@ spring_8 &lt;- c(36.80, 36.45, 33.15)</code></pre>
 <div id="build-a-data-matrix-that-has-the-springs-as-rows-and-the-columns-as-scientists." class="section level4">
 <h4>4. Build a data matrix that has the springs as rows and the columns
 as scientists.</h4>
+<p>Creating a new object combining the spring_1 to spring_8 vectors:</p>
 <pre class="r"><code>temperature_data &lt;- c(spring_1, spring_2, spring_3, spring_4, spring_5, spring_6, spring_7, spring_8)
-temperature_data</code></pre>
+temperature_data </code></pre>
 <pre><code>##  [1] 36.25 35.40 35.30 35.15 35.35 33.35 30.70 29.65 29.20 39.70 40.05 38.65
 ## [13] 31.85 31.40 29.30 30.20 30.65 29.75 32.90 32.50 32.80 36.80 36.45 33.15</code></pre>
+<p>Creating the data matrix:</p>
 <pre class="r"><code>temperature_data_matrix &lt;- matrix(temperature_data, nrow = 8, byrow = T)
 temperature_data_matrix</code></pre>
 <pre><code>##       [,1]  [,2]  [,3]
@@ -450,13 +452,13 @@ data matrix. Start by making two new vectors with the names, then use
 and rows.</h4>
 <p>Creating Row and Column Vectors:</p>
 <pre class="r"><code>spring_names &lt;- c(&quot;Bluebell Spring&quot;, &quot;Opal Spring&quot;, &quot;Riverside Spring&quot;, &quot;Too Hot Spring&quot;, &quot;Mystery Spring&quot;, &quot;Emerald Spring&quot;, &quot;Black Spring&quot;, &quot;Pearl Spring&quot;) 
-spring_names</code></pre>
+spring_names #row names vector</code></pre>
 <pre><code>## [1] &quot;Bluebell Spring&quot;  &quot;Opal Spring&quot;      &quot;Riverside Spring&quot; &quot;Too Hot Spring&quot;  
 ## [5] &quot;Mystery Spring&quot;   &quot;Emerald Spring&quot;   &quot;Black Spring&quot;     &quot;Pearl Spring&quot;</code></pre>
 <pre class="r"><code>scientist_names &lt;- c(&quot;Jill&quot;, &quot;Steve&quot;, &quot;Susan&quot;)
-scientist_names</code></pre>
+scientist_names #column names vector</code></pre>
 <pre><code>## [1] &quot;Jill&quot;  &quot;Steve&quot; &quot;Susan&quot;</code></pre>
-<p>Creating Row and Column Names:</p>
+<p>Adding Row and Column Names to temperature_data_matrix:</p>
 <pre class="r"><code>rownames(temperature_data_matrix) &lt;- spring_names #naming rows</code></pre>
 <pre class="r"><code>colnames(temperature_data_matrix) &lt;- scientist_names #naming columns</code></pre>
 <pre class="r"><code>temperature_data_matrix</code></pre>
@@ -508,8 +510,8 @@ mean(jill_avg)</code></pre>
 <h4>10. Use the data matrix to perform one calculation or operation of
 your interest.</h4>
 <p>Finding and listing the springs with the highest average temperatures
-(all the hot springs with mean temperatures above the median average
-degrees)</p>
+(all the hot springs with mean temperatures above the median average hot
+spring temperature):</p>
 <pre class="r"><code>all_avg &lt;- all_temperature_data_matrix[,4] #specifying the mean temperatures column
 med_all_avg &lt;- median(all_avg) #calculating the median of the average temperatures column
 all_avg[all_avg&gt;=med_all_avg] #finding hot springs with mean temperature above the median</code></pre>
