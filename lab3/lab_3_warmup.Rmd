@@ -1,0 +1,103 @@
+---
+title: "lab_3_warmup"
+output: html_document
+date: "2024-01-18"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Warm-up (like a series of midterm questions...hint hint)  
+
+### 1. Build a vector that includes the following height measurements for five plants: plant 1 30.7, plant 2 37.6, plant 3 28.4, plant 4 NA, plant 5 33.2 
+
+```{r}
+plant_1_h <-  30.7
+plant_2_h <- 37.6
+plant_3_h <- 28.4 
+plant_4_h <- NA
+plant_5_h <- 33.2
+plant_heights <- c(plant_1_h, plant_2_h, plant_3_h, plant_4_h, plant_5_h)
+```
+
+```{r}
+plant_height <- c(30.7, 37.6, 28.4, NA, 33.2)
+```
+
+### 2. Build another vector that includes the following mass measurements: plant 1 4, plant 2 5.2, plant 3 3.7, plant 4 NA, plant 5 4.6
+
+```{r}
+plant_1_m <-  4
+plant_2_m <- 5.2
+plant_3_m <- 3.7
+plant_4_m <- NA
+plant_5_m <- 4.6
+plant_masses <- c(plant_1_m, plant_2_m, plant_3_m, plant_4_m, plant_5_m)
+```
+
+```{r}
+plant_mass <- c(4, 5.2, 3.7, NA, 4.6)
+```
+
+### 3. Assemble these vectors into a labeled data matrix with two columns 
+
+Labels for data matrix:  
+
+```{r}
+samples <- c("plant_1", "plant_2", "plant_3", "plant_4", "plant_5")
+```
+
+```{r}
+column_names <- c(plant_heights, plant_masses)
+```
+
+```{r}
+measured <- c("height", "mass")
+```
+
+Combine data for height and weight:  
+
+```{r}
+plant_experiment <- c(plant_height, plant_mass)
+```
+
+Build the Data Matrix:  
+
+```{r}
+plant_data_matrix <- matrix(plant_experiment, nrow = 5, byrow = F) #do reality check for verification here
+plant_data_matrix 
+```
+
+Naming the columns and rows: 
+
+```{r}
+colnames(plant_data_matrix) <- measured
+```
+
+```{r}
+rownames(plant_data_matrix) <- samples
+```
+
+Overall data matrix:  
+
+```{r}
+plant_data_matrix
+```
+
+### 4. Calculate the mean for height and mass and add them to the data matrix 
+
+Finding the means:  
+
+```{r}
+plant_means <- colMeans(plant_data_matrix, na.rm = T) #removing the NAs
+plant_means
+```
+
+Add this as a new row:  
+
+```{r}
+plant_data_matrix_final <- rbind(plant_data_matrix, plant_means)
+plant_data_matrix_final
+```
+
