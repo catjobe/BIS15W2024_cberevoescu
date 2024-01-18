@@ -90,7 +90,7 @@ mean_temp
 #### 7. Add this as a new column in the data matrix.  
 
 ```{r}
-all_temperature_data_matrix <- cbind(temperature_data_matrix,mean_temp)
+all_temperature_data_matrix <- cbind(temperature_data_matrix, mean_temp)
 all_temperature_data_matrix
 ```
 

@@ -145,7 +145,7 @@ mean_temp
 
 
 ```r
-all_temperature_data_matrix <- cbind(temperature_data_matrix,mean_temp)
+all_temperature_data_matrix <- cbind(temperature_data_matrix, mean_temp)
 all_temperature_data_matrix
 ```
 
