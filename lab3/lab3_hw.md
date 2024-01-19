@@ -252,6 +252,14 @@ sleepiest
 ## # ℹ 2 more variables: brainwt <dbl>, bodywt <dbl>
 ```
 
+```r
+sleepiest$name
+```
+
+```
+## [1] "Little brown bat"
+```
+
 Therefore, the sleepiest animal, which has a sleep_total of 19.9, is the little brown bat.  
 
 ## Push your final code to GitHub!

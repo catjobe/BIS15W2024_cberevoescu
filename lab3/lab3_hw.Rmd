@@ -133,6 +133,7 @@ The sleepiest animal slept for 19.90 hours (the max value).
 ```{r}
 sleepiest <- filter(sleep, sleep_total == 19.90)
 sleepiest
+sleepiest$name
 ```
 
 Therefore, the sleepiest animal, which has a sleep_total of 19.9, is the little brown bat.  
