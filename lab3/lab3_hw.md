@@ -1,7 +1,7 @@
 ---
 title: "Lab 3 Homework"
 author: "Catrinel Berevoescu"
-date: "2024-01-18"
+date: "2024-01-22"
 output:
   html_document: 
     theme: spacelab
@@ -26,7 +26,7 @@ library(tidyverse)
 
 #### 1. For this assignment, we are going to use built-in data on mammal sleep patterns. From which publication are these data taken from? Since the data are built-in you can use the help function in R. The name of the data is `msleep`.   
 
-This data set is taken from the publication by V. M. Savage and G. B. West, A quantitative, theoretical framework for understanding mammalian sleep. Proceedings of the National Academy of Sciences, 104 (3):1051-1056, 2007.
+##### This data set is taken from the publication by V. M. Savage and G. B. West, A quantitative, theoretical framework for understanding mammalian sleep. Proceedings of the National Academy of Sciences, 104 (3):1051-1056, 2007.
 
 
 ```r
@@ -61,7 +61,7 @@ sleep
 
 #### 3. What are the dimensions of this data frame (variables and observations)? How do you know? Please show the *code* that you used to determine this below.   
 
-The dimensions of this data frame, as shown by the dim() function below (left value states the number of observations, and the right value states the number of variables), are 83 observations (rows) and 11 variables (columns).  
+##### The dimensions of this data frame, as shown by the dim() function below (left value states the number of observations, and the right value states the number of variables), are 83 observations (rows) and 11 variables (columns).  
 
 
 ```r
@@ -74,7 +74,7 @@ dim(sleep)
 
 #### 4. Are there any NAs in the data? How did you determine this? Please show your code.   
 
-Using the function anyNA(), there are NAs in the data, since running this function came back with "true".  
+##### There are NAs in the data, since running the function anyNA() (see below), which checks for NA values, came back with "true".  
 
 
 ```r
@@ -100,7 +100,7 @@ names(sleep)
 
 #### 6. How many herbivores are represented in the data?     
 
-There are 32 herbivores represented in the data:
+##### There are 32 herbivores represented in the data:
 
 
 ```r
@@ -186,7 +186,10 @@ mean(large_mammals$bodywt)
 ## [1] 1747.071
 ```
 
+##### The mean weight for small mammals is 1.797847 kg, and the mean weight for large mammals is 1747.071 kg.
+
 #### 9. Using a similar approach as above, do large or small animals sleep longer on average?   
+
 Mean Sleep Time for Small Mammals:  
 
 
@@ -220,7 +223,7 @@ mean_sleep_large_mammals <= mean_sleep_small_mammals #showing that mean sleep ti
 ## [1] TRUE
 ```
 
-Since the mean sleep time for small mammals is 11.78644 and the mean sleep time for large mammals is 3.3, this means that small animals sleep longer on average.  
+##### Since the mean sleep time for small mammals is 11.78644 hours and the mean sleep time for large mammals is 3.3 hours, this means that small animals sleep longer on average.  
 
 #### 10. Which animal is the sleepiest among the entire dataframe?
 
@@ -260,7 +263,7 @@ sleepiest$name
 ## [1] "Little brown bat"
 ```
 
-Therefore, the sleepiest animal, which has a sleep_total of 19.9, is the little brown bat.  
+##### Therefore, the sleepiest animal, which has a sleep_total of 19.9 hours, is the little brown bat.  
 
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences.   
