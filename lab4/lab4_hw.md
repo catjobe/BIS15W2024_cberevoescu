@@ -1,7 +1,7 @@
 ---
 title: "Lab 4 Homework"
 author: "Catrinel Berevoescu"
-date: "2024-01-24"
+date: "2024-01-25"
 output:
   html_document: 
     theme: spacelab
@@ -2007,17 +2007,31 @@ taxa
 ## 569                spinifera
 ```
 
+##### There are 9 taxon represented in the data frame 'homerange': birds, lake fishes, lizards, mammals, marine fishes, river fishes, snakes, tortoises, and turtles.
+
+
+```r
+levels(taxon) #the taxon represented in the data frame homerange
+```
+
+```
+## [1] "birds"         "lake fishes"   "lizards"       "mammals"      
+## [5] "marine fishes" "river fishes"  "snakes"        "tortoises"    
+## [9] "turtles"
+```
+
+
 #### 5. The variable `taxon` identifies the common name groups of the species represented in `homerange`. Make a table the shows the counts for each of these `taxon`.  
 
 Counts for each of the 'taxon':
 
 
 ```r
-table(taxon) #counts
+table(homerange$taxon) #counts
 ```
 
 ```
-## taxon
+## 
 ##         birds   lake fishes       lizards       mammals marine fishes 
 ##           140             9            11           238            90 
 ##  river fishes        snakes     tortoises       turtles 

@@ -112,12 +112,19 @@ taxa <- select(homerange, "taxon", "common_name", "class", "order", "family", "g
 taxa
 ```
 
+##### There are 9 taxon represented in the data frame 'homerange': birds, lake fishes, lizards, mammals, marine fishes, river fishes, snakes, tortoises, and turtles.
+
+```{r}
+levels(taxon) #the taxon represented in the data frame homerange
+```
+
+
 #### 5. The variable `taxon` identifies the common name groups of the species represented in `homerange`. Make a table the shows the counts for each of these `taxon`.  
 
 Counts for each of the 'taxon':
 
 ```{r}
-table(taxon) #counts
+table(homerange$taxon) #counts
 ```
 
 Table for 'taxon' counts:

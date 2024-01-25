@@ -11,7 +11,7 @@
 
 <meta name="author" content="Catrinel Berevoescu" />
 
-<meta name="date" content="2024-01-24" />
+<meta name="date" content="2024-01-25" />
 
 <title>Lab 4 Homework</title>
 
@@ -376,7 +376,7 @@ display: none;
 
 <h1 class="title toc-ignore">Lab 4 Homework</h1>
 <h4 class="author">Catrinel Berevoescu</h4>
-<h4 class="date">2024-01-24</h4>
+<h4 class="date">2024-01-25</h4>
 
 </div>
 
@@ -2302,14 +2302,23 @@ taxa</code></pre>
 ## 567               horsfieldi
 ## 568               kleinmanni
 ## 569                spinifera</code></pre>
+<div id="there-are-9-taxon-represented-in-the-data-frame-homerange-birds-lake-fishes-lizards-mammals-marine-fishes-river-fishes-snakes-tortoises-and-turtles." class="section level5">
+<h5>There are 9 taxon represented in the data frame ‘homerange’: birds,
+lake fishes, lizards, mammals, marine fishes, river fishes, snakes,
+tortoises, and turtles.</h5>
+<pre class="r"><code>levels(taxon) #the taxon represented in the data frame homerange</code></pre>
+<pre><code>## [1] &quot;birds&quot;         &quot;lake fishes&quot;   &quot;lizards&quot;       &quot;mammals&quot;      
+## [5] &quot;marine fishes&quot; &quot;river fishes&quot;  &quot;snakes&quot;        &quot;tortoises&quot;    
+## [9] &quot;turtles&quot;</code></pre>
+</div>
 </div>
 <div id="the-variable-taxon-identifies-the-common-name-groups-of-the-species-represented-in-homerange.-make-a-table-the-shows-the-counts-for-each-of-these-taxon." class="section level4">
 <h4>5. The variable <code>taxon</code> identifies the common name groups
 of the species represented in <code>homerange</code>. Make a table the
 shows the counts for each of these <code>taxon</code>.</h4>
 <p>Counts for each of the ‘taxon’:</p>
-<pre class="r"><code>table(taxon) #counts</code></pre>
-<pre><code>## taxon
+<pre class="r"><code>table(homerange$taxon) #counts</code></pre>
+<pre><code>## 
 ##         birds   lake fishes       lizards       mammals marine fishes 
 ##           140             9            11           238            90 
 ##  river fishes        snakes     tortoises       turtles 
