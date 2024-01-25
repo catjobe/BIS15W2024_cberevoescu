@@ -1,7 +1,7 @@
 ---
 title: "Lab 4 Homework"
 author: "Catrinel Berevoescu"
-date: "2024-01-23"
+date: "2024-01-24"
 output:
   html_document: 
     theme: spacelab
@@ -43,7 +43,7 @@ homerange <- read.csv("data/Tamburelloetal_HomeRangeDatabase.csv")
 
 
 ```r
-#install.packages("janitor")
+#install.packages("janitor") #I don't want to reinstall this package so I added a "#"
 ```
 
 
@@ -142,40 +142,7 @@ glimpse(homerange) #see classes in "<>"
 
 
 ```r
-str(homerange) #see classes to the right of each variable name
-```
-
-```
-## 'data.frame':	569 obs. of  24 variables:
-##  $ taxon                     : chr  "lake fishes" "river fishes" "river fishes" "river fishes" ...
-##  $ common_name               : chr  "american eel" "blacktail redhorse" "central stoneroller" "rosyside dace" ...
-##  $ class                     : chr  "actinopterygii" "actinopterygii" "actinopterygii" "actinopterygii" ...
-##  $ order                     : chr  "anguilliformes" "cypriniformes" "cypriniformes" "cypriniformes" ...
-##  $ family                    : chr  "anguillidae" "catostomidae" "cyprinidae" "cyprinidae" ...
-##  $ genus                     : chr  "anguilla" "moxostoma" "campostoma" "clinostomus" ...
-##  $ species                   : chr  "rostrata" "poecilura" "anomalum" "funduloides" ...
-##  $ primarymethod             : chr  "telemetry" "mark-recapture" "mark-recapture" "mark-recapture" ...
-##  $ n                         : chr  "16" NA "20" "26" ...
-##  $ mean_mass_g               : num  887 562 34 4 4 ...
-##  $ log10_mass                : num  2.948 2.75 1.531 0.602 0.602 ...
-##  $ alternative_mass_reference: chr  NA NA NA NA ...
-##  $ mean_hra_m2               : num  282750 282.1 116.1 125.5 87.1 ...
-##  $ log10_hra                 : num  5.45 2.45 2.06 2.1 1.94 ...
-##  $ hra_reference             : chr  "Minns, C. K. 1995. Allometry of home range size in lake and river fishes. Canadian Journal of Fisheries and Aquatic Sciences 52 "Minns, C. K. 1995. Allometry of home range size in lake and river fishes. Canadian Journal of Fisheries and Aquatic Sciences 52 "Minns, C. K. 1995. Allometry of home range size in lake and river fishes. Canadian Journal of Fisheries and Aquatic Sciences 52 "Minns, C. K. 1995. Allometry of home range size in lake and river fishes. Canadian Journal of Fisheries and Aquatic Sciences 52 ...
-##  $ realm                     : chr  "aquatic" "aquatic" "aquatic" "aquatic" ...
-##  $ thermoregulation          : chr  "ectotherm" "ectotherm" "ectotherm" "ectotherm" ...
-##  $ locomotion                : chr  "swimming" "swimming" "swimming" "swimming" ...
-##  $ trophic_guild             : chr  "carnivore" "carnivore" "carnivore" "carnivore" ...
-##  $ dimension                 : chr  "3D" "2D" "2D" "2D" ...
-##  $ preymass                  : num  NA NA NA NA NA NA 1.39 NA NA NA ...
-##  $ log10_preymass            : num  NA NA NA NA NA ...
-##  $ ppmr                      : num  NA NA NA NA NA NA 530 NA NA NA ...
-##  $ prey_size_reference       : chr  NA NA NA NA ...
-```
-
-
-```r
-sapply(homerange, class)
+sapply(homerange, class) #a simplified summary of the data classes for each variable; the full data class name is provided in quotes for each variable
 ```
 
 ```
@@ -317,7 +284,9 @@ levels(order) #displaying levels of 'order'
 
 #### 4. What taxa are represented in the `homerange` data frame? Make a new data frame `taxa` that is restricted to taxon, common name, class, order, family, genus, species.  
 
-Dataframe 'taxa':
+The following taxa, where taxa are generic names for taxonomic groupings such as species, genus, and family, are represented in the homerange data frame.
+
+Data frame 'taxa':
 
 
 ```r
@@ -2038,22 +2007,6 @@ taxa
 ## 569                spinifera
 ```
 
-The taxa represented in the 'homerange' data frame:
-
-
-```r
-table(taxon)
-```
-
-```
-## taxon
-##         birds   lake fishes       lizards       mammals marine fishes 
-##           140             9            11           238            90 
-##  river fishes        snakes     tortoises       turtles 
-##            14            41            12            14
-```
-##### There are nine different taxa represented in the 'homerange' dataframe: birds, lake fishes, lizards, mammals, marine fishes, river fishes, snakes, tortoises, and turtles.
-
 #### 5. The variable `taxon` identifies the common name groups of the species represented in `homerange`. Make a table the shows the counts for each of these `taxon`.  
 
 Counts for each of the 'taxon':
@@ -2076,20 +2029,21 @@ Table for 'taxon' counts:
 
 ```r
 taxon_table <- data.frame(table(taxon))
+taxon_table <- rename(taxon_table, counts=Freq)
 taxon_table #table
 ```
 
 ```
-##           taxon Freq
-## 1         birds  140
-## 2   lake fishes    9
-## 3       lizards   11
-## 4       mammals  238
-## 5 marine fishes   90
-## 6  river fishes   14
-## 7        snakes   41
-## 8     tortoises   12
-## 9       turtles   14
+##           taxon counts
+## 1         birds    140
+## 2   lake fishes      9
+## 3       lizards     11
+## 4       mammals    238
+## 5 marine fishes     90
+## 6  river fishes     14
+## 7        snakes     41
+## 8     tortoises     12
+## 9       turtles     14
 ```
 
 #### 6. The species in `homerange` are also classified into trophic guilds. How many species are represented in each trophic guild.  

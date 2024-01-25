@@ -42,7 +42,7 @@ homerange <- read.csv("data/Tamburelloetal_HomeRangeDatabase.csv")
 ```
 
 ```{r}
-#install.packages("janitor")
+#install.packages("janitor") #I don't want to reinstall this package so I added a "#"
 ```
 
 ```{r}
@@ -76,11 +76,7 @@ glimpse(homerange) #see classes in "<>"
 ```
 
 ```{r}
-str(homerange) #see classes to the right of each variable name
-```
-
-```{r}
-sapply(homerange, class)
+sapply(homerange, class) #a simplified summary of the data classes for each variable; the full data class name is provided in quotes for each variable
 ```
 
 Statistical Summary (provided for numerical variables):   
@@ -107,19 +103,14 @@ levels(order) #displaying levels of 'order'
 
 #### 4. What taxa are represented in the `homerange` data frame? Make a new data frame `taxa` that is restricted to taxon, common name, class, order, family, genus, species.  
 
-Dataframe 'taxa':
+The following taxa, where taxa are generic names for taxonomic groupings such as species, genus, and family, are represented in the homerange data frame.
+
+Data frame 'taxa':
 
 ```{r}
 taxa <- select(homerange, "taxon", "common_name", "class", "order", "family", "genus", "species")
 taxa
 ```
-
-The taxa represented in the 'homerange' data frame:
-
-```{r}
-table(taxon)
-```
-##### There are nine different taxa represented in the 'homerange' dataframe: birds, lake fishes, lizards, mammals, marine fishes, river fishes, snakes, tortoises, and turtles.
 
 #### 5. The variable `taxon` identifies the common name groups of the species represented in `homerange`. Make a table the shows the counts for each of these `taxon`.  
 
@@ -133,6 +124,7 @@ Table for 'taxon' counts:
 
 ```{r}
 taxon_table <- data.frame(table(taxon))
+taxon_table <- rename(taxon_table, counts=Freq)
 taxon_table #table
 ```
 
