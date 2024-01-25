@@ -2079,29 +2079,303 @@ table(homerange$trophic_guild)
 
 #### 7. Make two new data frames, one which is restricted to carnivores and another that is restricted to herbivores.   
 
-Note: will be completed in a later lab. 
+Note: completed in lab day 6.  
+
+Carnivores Data Frame:   
 
 
+```r
+carnivores <- filter(homerange, trophic_guild == "carnivore")
+```
+
+Herbivores Data Frame:   
+
+
+```r
+herbivores <- filter(homerange, trophic_guild == "herbivore")
+```
 
 #### 8. Do herbivores or carnivores have, on average, a larger `mean.hra.m2`? Remove any NAs from the data.   
 
-Note: will be completed in a later lab.  
+Note: completed in lab day 6.
 
 
+```r
+carnivores_mean_hra_m2 <- mean(carnivores$mean_hra_m2, rm.NA = T)
+carnivores_mean_hra_m2
+```
+
+```
+## [1] 13039918
+```
 
 
+```r
+herbivores_mean_hra_m2 <- mean(herbivores$mean_hra_m2, rm.NA = T)
+herbivores_mean_hra_m2
+```
+
+```
+## [1] 34137012
+```
+
+
+```r
+herbivores_mean_hra_m2 > carnivores_mean_hra_m2
+```
+
+```
+## [1] TRUE
+```
+
+##### Herbivores have, on average, a larger `mean_hra_m2` than carnivores.
 
 #### 9. Make a new dataframe `owls` that is limited to the mean mass, log10 mass, family, genus, and species of owls in the database. Which is the smallest owl? What is its common name? Do a little bit of searching online to see what you can learn about this species and provide a link below   
 
-Note: will be completed in a later lab. 
+Note: completed in lab day 6.
+
+Owls Data Frame:
 
 
+```r
+owls_selected <- filter(homerange, order == "strigiformes")
+owls <- select(owls_selected, "family", "genus", "species", "mean_mass_g", "log10_mass")
+owls
+```
+
+```
+##      family      genus     species mean_mass_g log10_mass
+## 1 strigidae   aegolius    funereus      119.00   2.075547
+## 2 strigidae       asio        otus      252.00   2.401401
+## 3 strigidae     athene      noctua      156.50   2.194514
+## 4 strigidae       bubo        bubo     2191.00   3.340642
+## 5 strigidae       bubo virginianus     1510.00   3.178977
+## 6 strigidae glaucidium  passerinum       61.32   1.787602
+## 7 strigidae     nyctea   scandiaca     1920.00   3.283301
+## 8 strigidae      strix       aluco      519.00   2.715167
+## 9 tytonidae       tyto        alba      285.00   2.454845
+```
+
+
+```r
+summary(owls$mean_mass_g)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   61.32  156.50  285.00  779.31 1510.00 2191.00
+```
+
+
+```r
+filter(homerange, mean_mass_g == 61.32)
+```
+
+```
+##   taxon        common_name class        order    family      genus    species
+## 1 birds Eurasian pygmy owl  aves strigiformes strigidae glaucidium passerinum
+##   primarymethod    n mean_mass_g log10_mass alternative_mass_reference
+## 1    telemetry* <NA>       61.32   1.787602                       <NA>
+##   mean_hra_m2 log10_hra
+## 1     1250000   6.09691
+##                                                                                                                                                                            hra_reference
+## 1 Ottaviani, D., S. C. Cairns, M. Oliverio, and L. Boitani. 2006. Body mass as a predictive variable of home-range size among Italian mammals and birds. Journal of Zoology 269:317-330.
+##         realm thermoregulation locomotion trophic_guild dimension preymass
+## 1 terrestrial        endotherm     flying     carnivore        3D    16.99
+##   log10_preymass ppmr
+## 1       1.230193 3.61
+##                                                                                                                                                 prey_size_reference
+## 1 Slagsvold T, Sonerud GA. 2007. Prey size and ingestion rate in raptors: importance for sex roles and reversed sexual size dimorphism. J. Avian Biol. 38: 650 661.
+```
+
+##### The smallest owl is from the genus glaucidium, and has the species name passerinum. Its common name is the Eurasian pygmy owl.
+
+##### The Eurasian pygmy owl is the smallest owl of Europe. It is native to the central area of the Palearctic region, and lives in coniferous forests.
+
+More about the [Eurasian pygmy owl](https://animaldiversity.org/accounts/Glaucidium_passerinum/)
 
 #### 10. As measured by the data, which bird species has the largest homerange? Show all of your work, please. Look this species up online and tell me about it!.    
 
-Note: will be completed in a later lab. 
+Note: completed in lab day 6.  
 
 
+```r
+homerange %>% #searching within the homerange data frame
+  filter(taxon == "birds") %>% #filtering for bird species
+  select(species, mean_hra_m2) %>% #selecting the desired columns
+  arrange(desc(mean_hra_m2)) #arranging the data to have the largest homerange value shown first
+```
+
+```
+##             species  mean_hra_m2
+## 1          cheriway 241000000.00
+## 2          pygargus 200980000.00
+## 3        peregrinus 153860000.00
+## 4          pennatus 117300000.00
+## 5           camelus  84300000.00
+## 6          gallicus  78500000.00
+## 7            turtur  63585000.00
+## 8      percnopterus  63570000.00
+## 9             buteo  50240000.00
+## 10        biarmicus  50000000.00
+## 11         strepera  45912000.00
+## 12         gentilis  40000000.00
+## 13          canorus  38460000.00
+## 14            corax  28000000.00
+## 15       chrysaetos  27550000.00
+## 16        mexicanus  25778434.50
+## 17          pennata  23880000.00
+## 18           milvus  19625000.00
+## 19        fasciatus  19620000.00
+## 20             otus  19620000.00
+## 21     urophasianus  18158215.95
+## 22             bubo  16000000.00
+## 23            epops  12560000.00
+## 24       glandarius  12560000.00
+## 25  cupido pinnatus  12030000.00
+## 26            nisus   7100000.00
+## 27        urogallus   5500000.00
+## 28         leucotos   5306600.00
+## 29        scandiaca   4937157.00
+## 30            canus   4521600.00
+## 31      jamaicensis   4249192.50
+## 32          martius   3500000.00
+## 33        cannabina   3140000.00
+## 34         funereus   3140000.00
+## 35      tinnunculus   3000000.00
+## 36         palumbus   2540000.00
+## 37          cyaneus   2521187.55
+## 38        swainsoni   2464531.65
+## 39       ostralegus   2460000.00
+## 40        americana   2450000.00
+## 41         cooperii   2254095.45
+## 42      virginianus   2124596.25
+## 43           tetrix   1975000.00
+## 44          viridis   1850000.00
+## 45             alba   1500000.00
+## 46       sparverius   1416397.50
+## 47       passerinum   1250000.00
+## 48        torquilla   1038100.00
+## 49         garrulus   1000000.00
+## 50         striatus    995525.10
+## 51        europaeus    785000.00
+## 52             alba    785000.00
+## 53       americanus    666000.00
+## 54         lineatus    639402.30
+## 55            minor    635800.00
+## 56    californianus    550000.00
+## 57           noctua    500000.00
+## 58       radiolosus    499000.00
+## 59        australis    463900.00
+## 60            aluco    356932.17
+## 61      tridactylus    350000.00
+## 62      habroptilus    195000.00
+## 63        stellaris    193000.00
+## 64           medius    141500.00
+## 65    caryocatactes    132332.00
+## 66          bonasia    103000.00
+## 67           exilis     97000.00
+## 68     dentirostris     95000.00
+## 69            wolfi     90000.00
+## 70         tyrannus     83769.80
+## 71          arborea     82960.43
+## 72          senator     80000.00
+## 73     ludovicianus     75676.10
+## 74           perdix     62000.00
+## 75       fuscicauda     60702.75
+## 76           rubica     48562.20
+## 77       familiaris     47000.00
+## 78           virens     44029.73
+## 79          elegans     44000.00
+## 80             crex     43000.00
+## 81         caudatus     42000.00
+## 82          coelebs     42000.00
+## 83          bonelli     35000.00
+## 84        kirtlandi     33993.54
+## 85        raimondii     30900.00
+## 86        passerina     30756.06
+## 87            magna     30351.38
+## 88         neglecta     30351.38
+## 89       polyglotta     30000.00
+## 90          lagopus     25899.84
+## 91           fuscus     25899.84
+## 92        inornatus     24281.10
+## 93           ornata     24281.10
+## 94        palustris     22662.36
+## 95         europaea     21000.00
+## 96          regulus     19900.00
+## 97         obscurus     16996.77
+## 98          arborea     16996.77
+## 99     ignicapillus     16500.00
+## 100          aberti     16187.40
+## 101        collurio     15782.72
+## 102        wrightii     15782.72
+## 103        oenanthe     15378.03
+## 104    carolinensis     14973.35
+## 105          citrea     14973.35
+## 106    atricapillus     14973.35
+## 107    atricapillus     14568.66
+## 108        juncidis     14400.00
+## 109           belli     11735.87
+## 110      savannarum     10926.50
+## 111           flava     10117.13
+## 112    aurocapillus     10117.13
+## 113      canadensis     10117.13
+## 114     troglodytes     10117.13
+## 115          sialis     10117.13
+## 116         serinus     10000.00
+## 117         striata     10000.00
+## 118    philadelphia      7689.02
+## 119         rubetra      7300.00
+## 120        magnolia      7284.33
+## 121       olivaceus      7284.33
+## 122          virens      6474.96
+## 123    pensylvanica      6070.28
+## 124         trichas      5260.91
+## 125           fusca      5260.91
+## 126        bewickiI      4856.22
+## 127     phoenicurus      4500.00
+## 128     polyglottos      4046.85
+## 129           aedon      4046.85
+## 130           sarda      3300.00
+## 131        fasciata      3237.48
+## 132          undata      2800.00
+## 133            inca      2589.98
+## 134       ruticilla      1942.49
+## 135         minimus      1780.61
+## 136        petechia      1699.68
+## 137          virens      1335.46
+## 138         griseus      1335.46
+## 139    ludovicianus      1214.06
+## 140          cyanea      1052.18
+```
+
+
+```r
+filter(homerange, species == "cheriway") #filtering for the species with the largest homerange
+```
+
+```
+##   taxon common_name class         order     family    genus  species
+## 1 birds    caracara  aves falconiformes falconidae caracara cheriway
+##   primarymethod  n mean_mass_g log10_mass alternative_mass_reference
+## 1     telemetry 26        1125   3.051153                       <NA>
+##   mean_hra_m2 log10_hra
+## 1    2.41e+08  8.382017
+##                                                                                                                                                    hra_reference
+## 1 Dwyer JF, Fraser JD, Morrison JL. 2013. Range sizes and habitat use of non-breeding Crested Caracaras in Florida. Journal of Field Ornithology 84(3), 223-233.
+##         realm thermoregulation locomotion trophic_guild dimension preymass
+## 1 terrestrial        endotherm    walking     carnivore        2D       NA
+##   log10_preymass ppmr prey_size_reference
+## 1             NA   NA                <NA>
+```
+
+
+##### Thus, the bird species with the largest homerange is the cheriway, common name caracara.
+
+##### The Caracara cheriway is found along the Mexican-American Border. They are opportunistic feeders that live in open countrysides.
+
+More about the [Caracara cheriway](https://animaldiversity.org/accounts/Caracara_cheriway/)
 
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences.   
