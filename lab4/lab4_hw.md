@@ -1,7 +1,7 @@
 ---
 title: "Lab 4 Homework"
 author: "Catrinel Berevoescu"
-date: "2024-01-29"
+date: "2024-01-30"
 output:
   html_document: 
     theme: spacelab
@@ -2074,8 +2074,6 @@ table(homerange$trophic_guild)
 ## carnivore herbivore 
 ##       342       227
 ```
-
-## Finish 1-6 (Complete #'s 1-6)
 
 #### 7. Make two new data frames, one which is restricted to carnivores and another that is restricted to herbivores.   
 

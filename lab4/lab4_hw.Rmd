@@ -143,8 +143,6 @@ taxon_table #table
 table(homerange$trophic_guild)
 ```
 
-## Finish 1-6 (Complete #'s 1-6)
-
 #### 7. Make two new data frames, one which is restricted to carnivores and another that is restricted to herbivores.   
 
 Note: completed in lab day 6 and as homework.  
