@@ -1,5 +1,5 @@
 ---
-title: "HW: dplyr Superhero"
+title: "dplyr Superhero"
 author: "Catrinel Berevoescu"
 date: "`r Sys.Date()`"
 output:
@@ -94,8 +94,10 @@ superhero_info %>%
 
 ```{r}
 superhero_info %>% 
-        filter(race != "Human") #defining superheroes as human only if their "race" is described exclusively as "human"
+        filter(race != "Human")
 ```
+
+filter(race != "Human", race != "Human / Radiation", race != "Human / Clone", race != "Human / Cosmic", race != "Human / Altered")
 
 ## Good and Evil    
 
@@ -129,7 +131,7 @@ tabyl(good_guys, race)
 filter(good_guys, race == "Vampires")
 ```
 
-##### There are no Vampires among the good guys.   
+##### There are not Vampires among the good guys.   
 
 #### 8. Among the bad guys, who are the male humans over 200 inches in height?   
 
@@ -212,10 +214,13 @@ dim(specific_superheroes)
 My favorite superhero is Catwoman:
 
 ```{r}
+superhero_power_names <- c(names(superhero_powers))
+```
+
+```{r}
 catwoman_powers <- superhero_powers %>% 
         filter(hero_names == "Catwoman") %>% 
-        select_if(.==TRUE) 
-catwoman_powers
+        select_if(all_vars(.==TRUE)) 
 ```
 
 ```{r}

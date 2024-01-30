@@ -1,12 +1,13 @@
 ---
-title: "dplyr Superhero"
+title: "HW: dplyr Superhero"
+author: "Catrinel Berevoescu"
 date: "2024-01-30"
 output:
   html_document: 
     theme: spacelab
-    toc: yes
-    toc_float: yes
-    keep_md: yes
+    toc: true
+    toc_float: true
+    keep_md: true
 ---
 
 ## Learning Goals  
@@ -106,6 +107,7 @@ names(superhero_info)
 
 ```r
 superhero_info <- clean_names(superhero_info)
+superhero_powers <- clean_names(superhero_powers)
 ```
 
 ## `tabyl`   
@@ -147,6 +149,7 @@ table(superhero_info$publisher)
 ##      Team Epic TV       Titan Books Universal Studios         Wildstorm 
 ##                 5                 1                 1                 3
 ```
+
 ##### The publishers of the superheroes are shown above (24 total). The publisher with the highest number of superheroes appears to be Marvel comics with 388 superheroes.
 
 #### 2. Notice that we have some neutral superheros! Who are they? List their names below.  
@@ -206,7 +209,6 @@ superhero_info %>%
 ## # ℹ 724 more rows
 ```
 
-
 ## Not Human   
 
 #### 4. List all of the superheros that are not human.
@@ -214,24 +216,24 @@ superhero_info %>%
 
 ```r
 superhero_info %>% 
-  filter(race != "Human", race != "Human / Radiation", race != "Human / Clone", race != "Human / Cosmic", race != "Human / Altered")
+        filter(race != "Human") #defining superheroes as human only if their "race" is described exclusively as "human"
 ```
 
 ```
-## # A tibble: 205 × 10
+## # A tibble: 222 × 10
 ##    name  gender eye_color race  hair_color height publisher skin_color alignment
 ##    <chr> <chr>  <chr>     <chr> <chr>       <dbl> <chr>     <chr>      <chr>    
 ##  1 Abe … Male   blue      Icth… No Hair       191 Dark Hor… blue       good     
 ##  2 Abin… Male   blue      Unga… No Hair       185 DC Comics red        good     
-##  3 Abra… Male   blue      Cosm… Black          NA Marvel C… <NA>       bad      
-##  4 Ajax  Male   brown     Cybo… Black         193 Marvel C… <NA>       bad      
-##  5 Alien Male   <NA>      Xeno… No Hair       244 Dark Hor… black      bad      
-##  6 Amazo Male   red       Andr… <NA>          257 DC Comics <NA>       bad      
-##  7 Angel Male   <NA>      Vamp… <NA>           NA Dark Hor… <NA>       good     
-##  8 Ange… Female yellow    Muta… Black         165 Marvel C… <NA>       good     
-##  9 Anti… Male   yellow    God … No Hair        61 DC Comics <NA>       bad      
-## 10 Anti… Male   blue      Symb… Blond         229 Marvel C… <NA>       <NA>     
-## # ℹ 195 more rows
+##  3 Abom… Male   green     Huma… No Hair       203 Marvel C… <NA>       bad      
+##  4 Abra… Male   blue      Cosm… Black          NA Marvel C… <NA>       bad      
+##  5 Ajax  Male   brown     Cybo… Black         193 Marvel C… <NA>       bad      
+##  6 Alien Male   <NA>      Xeno… No Hair       244 Dark Hor… black      bad      
+##  7 Amazo Male   red       Andr… <NA>          257 DC Comics <NA>       bad      
+##  8 Angel Male   <NA>      Vamp… <NA>           NA Dark Hor… <NA>       good     
+##  9 Ange… Female yellow    Muta… Black         165 Marvel C… <NA>       good     
+## 10 Anti… Male   yellow    God … No Hair        61 DC Comics <NA>       bad      
+## # ℹ 212 more rows
 ## # ℹ 1 more variable: weight <dbl>
 ```
 
@@ -361,7 +363,7 @@ filter(good_guys, race == "Vampires")
 ## #   alignment <chr>, weight <dbl>
 ```
 
-##### There are not Vampires among the good guys.   
+##### There are no Vampires among the good guys.   
 
 #### 8. Among the bad guys, who are the male humans over 200 inches in height?   
 
@@ -382,6 +384,7 @@ bad_guys %>%
 ## 5 Scorp… Male   brown     Human Brown         211 Marvel C… <NA>       bad      
 ## # ℹ 1 more variable: weight <dbl>
 ```
+
 ##### Among the bad guys, the male humans over 200 inches in height are Bane, Doctor Doom, Kingpin, Lizard, and Scorpion.   
 
 #### 9. Are there more good guys or bad guys with green hair?  
@@ -430,9 +433,9 @@ bad_guys %>%
 
 
 ```r
-superhero_info %>% 
-  filter(weight < 50) %>% 
-  arrange(weight)
+superhero_info %>% #searching within the superhero_info data frame
+  filter(weight < 50) %>% #filtering for superheroes that weigh less than 50
+  arrange(weight) #arranging the results from lowest to highest weight
 ```
 
 ```
@@ -463,19 +466,159 @@ superhero_info %>%
 
 #### 11. Let's make a new variable that is the ratio of height to weight. Call this variable `height_weight_ratio`.    
 
+
+```r
+superhero_info %>% 
+        mutate(height_weight_ratio = height / weight) #adding a new column with the height to weight ratio
+```
+
+```
+## # A tibble: 734 × 11
+##    name  gender eye_color race  hair_color height publisher skin_color alignment
+##    <chr> <chr>  <chr>     <chr> <chr>       <dbl> <chr>     <chr>      <chr>    
+##  1 A-Bo… Male   yellow    Human No Hair       203 Marvel C… <NA>       good     
+##  2 Abe … Male   blue      Icth… No Hair       191 Dark Hor… blue       good     
+##  3 Abin… Male   blue      Unga… No Hair       185 DC Comics red        good     
+##  4 Abom… Male   green     Huma… No Hair       203 Marvel C… <NA>       bad      
+##  5 Abra… Male   blue      Cosm… Black          NA Marvel C… <NA>       bad      
+##  6 Abso… Male   blue      Human No Hair       193 Marvel C… <NA>       bad      
+##  7 Adam… Male   blue      <NA>  Blond          NA NBC - He… <NA>       good     
+##  8 Adam… Male   blue      Human Blond         185 DC Comics <NA>       good     
+##  9 Agen… Female blue      <NA>  Blond         173 Marvel C… <NA>       good     
+## 10 Agen… Male   brown     Human Brown         178 Marvel C… <NA>       good     
+## # ℹ 724 more rows
+## # ℹ 2 more variables: weight <dbl>, height_weight_ratio <dbl>
+```
+
 #### 12. Who has the highest height to weight ratio?  
+
+
+```r
+superhero_info %>% 
+        mutate(height_weight_ratio = height / weight) %>% 
+        arrange(desc(height_weight_ratio))
+```
+
+```
+## # A tibble: 734 × 11
+##    name  gender eye_color race  hair_color height publisher skin_color alignment
+##    <chr> <chr>  <chr>     <chr> <chr>       <dbl> <chr>     <chr>      <chr>    
+##  1 Groot Male   yellow    Flor… <NA>          701 Marvel C… <NA>       good     
+##  2 Gala… Male   black     Cosm… Black         876 Marvel C… <NA>       neutral  
+##  3 Fin … Male   red       Kaka… No Hair       975 Marvel C… green      good     
+##  4 Long… Male   blue      Human Blond         188 Marvel C… <NA>       good     
+##  5 Jack… Male   blue      Human Brown          71 Dark Hor… <NA>       good     
+##  6 Rock… Male   brown     Anim… Brown         122 Marvel C… <NA>       good     
+##  7 Dash  Male   blue      Human Blond         122 Dark Hor… <NA>       good     
+##  8 Howa… Male   brown     <NA>  Yellow         79 Marvel C… <NA>       good     
+##  9 Swarm Male   yellow    Muta… No Hair       196 Marvel C… yellow     bad      
+## 10 Yoda  Male   brown     Yoda… White          66 George L… green      good     
+## # ℹ 724 more rows
+## # ℹ 2 more variables: weight <dbl>, height_weight_ratio <dbl>
+```
+
+##### Thus, the superhero with the highest height to weight ratio is Groot (175.25000000).
 
 ## `superhero_powers`    
 
 Have a quick look at the `superhero_powers` data frame.  
 
+
+```r
+superhero_powers <- clean_names(superhero_powers) #tidying up the superhero_powers data frame
+```
+
+
 #### 13. How many superheros have a combination of agility, stealth, super_strength, stamina?
+
+
+
+```r
+specific_superheroes <- superhero_powers %>% 
+        filter(agility == "TRUE", stealth == "TRUE", super_strength == "TRUE", stamina == "TRUE") %>%  #filtering for superheroes that have this combination of powers (as in, all of powers are "TRUE" for each superhero)
+        select(hero_names, agility, stealth, super_strength, stamina) #selecting only the specific combination of powers for ease of viewing
+specific_superheroes
+```
+
+```
+## # A tibble: 40 × 5
+##    hero_names  agility stealth super_strength stamina
+##    <chr>       <lgl>   <lgl>   <lgl>          <lgl>  
+##  1 Alex Mercer TRUE    TRUE    TRUE           TRUE   
+##  2 Angel       TRUE    TRUE    TRUE           TRUE   
+##  3 Ant-Man II  TRUE    TRUE    TRUE           TRUE   
+##  4 Aquaman     TRUE    TRUE    TRUE           TRUE   
+##  5 Batman      TRUE    TRUE    TRUE           TRUE   
+##  6 Black Flash TRUE    TRUE    TRUE           TRUE   
+##  7 Black Manta TRUE    TRUE    TRUE           TRUE   
+##  8 Brundlefly  TRUE    TRUE    TRUE           TRUE   
+##  9 Buffy       TRUE    TRUE    TRUE           TRUE   
+## 10 Cable       TRUE    TRUE    TRUE           TRUE   
+## # ℹ 30 more rows
+```
+
+```r
+dim(specific_superheroes)
+```
+
+```
+## [1] 40  5
+```
+
+##### Thus, there are 40 superheroes that have the combination of agility, stealth, super_strength, stamina powers.   
 
 ## Your Favorite    
 
 #### 14. Pick your favorite superhero and let's see their powers!  
 
+My favorite superhero is Catwoman:
+
+
+```r
+catwoman_powers <- superhero_powers %>% 
+        filter(hero_names == "Catwoman") %>% 
+        select_if(.==TRUE) 
+catwoman_powers
+```
+
+```
+## # A tibble: 1 × 8
+##   agility stealth marksmanship animal_attributes stamina dexterity
+##   <lgl>   <lgl>   <lgl>        <lgl>             <lgl>   <lgl>    
+## 1 TRUE    TRUE    TRUE         TRUE              TRUE    TRUE     
+## # ℹ 2 more variables: peak_human_condition <lgl>, empathy <lgl>
+```
+
+
+```r
+names(catwoman_powers)
+```
+
+```
+## [1] "agility"              "stealth"              "marksmanship"        
+## [4] "animal_attributes"    "stamina"              "dexterity"           
+## [7] "peak_human_condition" "empathy"
+```
+
+##### Thus, Catwoman's powers include agility, stealth, marksmanship, animal attributes, stamina, dexterity, peak human condition, and empathy. 
+
 #### 15. Can you find your hero in the superhero_info data? Show their info!  
+
+I could find my hero, Catwoman, in the superhero_info data:
+
+
+```r
+superhero_info %>% 
+        filter(name == "Catwoman")
+```
+
+```
+## # A tibble: 1 × 10
+##   name   gender eye_color race  hair_color height publisher skin_color alignment
+##   <chr>  <chr>  <chr>     <chr> <chr>       <dbl> <chr>     <chr>      <chr>    
+## 1 Catwo… Female green     Human Black         175 DC Comics <NA>       good     
+## # ℹ 1 more variable: weight <dbl>
+```
 
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences.  
