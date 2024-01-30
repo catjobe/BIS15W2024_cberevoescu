@@ -1,0 +1,145 @@
+---
+title: "lab6_warmup"
+output: html_document
+date: "2024-01-30"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Warm-up  
+
+### 1. Load the `bison.csv` data.   (library calls)
+
+```{r}
+library(tidyverse) #make sure to embed the library calls in every bit of data so other people can easily run your code
+library(janitor)
+```
+```{r}
+bison <- read_csv("data/bison.csv")
+bison <- clean_names(bison)
+```
+
+### 2. What are the dimesions and structure of the data?
+
+The bison data frame is a data frame (each variable can be a different data class, see data classes in the <> below).
+
+```{r}
+glimpse(bison) #taking a look at the data (dbl = double floating point integers)
+```
+
+Dimensions of Bison:
+
+There are 8 variables (columns) and 8325 observations (rows).
+
+```{r}
+dim(bison)
+```
+
+
+### 3. We are only interested in code, sex, weight, year of birth. Restrict the data to these variables and store the dataframe as a new object.  
+
+```{r}
+names(bison)
+```
+
+New, restricted Bison dataframe:
+
+```{r}
+restricted_bison <- select(bison, "data_code", "animal_code", "animal_sex", "animal_weight", "animal_yob")
+restricted_bison
+```
+
+Another method, using pipes (from now on, use pipes):
+
+```{r}
+bison_new <- bison %>% 
+  select(animal_code, animal_sex, animal_weight, animal_yob)
+```
+
+
+### 4. Pull out the animals born between 1980-1990.   
+
+```{r}
+specific_animal_birthdays <- filter(bison, between(animal_yob, 1980, 1990)) #using between() may be more elegant, but can use whatever you want
+specific_animal_birthdays 
+```
+
+Another method:
+
+```{r}
+bison_new %>%
+  filter(animal_yob >= 1980 & animal_yob <= 1990) #use an & here
+```
+
+
+### 5. How many male and female bison are represented between 1980-1990?
+
+Filtering specific_animal_birthdays by females:
+
+```{r}
+females <- filter(specific_animal_birthdays, animal_sex=="F")
+females
+```
+
+There are 414 female bison in the specific_animal_birthdays data frame:
+
+```{r}
+dim(females)
+```
+
+Filtering specific_animal_birthdays by males:
+
+```{r}
+males <- filter(specific_animal_birthdays, animal_sex=="M")
+males
+```
+
+There are 21 male bison in the specific_animal_birthdays dataframe: 
+
+```{r}
+dim(males)
+```
+
+Another method:
+
+```{r}
+male_bison <- bison_new %>% #first pull out males
+  filter(animal_yob >= 1980 & animal_yob <= 1990) %>% 
+  filter(animal_sex=="M") #could change this to filter out for females
+male_bison
+
+table(male_bison$animal_sex) #another way to find the counts (observations) of male bison
+```
+
+```{r}
+female_bison <- bison_new %>% #first pull out females
+  filter(animal_yob >= 1980 & animal_yob <= 1990) %>% 
+  filter(animal_sex=="F") 
+female_bison
+
+table(female_bison$animal_sex) #another way to find the counts (observations) of female bison
+```
+
+### 6. Between 1980-1990, were males or females larger on average?    
+
+Female Mean:    
+
+```{r}
+average_female_weight <- mean(females$animal_weight)
+average_female_weight
+```
+
+Male Mean:   
+
+```{r}
+average_male_weight <- mean(males$animal_weight)
+average_male_weight
+```
+
+```{r}
+average_male_weight > average_female_weight
+```
+
+Thus, between 1980-1990, males were larger on average.
