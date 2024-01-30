@@ -1,7 +1,7 @@
 ---
 title: "Lab 4 Homework"
 author: "Catrinel Berevoescu"
-date: "2024-01-25"
+date: "2024-01-29"
 output:
   html_document: 
     theme: spacelab
@@ -2075,11 +2075,11 @@ table(homerange$trophic_guild)
 ##       342       227
 ```
 
-## Finish 1-6 (Complete #'s 1-6 Only)
+## Finish 1-6 (Complete #'s 1-6)
 
 #### 7. Make two new data frames, one which is restricted to carnivores and another that is restricted to herbivores.   
 
-Note: completed in lab day 6.  
+Note: completed in lab day 6 and as homework.  
 
 Carnivores Data Frame:   
 
@@ -2097,7 +2097,7 @@ herbivores <- filter(homerange, trophic_guild == "herbivore")
 
 #### 8. Do herbivores or carnivores have, on average, a larger `mean.hra.m2`? Remove any NAs from the data.   
 
-Note: completed in lab day 6.
+Note: completed in lab day 6 and as homework.   
 
 
 ```r
@@ -2132,7 +2132,7 @@ herbivores_mean_hra_m2 > carnivores_mean_hra_m2
 
 #### 9. Make a new dataframe `owls` that is limited to the mean mass, log10 mass, family, genus, and species of owls in the database. Which is the smallest owl? What is its common name? Do a little bit of searching online to see what you can learn about this species and provide a link below   
 
-Note: completed in lab day 6.
+Note: completed in lab day 6 and as homework.   
 
 Owls Data Frame:
 
@@ -2166,6 +2166,10 @@ summary(owls$mean_mass_g)
 ##   61.32  156.50  285.00  779.31 1510.00 2191.00
 ```
 
+The smallest owl weighs 61.32 grams, the minimum mean_mass_g value.
+
+Identifying the Smallest Owl:   
+
 
 ```r
 filter(homerange, mean_mass_g == 61.32)
@@ -2188,15 +2192,15 @@ filter(homerange, mean_mass_g == 61.32)
 ## 1 Slagsvold T, Sonerud GA. 2007. Prey size and ingestion rate in raptors: importance for sex roles and reversed sexual size dimorphism. J. Avian Biol. 38: 650 661.
 ```
 
-##### The smallest owl is from the genus glaucidium, and has the species name passerinum. Its common name is the Eurasian pygmy owl.
+##### The smallest owl is Glaucidium passerinum. Its common name is the Eurasian pygmy owl.
 
-##### The Eurasian pygmy owl is the smallest owl of Europe. It is native to the central area of the Palearctic region, and lives in coniferous forests.
+##### The Eurasian pygmy owl is the smallest owl of Europe. It is native to the central area of the Palearctic region, and lives in coniferous forests. Due to their large feet and legs, they can catch prey, which are typically small mammals and birds, up to their own size. Their typical lifespan is 6 years.    
 
-More about the [Eurasian pygmy owl](https://animaldiversity.org/accounts/Glaucidium_passerinum/)
+##### More about the [Eurasian pygmy owl](https://animaldiversity.org/accounts/Glaucidium_passerinum/)
 
 #### 10. As measured by the data, which bird species has the largest homerange? Show all of your work, please. Look this species up online and tell me about it!.    
 
-Note: completed in lab day 6.  
+Note: completed in lab day 6 and as homework.   
 
 
 ```r
@@ -2350,6 +2354,8 @@ homerange %>% #searching within the homerange data frame
 ## 140          cyanea      1052.18
 ```
 
+The bird species with the largest homerange as found above is the cheriway, with a homerange of 241000000.00 square meters.  
+
 
 ```r
 filter(homerange, species == "cheriway") #filtering for the species with the largest homerange
@@ -2371,11 +2377,11 @@ filter(homerange, species == "cheriway") #filtering for the species with the lar
 ```
 
 
-##### Thus, the bird species with the largest homerange is the cheriway, common name caracara.
+##### Thus, the bird species with the largest homerange is the Caracara cheriway, common name caracara.
 
-##### The Caracara cheriway is found along the Mexican-American Border. They are opportunistic feeders that live in open countrysides.
+##### The Caracara cheriway is found along the Mexican-American Border. They are opportunistic feeders that eat small animals and live in open countrysides. They are also quite aggressive birds, and will chase other birds and scavengers, like vultures, away from prey and road kills. The name "caracara" comes from from the sound of their call. Appearance-wise they have colorful faces with black crests and bellies.
 
-More about the [Caracara cheriway](https://animaldiversity.org/accounts/Caracara_cheriway/)
+##### More about the [Caracara cheriway](https://animaldiversity.org/accounts/Caracara_cheriway/).   [Caracara cheriway - The Crested Caracara](https://www.audubon.org/field-guide/bird/crested-caracara).  
 
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences.   

@@ -11,7 +11,7 @@
 
 <meta name="author" content="Catrinel Berevoescu" />
 
-<meta name="date" content="2024-01-25" />
+<meta name="date" content="2024-01-29" />
 
 <title>Lab 4 Homework</title>
 
@@ -376,7 +376,7 @@ display: none;
 
 <h1 class="title toc-ignore">Lab 4 Homework</h1>
 <h4 class="author">Catrinel Berevoescu</h4>
-<h4 class="date">2024-01-25</h4>
+<h4 class="date">2024-01-29</h4>
 
 </div>
 
@@ -2353,12 +2353,12 @@ represented in the herbivore category.</h5>
 </div>
 </div>
 </div>
-<div id="finish-1-6-complete-s-1-6-only" class="section level2">
-<h2>Finish 1-6 (Complete #’s 1-6 Only)</h2>
+<div id="finish-1-6-complete-s-1-6" class="section level2">
+<h2>Finish 1-6 (Complete #’s 1-6)</h2>
 <div id="make-two-new-data-frames-one-which-is-restricted-to-carnivores-and-another-that-is-restricted-to-herbivores." class="section level4">
 <h4>7. Make two new data frames, one which is restricted to carnivores
 and another that is restricted to herbivores.</h4>
-<p>Note: completed in lab day 6.</p>
+<p>Note: completed in lab day 6 and as homework.</p>
 <p>Carnivores Data Frame:</p>
 <pre class="r"><code>carnivores &lt;- filter(homerange, trophic_guild == &quot;carnivore&quot;)</code></pre>
 <p>Herbivores Data Frame:</p>
@@ -2367,7 +2367,7 @@ and another that is restricted to herbivores.</h4>
 <div id="do-herbivores-or-carnivores-have-on-average-a-larger-mean.hra.m2-remove-any-nas-from-the-data." class="section level4">
 <h4>8. Do herbivores or carnivores have, on average, a larger
 <code>mean.hra.m2</code>? Remove any NAs from the data.</h4>
-<p>Note: completed in lab day 6.</p>
+<p>Note: completed in lab day 6 and as homework.</p>
 <pre class="r"><code>carnivores_mean_hra_m2 &lt;- mean(carnivores$mean_hra_m2, rm.NA = T)
 carnivores_mean_hra_m2</code></pre>
 <pre><code>## [1] 13039918</code></pre>
@@ -2387,7 +2387,7 @@ mean mass, log10 mass, family, genus, and species of owls in the
 database. Which is the smallest owl? What is its common name? Do a
 little bit of searching online to see what you can learn about this
 species and provide a link below</h4>
-<p>Note: completed in lab day 6.</p>
+<p>Note: completed in lab day 6 and as homework.</p>
 <p>Owls Data Frame:</p>
 <pre class="r"><code>owls_selected &lt;- filter(homerange, order == &quot;strigiformes&quot;)
 owls &lt;- select(owls_selected, &quot;family&quot;, &quot;genus&quot;, &quot;species&quot;, &quot;mean_mass_g&quot;, &quot;log10_mass&quot;)
@@ -2405,6 +2405,9 @@ owls</code></pre>
 <pre class="r"><code>summary(owls$mean_mass_g)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##   61.32  156.50  285.00  779.31 1510.00 2191.00</code></pre>
+<p>The smallest owl weighs 61.32 grams, the minimum mean_mass_g
+value.</p>
+<p>Identifying the Smallest Owl:</p>
 <pre class="r"><code>filter(homerange, mean_mass_g == 61.32)</code></pre>
 <pre><code>##   taxon        common_name class        order    family      genus    species
 ## 1 birds Eurasian pygmy owl  aves strigiformes strigidae glaucidium passerinum
@@ -2420,23 +2423,27 @@ owls</code></pre>
 ## 1       1.230193 3.61
 ##                                                                                                                                                 prey_size_reference
 ## 1 Slagsvold T, Sonerud GA. 2007. Prey size and ingestion rate in raptors: importance for sex roles and reversed sexual size dimorphism. J. Avian Biol. 38: 650 661.</code></pre>
-<div id="the-smallest-owl-is-from-the-genus-glaucidium-and-has-the-species-name-passerinum.-its-common-name-is-the-eurasian-pygmy-owl." class="section level5">
-<h5>The smallest owl is from the genus glaucidium, and has the species
-name passerinum. Its common name is the Eurasian pygmy owl.</h5>
+<div id="the-smallest-owl-is-glaucidium-passerinum.-its-common-name-is-the-eurasian-pygmy-owl." class="section level5">
+<h5>The smallest owl is Glaucidium passerinum. Its common name is the
+Eurasian pygmy owl.</h5>
 </div>
-<div id="the-eurasian-pygmy-owl-is-the-smallest-owl-of-europe.-it-is-native-to-the-central-area-of-the-palearctic-region-and-lives-in-coniferous-forests." class="section level5">
+<div id="the-eurasian-pygmy-owl-is-the-smallest-owl-of-europe.-it-is-native-to-the-central-area-of-the-palearctic-region-and-lives-in-coniferous-forests.-due-to-their-large-feet-and-legs-they-can-catch-prey-which-are-typically-small-mammals-and-birds-up-to-their-own-size.-their-typical-lifespan-is-6-years." class="section level5">
 <h5>The Eurasian pygmy owl is the smallest owl of Europe. It is native
 to the central area of the Palearctic region, and lives in coniferous
-forests.</h5>
-<p>More about the <a href="https://animaldiversity.org/accounts/Glaucidium_passerinum/">Eurasian
-pygmy owl</a></p>
+forests. Due to their large feet and legs, they can catch prey, which
+are typically small mammals and birds, up to their own size. Their
+typical lifespan is 6 years.</h5>
+</div>
+<div id="more-about-the-eurasian-pygmy-owl" class="section level5">
+<h5>More about the <a href="https://animaldiversity.org/accounts/Glaucidium_passerinum/">Eurasian
+pygmy owl</a></h5>
 </div>
 </div>
 <div id="as-measured-by-the-data-which-bird-species-has-the-largest-homerange-show-all-of-your-work-please.-look-this-species-up-online-and-tell-me-about-it." class="section level4">
 <h4>10. As measured by the data, which bird species has the largest
 homerange? Show all of your work, please. Look this species up online
 and tell me about it!.</h4>
-<p>Note: completed in lab day 6.</p>
+<p>Note: completed in lab day 6 and as homework.</p>
 <pre class="r"><code>homerange %&gt;% #searching within the homerange data frame
   filter(taxon == &quot;birds&quot;) %&gt;% #filtering for bird species
   select(species, mean_hra_m2) %&gt;% #selecting the desired columns
@@ -2582,6 +2589,8 @@ and tell me about it!.</h4>
 ## 138         griseus      1335.46
 ## 139    ludovicianus      1214.06
 ## 140          cyanea      1052.18</code></pre>
+<p>The bird species with the largest homerange as found above is the
+cheriway, with a homerange of 241000000.00 square meters.</p>
 <pre class="r"><code>filter(homerange, species == &quot;cheriway&quot;) #filtering for the species with the largest homerange</code></pre>
 <pre><code>##   taxon common_name class         order     family    genus  species
 ## 1 birds    caracara  aves falconiformes falconidae caracara cheriway
@@ -2595,15 +2604,22 @@ and tell me about it!.</h4>
 ## 1 terrestrial        endotherm    walking     carnivore        2D       NA
 ##   log10_preymass ppmr prey_size_reference
 ## 1             NA   NA                &lt;NA&gt;</code></pre>
-<div id="thus-the-bird-species-with-the-largest-homerange-is-the-cheriway-common-name-caracara." class="section level5">
-<h5>Thus, the bird species with the largest homerange is the cheriway,
-common name caracara.</h5>
+<div id="thus-the-bird-species-with-the-largest-homerange-is-the-caracara-cheriway-common-name-caracara." class="section level5">
+<h5>Thus, the bird species with the largest homerange is the Caracara
+cheriway, common name caracara.</h5>
 </div>
-<div id="the-caracara-cheriway-is-found-along-the-mexican-american-border.-they-are-opportunistic-feeders-that-live-in-open-countrysides." class="section level5">
+<div id="the-caracara-cheriway-is-found-along-the-mexican-american-border.-they-are-opportunistic-feeders-that-eat-small-animals-and-live-in-open-countrysides.-they-are-also-quite-aggressive-birds-and-will-chase-other-birds-and-scavengers-like-vultures-away-from-prey-and-road-kills.-the-name-caracara-comes-from-from-the-sound-of-their-call.-appearance-wise-they-have-colorful-faces-with-black-crests-and-bellies." class="section level5">
 <h5>The Caracara cheriway is found along the Mexican-American Border.
-They are opportunistic feeders that live in open countrysides.</h5>
-<p>More about the <a href="https://animaldiversity.org/accounts/Caracara_cheriway/">Caracara
-cheriway</a></p>
+They are opportunistic feeders that eat small animals and live in open
+countrysides. They are also quite aggressive birds, and will chase other
+birds and scavengers, like vultures, away from prey and road kills. The
+name “caracara” comes from from the sound of their call. Appearance-wise
+they have colorful faces with black crests and bellies.</h5>
+</div>
+<div id="more-about-the-caracara-cheriway.-caracara-cheriway---the-crested-caracara." class="section level5">
+<h5>More about the <a href="https://animaldiversity.org/accounts/Caracara_cheriway/">Caracara
+cheriway</a>. <a href="https://www.audubon.org/field-guide/bird/crested-caracara">Caracara
+cheriway - The Crested Caracara</a>.</h5>
 </div>
 </div>
 </div>
