@@ -191,9 +191,11 @@ Have a quick look at the `superhero_powers` data frame.
 superhero_powers <- clean_names(superhero_powers) #tidying up the superhero_powers data frame
 ```
 
+```{r}
+glimpse(superhero_powers)
+```
 
 #### 13. How many superheros have a combination of agility, stealth, super_strength, stamina?
-
 
 ```{r}
 specific_superheroes <- superhero_powers %>% 
