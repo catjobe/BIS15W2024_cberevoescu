@@ -1,5 +1,5 @@
 ---
-title: "dplyr Superhero"
+title: "HW: dplyr Superhero"
 author: "Catrinel Berevoescu"
 date: "2024-01-31"
 output:
@@ -1126,4 +1126,4 @@ superhero_info %>%
 ```
 
 ## Push your final code to GitHub!
-Please be sure that you check the `keep md` file in the knit preferences. 
+Please be sure that you check the `keep md` file in the knit preferences.  

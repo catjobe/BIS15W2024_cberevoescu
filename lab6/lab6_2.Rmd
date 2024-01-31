@@ -1,5 +1,5 @@
 ---
-title: "HW: dplyr Superhero"
+title: "dplyr Superhero"
 author: "Catrinel Berevoescu"
 date: "`r Sys.Date()`"
 output:
@@ -16,11 +16,11 @@ output:
 1. Develop your dplyr superpowers so you can easily and confidently manipulate dataframes.  
 2. Learn helpful new functions that are part of the `janitor` package.  
 
-## Instructions    
+## Instructions   
 
 For the second part of lab today, we are going to spend time practicing the dplyr functions we have learned and add a few new ones. This lab doubles as your homework. Please complete the lab and push your final code to GitHub.  
 
-## Load the libraries   
+## Load the libraries    
 
 ```{r}
 library("tidyverse")
@@ -31,14 +31,14 @@ library("janitor")
 
 These are data taken from comic books and assembled by fans. The include a good mix of categorical and continuous data.  Data taken from: https://www.kaggle.com/claudiodavi/superhero-set  
 
-Check out the way I am loading these data. If I know there are NAs, I can take care of them at the beginning. But, we should do this very cautiously. At times it is better to keep the original columns and data intact.  
+Check out the way I am loading these data. If I know there are NAs, I can take care of them at the beginning. But, we should do this very cautiously. At times it is better to keep the original columns and data intact.   
 
 ```{r}
-superhero_info <- read_csv("data/heroes_information.csv", na = c("", "-99", "-")) #told what to interpret as NAs in the read_csv(), but don't add this to every data file
+superhero_info <- read_csv("data/heroes_information.csv", na = c("", "-99", "-"))
 superhero_powers <- read_csv("data/super_hero_powers.csv", na = c("", "-99", "-"))
 ```
 
-## Data tidy    
+## Data tidy.   
 
 #### 1. Some of the names used in the `superhero_info` data are problematic so you should rename them here. Before you do anything, first have a look at the names of the variables. You can use `rename()` or `clean_names()`.    
 
@@ -51,8 +51,7 @@ superhero_info <- clean_names(superhero_info)
 superhero_powers <- clean_names(superhero_powers)
 ```
 
-## `tabyl`   
-
+## `tabyl`
 The `janitor` package has many awesome functions that we will explore. Here is its version of `table` which not only produces counts but also percentages. Very handy! Let's use it to explore the proportion of good guys and bad guys in the `superhero_info` data.  
 
 ```{r}
@@ -61,102 +60,135 @@ tabyl(superhero_info, alignment)
 
 #### 1. Who are the publishers of the superheros? Show the proportion of superheros from each publisher. Which publisher has the highest number of superheros?  
 
+Publishers of the Superheroes:   
+
 ```{r}
 table(superhero_info$publisher)
 ```
 
-##### The publishers of the superheroes are shown above (24 total). The publisher with the highest number of superheroes appears to be Marvel comics with 388 superheroes.
+Proportions of Superheroes from each Publisher:   
+
+```{r}
+tabyl(superhero_info$publisher)
+```
+
+##### The publishers of the superheroes are shown above (24 total). The publisher with the highest number of superheroes appears to be Marvel comics with 388 superheroes.    
 
 #### 2. Notice that we have some neutral superheros! Who are they? List their names below.  
 
 ```{r}
-superhero_info %>% 
+neutral_superheroes <- superhero_info %>% 
   select(name, alignment) %>% 
-  filter(alignment == "neutral")
+  filter(alignment == "neutral") #filtering for neutral superheroes
+neutral_superheroes
 ```
 
-##### There are 24 neutral superheroes represented in the superhero_info data frame.
+List of Neutral Superheroes:   
 
-## `superhero_info`  
+```{r}
+tabyl(neutral_superheroes, name)
+```
 
-#### 3. Let's say we are only interested in the variables name, alignment, and "race". How would you isolate these variables from `superhero_info`?
+##### There are 24 neutral superheroes represented in the superhero_info data frame.    
+
+## `superhero_info`   
+
+#### 3. Let's say we are only interested in the variables name, alignment, and "race". How would you isolate these variables from `superhero_info`?    
 
 I selected the three desired variables name, alignment, and "race" with the select() function.
 
 ```{r}
 superhero_info %>% 
-  select(name, alignment, race)
+  select(name, alignment, race) #isolating desired variables with the select() function
 ```
 
-## Not Human   
+## Not Human    
 
-#### 4. List all of the superheros that are not human.
+#### 4. List all of the superheros that are not human.    
 
 ```{r}
-superhero_info %>% 
+nonhuman_superheroes <- superhero_info %>% 
         filter(race != "Human") #defining superheroes as human only if their "race" is described exclusively as "human"
+nonhuman_superheroes
 ```
 
-## Good and Evil    
+Listing the Superheroes that are Not Human:    
 
-#### 5. Let's make two different data frames, one focused on the "good guys" and another focused on the "bad guys".   
+```{r}
+tabyl(nonhuman_superheroes, name)
+```
 
-Good Guys Data Frame:
+## Good and Evil   
+
+#### 5. Let's make two different data frames, one focused on the "good guys" and another focused on the "bad guys".    
+
+Good Guys Data Frame:   
 
 ```{r}
 good_guys <- filter(superhero_info, alignment == "good")
 good_guys
 ```
 
-Bad Guys Data frame:
+Bad Guys Data Frame:   
 
 ```{r}
 bad_guys <- filter(superhero_info, alignment == "bad")
 bad_guys
 ```
 
-
-#### 6. For the good guys, use the `tabyl` function to summarize their "race".
+#### 6. For the good guys, use the `tabyl` function to summarize their "race".    
 
 ```{r}
 tabyl(good_guys, race)
 ```
 
 
-#### 7. Among the good guys, Who are the Vampires?
+#### 7. Among the good guys, Who are the Vampires?    
 
 ```{r}
-filter(good_guys, race == "Vampires")
+filter(good_guys, race == "Vampire")
 ```
 
-##### There are no Vampires among the good guys.   
+##### The Vampires among the good guys are Angel and Blade.    
 
-#### 8. Among the bad guys, who are the male humans over 200 inches in height?   
+#### 8. Among the bad guys, who are the male humans over 200 inches in height?    
 
 ```{r}
 bad_guys %>% 
   filter(race == "Human", gender == "Male", height > 200) #selecting male humans over 200 inches in height
 ```
 
-##### Among the bad guys, the male humans over 200 inches in height are Bane, Doctor Doom, Kingpin, Lizard, and Scorpion.   
+##### Among the bad guys, the male humans over 200 inches in height are Bane, Doctor Doom, Kingpin, Lizard, and Scorpion.    
 
-#### 9. Are there more good guys or bad guys with green hair?  
+#### 9. Are there more good guys or bad guys with green hair?    
 
-Good Guys with Green Hair:
+Good Guys with Green Hair:   
 
 ```{r}
 good_guys %>% 
   filter(hair_color == "Green")
 ```
 
-Bad Guys with Green Hair:
+```{r}
+good_guys %>% 
+        filter(hair_color == "Green") %>% 
+        dim()
+```
+
+Bad Guys with Green Hair:    
 
 ```{r}
 bad_guys %>% 
   filter(hair_color == "Green")
 ```
 
-##### Since there are 7 good guys with green hair, and only 1 bad guy with green hair, there are more good guys with green hair.
+```{r}
+bad_guys %>% 
+        filter(hair_color == "Green") %>% 
+        dim()
+```
+
+##### Since there are 7 good guys with green hair, and only 1 bad guy with green hair, there are more good guys with green hair.    
 
 #### 10. Let's explore who the really small superheros are. In the `superhero_info` data, which have a weight less than 50? Be sure to sort your results by weight lowest to highest.  
 
@@ -166,7 +198,7 @@ superhero_info %>% #searching within the superhero_info data frame
   arrange(weight) #arranging the results from lowest to highest weight
 ```
 
-#### 11. Let's make a new variable that is the ratio of height to weight. Call this variable `height_weight_ratio`.    
+#### 11. Let's make a new variable that is the ratio of height to weight. Call this variable `height_weight_ratio`.     
 
 ```{r}
 superhero_info %>% 
@@ -181,7 +213,7 @@ superhero_info %>%
         arrange(desc(height_weight_ratio))
 ```
 
-##### Thus, the superhero with the highest height to weight ratio is Groot (175.25000000).
+##### Thus, the superhero with the highest height to weight ratio is Groot (175.25000000).   
 
 ## `superhero_powers`    
 
@@ -192,22 +224,25 @@ superhero_powers <- clean_names(superhero_powers) #tidying up the superhero_powe
 ```
 
 ```{r}
-glimpse(superhero_powers)
+glimpse(superhero_powers) #looking at the superhero_powers data frame
 ```
 
-#### 13. How many superheros have a combination of agility, stealth, super_strength, stamina?
+#### 13. How many superheros have a combination of agility, stealth, super_strength, stamina?    
 
 ```{r}
 specific_superheroes <- superhero_powers %>% 
         filter(agility == "TRUE", stealth == "TRUE", super_strength == "TRUE", stamina == "TRUE") %>%  #filtering for superheroes that have this combination of powers (as in, all of powers are "TRUE" for each superhero)
         select(hero_names, agility, stealth, super_strength, stamina) #selecting only the specific combination of powers for ease of viewing
 specific_superheroes
+```
+
+```{r}
 dim(specific_superheroes)
 ```
 
-##### Thus, there are 40 superheroes that have the combination of agility, stealth, super_strength, stamina powers.   
+##### Thus, there are 40 superheroes that have the combination of agility, stealth, super_strength, stamina powers.    
 
-## Your Favorite    
+## Your Favorite   
 
 #### 14. Pick your favorite superhero and let's see their powers!  
 
@@ -224,11 +259,11 @@ catwoman_powers
 names(catwoman_powers)
 ```
 
-##### Thus, Catwoman's powers include agility, stealth, marksmanship, animal attributes, stamina, dexterity, peak human condition, and empathy. 
+##### Thus, Catwoman's powers include agility, stealth, marksmanship, animal attributes, stamina, dexterity, peak human condition, and empathy.    
 
 #### 15. Can you find your hero in the superhero_info data? Show their info!  
 
-I could find my hero, Catwoman, in the superhero_info data:
+I could find my hero, Catwoman, in the superhero_info data:    
 
 ```{r}
 superhero_info %>% 
@@ -236,4 +271,4 @@ superhero_info %>%
 ```
 
 ## Push your final code to GitHub!
-Please be sure that you check the `keep md` file in the knit preferences.  
+Please be sure that you check the `keep md` file in the knit preferences. 
