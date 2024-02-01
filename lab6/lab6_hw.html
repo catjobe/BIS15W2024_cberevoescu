@@ -11,7 +11,7 @@
 
 <meta name="author" content="Catrinel Berevoescu" />
 
-<meta name="date" content="2024-01-31" />
+<meta name="date" content="2024-02-01" />
 
 <title>HW: dplyr Superhero</title>
 
@@ -1505,7 +1505,7 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">HW: dplyr Superhero</h1>
 <h4 class="author">Catrinel Berevoescu</h4>
-<h4 class="date">2024-01-31</h4>
+<h4 class="date">2024-02-01</h4>
 
 </div>
 
@@ -1758,6 +1758,25 @@ nonhuman_superheroes</code></pre>
 ## 10 Anti… Male   yellow    God … No Hair        61 DC Comics &lt;NA&gt;       bad      
 ## # ℹ 212 more rows
 ## # ℹ 1 more variable: weight &lt;dbl&gt;</code></pre>
+<p>For ease of viewing:</p>
+<pre class="r"><code>nonhuman_superheroes &lt;- superhero_info %&gt;% 
+        select(name, race) %&gt;% 
+        filter(race != &quot;Human&quot;) #defining superheroes as human only if their &quot;race&quot; is described exclusively as &quot;human&quot;
+nonhuman_superheroes</code></pre>
+<pre><code>## # A tibble: 222 × 2
+##    name         race             
+##    &lt;chr&gt;        &lt;chr&gt;            
+##  1 Abe Sapien   Icthyo Sapien    
+##  2 Abin Sur     Ungaran          
+##  3 Abomination  Human / Radiation
+##  4 Abraxas      Cosmic Entity    
+##  5 Ajax         Cyborg           
+##  6 Alien        Xenomorph XX121  
+##  7 Amazo        Android          
+##  8 Angel        Vampire          
+##  9 Angel Dust   Mutant           
+## 10 Anti-Monitor God / Eternal    
+## # ℹ 212 more rows</code></pre>
 <p>Listing the Superheroes that are Not Human:</p>
 <pre class="r"><code>tabyl(nonhuman_superheroes, name)</code></pre>
 <pre><code>##                       name n     percent

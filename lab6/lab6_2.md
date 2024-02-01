@@ -1,7 +1,7 @@
 ---
 title: "dplyr Superhero"
 author: "Catrinel Berevoescu"
-date: "2024-01-31"
+date: "2024-02-01"
 output:
   html_document: 
     theme: spacelab
@@ -311,6 +311,33 @@ nonhuman_superheroes
 ## 10 Anti… Male   yellow    God … No Hair        61 DC Comics <NA>       bad      
 ## # ℹ 212 more rows
 ## # ℹ 1 more variable: weight <dbl>
+```
+
+For ease of viewing:    
+
+
+```r
+nonhuman_superheroes <- superhero_info %>% 
+        select(name, race) %>% 
+        filter(race != "Human") #defining superheroes as human only if their "race" is described exclusively as "human"
+nonhuman_superheroes
+```
+
+```
+## # A tibble: 222 × 2
+##    name         race             
+##    <chr>        <chr>            
+##  1 Abe Sapien   Icthyo Sapien    
+##  2 Abin Sur     Ungaran          
+##  3 Abomination  Human / Radiation
+##  4 Abraxas      Cosmic Entity    
+##  5 Ajax         Cyborg           
+##  6 Alien        Xenomorph XX121  
+##  7 Amazo        Android          
+##  8 Angel        Vampire          
+##  9 Angel Dust   Mutant           
+## 10 Anti-Monitor God / Eternal    
+## # ℹ 212 more rows
 ```
 
 Listing the Superheroes that are Not Human:    

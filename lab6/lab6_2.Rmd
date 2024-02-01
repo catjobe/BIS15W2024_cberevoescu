@@ -114,6 +114,15 @@ nonhuman_superheroes <- superhero_info %>%
 nonhuman_superheroes
 ```
 
+For ease of viewing:    
+
+```{r}
+nonhuman_superheroes <- superhero_info %>% 
+        select(name, race) %>% 
+        filter(race != "Human") #defining superheroes as human only if their "race" is described exclusively as "human"
+nonhuman_superheroes
+```
+
 Listing the Superheroes that are Not Human:    
 
 ```{r}
