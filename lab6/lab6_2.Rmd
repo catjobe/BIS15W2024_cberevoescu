@@ -69,7 +69,9 @@ table(superhero_info$publisher)
 Proportions of Superheroes from each Publisher:   
 
 ```{r}
-tabyl(superhero_info$publisher)
+superhero_info %>% 
+        tabyl(publisher) %>% 
+        arrange(desc(n))
 ```
 
 ##### The publishers of the superheroes are shown above (24 total). The publisher with the highest number of superheroes appears to be Marvel comics with 388 superheroes.    
@@ -86,7 +88,7 @@ neutral_superheroes
 List of Neutral Superheroes:   
 
 ```{r}
-tabyl(neutral_superheroes, name)
+tabyl(neutral_superheroes, name) 
 ```
 
 ##### There are 24 neutral superheroes represented in the superhero_info data frame.    
@@ -139,7 +141,7 @@ bad_guys
 #### 6. For the good guys, use the `tabyl` function to summarize their "race".    
 
 ```{r}
-tabyl(good_guys, race)
+tabyl(good_guys, race) #summarizing the good guys data frame by "race"
 ```
 
 
@@ -198,6 +200,15 @@ superhero_info %>% #searching within the superhero_info data frame
   arrange(weight) #arranging the results from lowest to highest weight
 ```
 
+For ease of viewing, I have selected only the `name` and `weight` variables below:    
+
+```{r}
+superhero_info %>% #searching within the superhero_info data frame
+        filter(weight < 50) %>% #filtering for superheroes that weigh less than 50 
+        select(name, weight) %>% #selecting only the variables name and weight
+        arrange(weight) #arranging the results from lowest to highest weight
+```
+
 #### 11. Let's make a new variable that is the ratio of height to weight. Call this variable `height_weight_ratio`.     
 
 ```{r}
@@ -205,11 +216,28 @@ superhero_info %>%
         mutate(height_weight_ratio = height / weight) #adding a new column with the height to weight ratio
 ```
 
+For a more clear visual of the `height_weight_ratio` variable:    
+
+```{r}
+superhero_info %>% 
+        mutate(height_weight_ratio = height / weight) %>% 
+        select(name, height_weight_ratio)
+```
+
 #### 12. Who has the highest height to weight ratio?  
 
 ```{r}
 superhero_info %>% 
         mutate(height_weight_ratio = height / weight) %>% 
+        arrange(desc(height_weight_ratio))
+```
+
+For ease of viewing, I have selected only the `name` and `height_weight_ratio` variables below:   
+
+```{r}
+superhero_info %>% 
+        mutate(height_weight_ratio = height / weight) %>% 
+        select(name, height_weight_ratio) %>% 
         arrange(desc(height_weight_ratio))
 ```
 
@@ -267,7 +295,7 @@ I could find my hero, Catwoman, in the superhero_info data:
 
 ```{r}
 superhero_info %>% 
-        filter(name == "Catwoman")
+        filter(name == "Catwoman") #filtering by the name Catwoman to show only her info
 ```
 
 ## Push your final code to GitHub!

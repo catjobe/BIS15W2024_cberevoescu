@@ -1621,33 +1621,35 @@ of superheros?</h4>
 ##      Team Epic TV       Titan Books Universal Studios         Wildstorm 
 ##                 5                 1                 1                 3</code></pre>
 <p>Proportions of Superheroes from each Publisher:</p>
-<pre class="r"><code>tabyl(superhero_info$publisher)</code></pre>
-<pre><code>##  superhero_info$publisher   n     percent valid_percent
-##               ABC Studios   4 0.005449591   0.005563282
-##                 DC Comics 215 0.292915531   0.299026426
-##         Dark Horse Comics  18 0.024523161   0.025034771
-##              George Lucas  14 0.019073569   0.019471488
-##             Hanna-Barbera   1 0.001362398   0.001390821
-##             HarperCollins   6 0.008174387   0.008344924
-##            IDW Publishing   4 0.005449591   0.005563282
-##               Icon Comics   4 0.005449591   0.005563282
-##              Image Comics  14 0.019073569   0.019471488
-##             J. K. Rowling   1 0.001362398   0.001390821
-##          J. R. R. Tolkien   1 0.001362398   0.001390821
-##             Marvel Comics 388 0.528610354   0.539638387
-##                 Microsoft   1 0.001362398   0.001390821
-##              NBC - Heroes  19 0.025885559   0.026425591
-##                 Rebellion   1 0.001362398   0.001390821
-##                  Shueisha   4 0.005449591   0.005563282
-##             Sony Pictures   2 0.002724796   0.002781641
-##                South Park   1 0.001362398   0.001390821
-##                 Star Trek   6 0.008174387   0.008344924
-##                      SyFy   5 0.006811989   0.006954103
-##              Team Epic TV   5 0.006811989   0.006954103
-##               Titan Books   1 0.001362398   0.001390821
-##         Universal Studios   1 0.001362398   0.001390821
-##                 Wildstorm   3 0.004087193   0.004172462
-##                      &lt;NA&gt;  15 0.020435967            NA</code></pre>
+<pre class="r"><code>superhero_info %&gt;% 
+        tabyl(publisher) %&gt;% 
+        arrange(desc(n))</code></pre>
+<pre><code>##          publisher   n     percent valid_percent
+##      Marvel Comics 388 0.528610354   0.539638387
+##          DC Comics 215 0.292915531   0.299026426
+##       NBC - Heroes  19 0.025885559   0.026425591
+##  Dark Horse Comics  18 0.024523161   0.025034771
+##               &lt;NA&gt;  15 0.020435967            NA
+##       George Lucas  14 0.019073569   0.019471488
+##       Image Comics  14 0.019073569   0.019471488
+##      HarperCollins   6 0.008174387   0.008344924
+##          Star Trek   6 0.008174387   0.008344924
+##               SyFy   5 0.006811989   0.006954103
+##       Team Epic TV   5 0.006811989   0.006954103
+##        ABC Studios   4 0.005449591   0.005563282
+##     IDW Publishing   4 0.005449591   0.005563282
+##        Icon Comics   4 0.005449591   0.005563282
+##           Shueisha   4 0.005449591   0.005563282
+##          Wildstorm   3 0.004087193   0.004172462
+##      Sony Pictures   2 0.002724796   0.002781641
+##      Hanna-Barbera   1 0.001362398   0.001390821
+##      J. K. Rowling   1 0.001362398   0.001390821
+##   J. R. R. Tolkien   1 0.001362398   0.001390821
+##          Microsoft   1 0.001362398   0.001390821
+##          Rebellion   1 0.001362398   0.001390821
+##         South Park   1 0.001362398   0.001390821
+##        Titan Books   1 0.001362398   0.001390821
+##  Universal Studios   1 0.001362398   0.001390821</code></pre>
 <div id="the-publishers-of-the-superheroes-are-shown-above-24-total.-the-publisher-with-the-highest-number-of-superheroes-appears-to-be-marvel-comics-with-388-superheroes." class="section level5">
 <h5>The publishers of the superheroes are shown above (24 total). The
 publisher with the highest number of superheroes appears to be Marvel
@@ -1676,7 +1678,7 @@ neutral_superheroes</code></pre>
 ## 10 Indigo       neutral  
 ## # ℹ 14 more rows</code></pre>
 <p>List of Neutral Superheroes:</p>
-<pre class="r"><code>tabyl(neutral_superheroes, name)</code></pre>
+<pre class="r"><code>tabyl(neutral_superheroes, name) </code></pre>
 <pre><code>##             name n    percent
 ##          Bizarro 1 0.04166667
 ##      Black Flash 1 0.04166667
@@ -2026,7 +2028,7 @@ bad_guys</code></pre>
 <div id="for-the-good-guys-use-the-tabyl-function-to-summarize-their-race." class="section level4">
 <h4>6. For the good guys, use the <code>tabyl</code> function to
 summarize their “race”.</h4>
-<pre class="r"><code>tabyl(good_guys, race)</code></pre>
+<pre class="r"><code>tabyl(good_guys, race) #summarizing the good guys data frame by &quot;race&quot;</code></pre>
 <pre><code>##               race   n     percent valid_percent
 ##              Alien   3 0.006048387   0.010752688
 ##              Alpha   5 0.010080645   0.017921147
@@ -2171,6 +2173,34 @@ sure to sort your results by weight lowest to highest.</h4>
 ## 18 Jolt  Female blue      &lt;NA&gt;  Black         165 Marvel C… &lt;NA&gt;       good     
 ## 19 Snow… Female white     &lt;NA&gt;  Blond         178 Marvel C… &lt;NA&gt;       good     
 ## # ℹ 1 more variable: weight &lt;dbl&gt;</code></pre>
+<p>For ease of viewing, I have selected only the <code>name</code> and
+<code>weight</code> variables below:</p>
+<pre class="r"><code>superhero_info %&gt;% #searching within the superhero_info data frame
+        filter(weight &lt; 50) %&gt;% #filtering for superheroes that weigh less than 50 
+        select(name, weight) %&gt;% #selecting only the variables name and weight
+        arrange(weight) #arranging the results from lowest to highest weight</code></pre>
+<pre><code>## # A tibble: 19 × 2
+##    name              weight
+##    &lt;chr&gt;              &lt;dbl&gt;
+##  1 Iron Monger            2
+##  2 Groot                  4
+##  3 Jack-Jack             14
+##  4 Galactus              16
+##  5 Yoda                  17
+##  6 Fin Fang Foom         18
+##  7 Howard the Duck       18
+##  8 Krypto                18
+##  9 Rocket Raccoon        25
+## 10 Dash                  27
+## 11 Longshot              36
+## 12 Robin V               38
+## 13 Wiz Kid               39
+## 14 Violet Parr           41
+## 15 Franklin Richards     45
+## 16 Swarm                 47
+## 17 Hope Summers          48
+## 18 Jolt                  49
+## 19 Snowbird              49</code></pre>
 </div>
 <div id="lets-make-a-new-variable-that-is-the-ratio-of-height-to-weight.-call-this-variable-height_weight_ratio." class="section level4">
 <h4>11. Let’s make a new variable that is the ratio of height to weight.
@@ -2192,6 +2222,25 @@ Call this variable <code>height_weight_ratio</code>.</h4>
 ## 10 Agen… Male   brown     Human Brown         178 Marvel C… &lt;NA&gt;       good     
 ## # ℹ 724 more rows
 ## # ℹ 2 more variables: weight &lt;dbl&gt;, height_weight_ratio &lt;dbl&gt;</code></pre>
+<p>For a more clear visual of the <code>height_weight_ratio</code>
+variable:</p>
+<pre class="r"><code>superhero_info %&gt;% 
+        mutate(height_weight_ratio = height / weight) %&gt;% 
+        select(name, height_weight_ratio)</code></pre>
+<pre><code>## # A tibble: 734 × 2
+##    name          height_weight_ratio
+##    &lt;chr&gt;                       &lt;dbl&gt;
+##  1 A-Bomb                      0.460
+##  2 Abe Sapien                  2.94 
+##  3 Abin Sur                    2.06 
+##  4 Abomination                 0.460
+##  5 Abraxas                    NA    
+##  6 Absorbing Man               1.58 
+##  7 Adam Monroe                NA    
+##  8 Adam Strange                2.10 
+##  9 Agent 13                    2.84 
+## 10 Agent Bob                   2.20 
+## # ℹ 724 more rows</code></pre>
 </div>
 <div id="who-has-the-highest-height-to-weight-ratio" class="section level4">
 <h4>12. Who has the highest height to weight ratio?</h4>
@@ -2213,6 +2262,26 @@ Call this variable <code>height_weight_ratio</code>.</h4>
 ## 10 Yoda  Male   brown     Yoda… White          66 George L… green      good     
 ## # ℹ 724 more rows
 ## # ℹ 2 more variables: weight &lt;dbl&gt;, height_weight_ratio &lt;dbl&gt;</code></pre>
+<p>For ease of viewing, I have selected only the <code>name</code> and
+<code>height_weight_ratio</code> variables below:</p>
+<pre class="r"><code>superhero_info %&gt;% 
+        mutate(height_weight_ratio = height / weight) %&gt;% 
+        select(name, height_weight_ratio) %&gt;% 
+        arrange(desc(height_weight_ratio))</code></pre>
+<pre><code>## # A tibble: 734 × 2
+##    name            height_weight_ratio
+##    &lt;chr&gt;                         &lt;dbl&gt;
+##  1 Groot                        175.  
+##  2 Galactus                      54.8 
+##  3 Fin Fang Foom                 54.2 
+##  4 Longshot                       5.22
+##  5 Jack-Jack                      5.07
+##  6 Rocket Raccoon                 4.88
+##  7 Dash                           4.52
+##  8 Howard the Duck                4.39
+##  9 Swarm                          4.17
+## 10 Yoda                           3.88
+## # ℹ 724 more rows</code></pre>
 <div id="thus-the-superhero-with-the-highest-height-to-weight-ratio-is-groot-175.25000000." class="section level5">
 <h5>Thus, the superhero with the highest height to weight ratio is Groot
 (175.25000000).</h5>
@@ -2453,7 +2522,7 @@ empathy.</h5>
 info!</h4>
 <p>I could find my hero, Catwoman, in the superhero_info data:</p>
 <pre class="r"><code>superhero_info %&gt;% 
-        filter(name == &quot;Catwoman&quot;)</code></pre>
+        filter(name == &quot;Catwoman&quot;) #filtering by the name Catwoman to show only her info</code></pre>
 <pre><code>## # A tibble: 1 × 10
 ##   name   gender eye_color race  hair_color height publisher skin_color alignment
 ##   &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt;    
