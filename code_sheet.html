@@ -385,6 +385,7 @@ library(&quot;tidyverse&quot;)</code></pre>
 ## The following objects are masked from &#39;package:stats&#39;:
 ## 
 ##     chisq.test, fisher.test</code></pre>
+<pre class="r"><code>library(&quot;skimr&quot;)</code></pre>
 </div>
 <div id="working-directory" class="section level2">
 <h2>Working Directory</h2>
@@ -605,7 +606,67 @@ ONLY ONE of the conditions is met, and not when both.</li>
 </div>
 <div id="lab-6" class="section level1">
 <h1>Lab 6</h1>
-<p>…</p>
+<div id="tabyl" class="section level2">
+<h2>tabyl()</h2>
+<p><code>tabyl()</code> produces counts and also percentages.</p>
+</div>
+</div>
+<div id="lab-7" class="section level1">
+<h1>Lab 7</h1>
+<div id="skimr-package" class="section level2">
+<h2>skimr package</h2>
+<pre class="r"><code>#skim() #creates summaries of the data</code></pre>
+</div>
+<div id="hist" class="section level2">
+<h2>hist()</h2>
+<p>Histograms are a quick way to check the output.</p>
+</div>
+<div id="summarize" class="section level2">
+<h2><code>summarize()</code></h2>
+<p><code>summarize()</code> produces summary statistics for a given
+variable in a data frame.</p>
+<p>Example:</p>
+<pre class="r"><code>#msleep %&gt;% 
+  #filter(bodywt&gt;200) %&gt;% 
+  #summarize(mean_sleep_lg=mean(sleep_total),
+            #min_sleep_lg=min(sleep_total),
+            #max_sleep_lg=max(sleep_total),
+            #sd_sleep_lg=sd(sleep_total),
+            #total=n())</code></pre>
+<p><code>n_distinct()</code> is a very handy way of cleanly presenting
+the number of distinct observations.</p>
+<div id="useful-summary-stats" class="section level3">
+<h3>Useful Summary Stats:</h3>
+<p><code>sd()</code>, <code>min()</code>, <code>max()</code>,
+<code>median()</code>, <code>sum()</code>, <code>n()</code> (returns the
+length of a column), <code>first()</code> (returns first value in a
+column), <code>last()</code> (returns last value in a column) and
+<code>n_distinct()</code> (number of distinct values in a column).</p>
+</div>
+</div>
+<div id="group_by" class="section level2">
+<h2><code>group_by()</code></h2>
+<p>Used for selecting by a certain variable.</p>
+</div>
+<div id="counts" class="section level2">
+<h2>Counts</h2>
+<p><code>count()</code> is way of determining the number of observations
+there are within a column. It is like a combination of
+<code>group_by()</code> and <code>n()</code>.</p>
+</div>
+<div id="across" class="section level2">
+<h2><code>across()</code></h2>
+<p>A function in dplyr called <code>across()</code> is designed to work
+across multiple variables.</p>
+<p>Example:</p>
+<pre class="r"><code>#penguins %&gt;%
+  #summarize(distinct_species = n_distinct(species),
+            #distinct_island = n_distinct(island),
+            #distinct_sex = n_distinct(sex))</code></pre>
+<p>versus using across()</p>
+<pre class="r"><code>#penguins %&gt;%
+  #summarize(across(c(species, island, sex), n_distinct))</code></pre>
+</div>
 </div>
 
 

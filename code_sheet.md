@@ -51,6 +51,10 @@ library("janitor")
 ##     chisq.test, fisher.test
 ```
 
+```r
+library("skimr")
+```
+
 ## Working Directory     
 
 Checking current working directory:    
@@ -442,4 +446,76 @@ Example:
 
 # Lab 6   
 
-...
+## tabyl()   
+
+`tabyl()` produces counts and also percentages.        
+
+# Lab 7     
+
+## skimr package
+
+
+```r
+#skim() #creates summaries of the data
+```
+
+## hist()    
+
+Histograms are a quick way to check the output.   
+
+## `summarize()`  
+
+`summarize()` produces summary statistics for a given variable in a data frame.     
+
+Example:    
+
+
+```r
+#msleep %>% 
+  #filter(bodywt>200) %>% 
+  #summarize(mean_sleep_lg=mean(sleep_total),
+            #min_sleep_lg=min(sleep_total),
+            #max_sleep_lg=max(sleep_total),
+            #sd_sleep_lg=sd(sleep_total),
+            #total=n())
+```
+
+`n_distinct()` is a very handy way of cleanly presenting the number of distinct observations.   
+
+### Useful Summary Stats:   
+
+`sd()`, `min()`, `max()`, `median()`, `sum()`, `n()` (returns the length of a column), `first()` (returns first value in a column), `last()` (returns last value in a column) and `n_distinct()` (number of distinct values in a column).    
+
+## `group_by()`     
+
+Used for selecting by a certain variable.     
+
+## Counts   
+
+`count()` is way of determining the number of observations there are within a column. It is like a combination of `group_by()` and `n()`.    
+
+## `across()`  
+
+A function in dplyr called `across()` is designed to work across multiple variables.   
+
+Example:   
+
+
+```r
+#penguins %>%
+  #summarize(distinct_species = n_distinct(species),
+            #distinct_island = n_distinct(island),
+            #distinct_sex = n_distinct(sex))
+```
+
+versus using across()       
+
+
+```r
+#penguins %>%
+  #summarize(across(c(species, island, sex), n_distinct))
+```
+
+
+
+
