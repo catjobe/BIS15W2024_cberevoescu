@@ -64,6 +64,8 @@ glimpse(fisheries)
 
 #### 2. Use `janitor` to rename the columns and make them easier to use. As part of this cleaning step, change `country`, `isscaap_group_number`, `asfis_species_number`, and `fao_major_fishing_area` to data class factor.    
 
+Renaming the columns:   
+
 ```{r}
 fisheries <- clean_names(fisheries)
 ```
@@ -72,10 +74,15 @@ fisheries <- clean_names(fisheries)
 names(fisheries)
 ```
 
+Changing `country`, `isscaap_group_number`, `asfis_species_number`, and `fao_major_fishing_area` to data class factor:   
+
 ```{r}
-isscaap_group_number <- as.factor(fisheries$isscaap_group_number)
-asfis_species_number <- as.factor(fisheries$asfis_species_number)
-fao_major_fishing_area <- as.factor(fisheries$fao_major_fishing_area)
+fisheries$isscaap_group_number <- as.factor(fisheries$isscaap_group_number) #changing the data class to factor
+fisheries$asfis_species_number <- as.factor(fisheries$asfis_species_number)
+fisheries$fao_major_fishing_area <- as.factor(fisheries$fao_major_fishing_area)
+is.factor(fisheries$isscaap_group_number) #verifying that the data class is now factor
+is.factor(fisheries$asfis_species_number)
+is.factor(fisheries$fao_major_fishing_area)
 ```
 
 We need to deal with the years because they are being treated as characters and start with an X. We also have the problem that the column names that are years actually represent data. We haven't discussed tidy data yet, so here is some help. You should run this ugly chunk to transform the data for the rest of the homework. It will only work if you have used janitor to rename the variables in question 2!    
@@ -191,7 +198,7 @@ fisheries_refocused %>%
 
 ```{r}
 fisheries_refocused %>% 
-        group_by(asfis_species_number) %>% 
+        group_by(asfis_species_number) %>%
         summarize(average_catch = mean(catch, na.rm = T)) %>% 
         arrange(desc(average_catch))
 ```

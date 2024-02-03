@@ -11,7 +11,7 @@
 
 <meta name="author" content="Catrinel Berevoescu" />
 
-<meta name="date" content="2024-02-01" />
+<meta name="date" content="2024-02-02" />
 
 <title>Lab 7 Homework</title>
 
@@ -376,7 +376,7 @@ display: none;
 
 <h1 class="title toc-ignore">Lab 7 Homework</h1>
 <h4 class="author">Catrinel Berevoescu</h4>
-<h4 class="date">2024-02-01</h4>
+<h4 class="date">2024-02-02</h4>
 
 </div>
 
@@ -545,6 +545,7 @@ easier to use. As part of this cleaning step, change
 <code>country</code>, <code>isscaap_group_number</code>,
 <code>asfis_species_number</code>, and
 <code>fao_major_fishing_area</code> to data class factor.</h4>
+<p>Renaming the columns:</p>
 <pre class="r"><code>fisheries &lt;- clean_names(fisheries)</code></pre>
 <pre class="r"><code>names(fisheries)</code></pre>
 <pre><code>##  [1] &quot;country&quot;                 &quot;common_name&quot;            
@@ -583,9 +584,18 @@ easier to use. As part of this cleaning step, change
 ## [67] &quot;x2008&quot;                   &quot;x2009&quot;                  
 ## [69] &quot;x2010&quot;                   &quot;x2011&quot;                  
 ## [71] &quot;x2012&quot;</code></pre>
-<pre class="r"><code>isscaap_group_number &lt;- as.factor(fisheries$isscaap_group_number)
-asfis_species_number &lt;- as.factor(fisheries$asfis_species_number)
-fao_major_fishing_area &lt;- as.factor(fisheries$fao_major_fishing_area)</code></pre>
+<p>Changing <code>country</code>, <code>isscaap_group_number</code>,
+<code>asfis_species_number</code>, and
+<code>fao_major_fishing_area</code> to data class factor:</p>
+<pre class="r"><code>fisheries$isscaap_group_number &lt;- as.factor(fisheries$isscaap_group_number) #changing the data class to factor
+fisheries$asfis_species_number &lt;- as.factor(fisheries$asfis_species_number)
+fisheries$fao_major_fishing_area &lt;- as.factor(fisheries$fao_major_fishing_area)
+is.factor(fisheries$isscaap_group_number) #verifying that the data class is now factor</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>is.factor(fisheries$asfis_species_number)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>is.factor(fisheries$fao_major_fishing_area)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
 <p>We need to deal with the years because they are being treated as
 characters and start with an X. We also have the problem that the column
 names that are years actually represent data. We haven’t discussed tidy
@@ -644,7 +654,7 @@ catch.</h4>
 fisheries_refocused</code></pre>
 <pre><code>## # A tibble: 376,771 × 6
 ##    country isscaap_taxonomic_group asfis_species_name asfis_species_number  year
-##    &lt;chr&gt;   &lt;chr&gt;                   &lt;chr&gt;              &lt;chr&gt;                &lt;dbl&gt;
+##    &lt;chr&gt;   &lt;chr&gt;                   &lt;chr&gt;              &lt;fct&gt;                &lt;dbl&gt;
 ##  1 Albania Sharks, rays, chimaeras Squatinidae        10903XXXXX            1995
 ##  2 Albania Sharks, rays, chimaeras Squatinidae        10903XXXXX            1996
 ##  3 Albania Sharks, rays, chimaeras Squatinidae        10903XXXXX            1997
@@ -780,7 +790,7 @@ France (101).</h5>
         arrange(desc(total_catch)) #arranging such that the species that was caught the most is shown first</code></pre>
 <pre><code>## # A tibble: 1,477 × 2
 ##    asfis_species_number total_catch
-##    &lt;chr&gt;                      &lt;dbl&gt;
+##    &lt;fct&gt;                      &lt;dbl&gt;
 ##  1 199XXXXXXX010             105651
 ##  2 1480401601                 41075
 ##  3 1210600208                 35523
@@ -805,12 +815,12 @@ fish”.</h5>
 <h5>I want to find the species that was caught the most on average over
 the entire time period represented in the data set:</h5>
 <pre class="r"><code>fisheries_refocused %&gt;% 
-        group_by(asfis_species_number) %&gt;% 
+        group_by(asfis_species_number) %&gt;%
         summarize(average_catch = mean(catch, na.rm = T)) %&gt;% 
         arrange(desc(average_catch))</code></pre>
 <pre><code>## # A tibble: 1,551 × 2
 ##    asfis_species_number average_catch
-##    &lt;chr&gt;                        &lt;dbl&gt;
+##    &lt;fct&gt;                        &lt;dbl&gt;
 ##  1 1210600208                   4097.
 ##  2 1210501303                   1314.
 ##  3 1480401601                   1084.

@@ -1,7 +1,7 @@
 ---
 title: "Lab 7 Homework"
 author: "Catrinel Berevoescu"
-date: "2024-02-01"
+date: "2024-02-02"
 output:
   html_document: 
     theme: spacelab
@@ -202,6 +202,8 @@ glimpse(fisheries)
 
 #### 2. Use `janitor` to rename the columns and make them easier to use. As part of this cleaning step, change `country`, `isscaap_group_number`, `asfis_species_number`, and `fao_major_fishing_area` to data class factor.    
 
+Renaming the columns:   
+
 
 ```r
 fisheries <- clean_names(fisheries)
@@ -251,11 +253,34 @@ names(fisheries)
 ## [71] "x2012"
 ```
 
+Changing `country`, `isscaap_group_number`, `asfis_species_number`, and `fao_major_fishing_area` to data class factor:   
+
 
 ```r
-isscaap_group_number <- as.factor(fisheries$isscaap_group_number)
-asfis_species_number <- as.factor(fisheries$asfis_species_number)
-fao_major_fishing_area <- as.factor(fisheries$fao_major_fishing_area)
+fisheries$isscaap_group_number <- as.factor(fisheries$isscaap_group_number) #changing the data class to factor
+fisheries$asfis_species_number <- as.factor(fisheries$asfis_species_number)
+fisheries$fao_major_fishing_area <- as.factor(fisheries$fao_major_fishing_area)
+is.factor(fisheries$isscaap_group_number) #verifying that the data class is now factor
+```
+
+```
+## [1] TRUE
+```
+
+```r
+is.factor(fisheries$asfis_species_number)
+```
+
+```
+## [1] TRUE
+```
+
+```r
+is.factor(fisheries$fao_major_fishing_area)
+```
+
+```
+## [1] TRUE
 ```
 
 We need to deal with the years because they are being treated as characters and start with an X. We also have the problem that the column names that are years actually represent data. We haven't discussed tidy data yet, so here is some help. You should run this ugly chunk to transform the data for the rest of the homework. It will only work if you have used janitor to rename the variables in question 2!    
@@ -330,7 +355,7 @@ fisheries_refocused
 ```
 ## # A tibble: 376,771 × 6
 ##    country isscaap_taxonomic_group asfis_species_name asfis_species_number  year
-##    <chr>   <chr>                   <chr>              <chr>                <dbl>
+##    <chr>   <chr>                   <chr>              <fct>                <dbl>
 ##  1 Albania Sharks, rays, chimaeras Squatinidae        10903XXXXX            1995
 ##  2 Albania Sharks, rays, chimaeras Squatinidae        10903XXXXX            1996
 ##  3 Albania Sharks, rays, chimaeras Squatinidae        10903XXXXX            1997
@@ -488,7 +513,7 @@ fisheries_refocused %>%
 ```
 ## # A tibble: 1,477 × 2
 ##    asfis_species_number total_catch
-##    <chr>                      <dbl>
+##    <fct>                      <dbl>
 ##  1 199XXXXXXX010             105651
 ##  2 1480401601                 41075
 ##  3 1210600208                 35523
@@ -511,7 +536,7 @@ fisheries_refocused %>%
 
 ```r
 fisheries_refocused %>% 
-        group_by(asfis_species_number) %>% 
+        group_by(asfis_species_number) %>%
         summarize(average_catch = mean(catch, na.rm = T)) %>% 
         arrange(desc(average_catch))
 ```
@@ -519,7 +544,7 @@ fisheries_refocused %>%
 ```
 ## # A tibble: 1,551 × 2
 ##    asfis_species_number average_catch
-##    <chr>                        <dbl>
+##    <fct>                        <dbl>
 ##  1 1210600208                   4097.
 ##  2 1210501303                   1314.
 ##  3 1480401601                   1084.
