@@ -395,7 +395,7 @@ fisheries_refocused %>%
         filter(year == 2000) %>% #filtering by the year 2000
         group_by(country) %>% #grouping the data by the categorical variable country
         summarize(overall_catch = sum(catch, na.rm = T)) %>% #calculating the overall catch values
-        arrange(desc(overall_catch)) #arranging the data to show the countries that had the largest ovcerall catches in the year 2000 first
+        arrange(desc(overall_catch)) #arranging the data to show the countries that had the largest overall catches in the year 2000 first
 ```
 
 ```
@@ -510,26 +510,15 @@ fisheries_tidy %>%
 
 ```r
 fisheries_refocused %>% 
-        group_by(asfis_species_number) %>% #grouping the data by the categorical variable asfis_species_number
         summarize(average_catch = mean(catch, na.rm = T)) %>% #finding the average/mean catch value
         arrange(desc(average_catch)) #rearranging for ease of viewing
 ```
 
 ```
-## # A tibble: 1,551 × 2
-##    asfis_species_number average_catch
-##    <fct>                        <dbl>
-##  1 1210600208                   4097.
-##  2 1210501303                   1314.
-##  3 1480401601                   1084.
-##  4 1210501301                   1012.
-##  5 1702300405                    549.
-##  6 1210502404                    523.
-##  7 1210600202                    487.
-##  8 3161202001                    362.
-##  9 1210600212                    343.
-## 10 1650100204                    339 
-## # ℹ 1,541 more rows
+## # A tibble: 1 × 1
+##   average_catch
+##           <dbl>
+## 1          39.4
 ```
 
 
