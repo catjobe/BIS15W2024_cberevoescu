@@ -182,7 +182,7 @@ fisheries_tidy %>%
         arrange(desc(total_catch)) #arranging such that the species that was caught the most is shown first
 ```
 
-##### Thus the species that is caught the most is Theragra chalcogramma, common name Alaska pollock.    
+##### Thus the species that is caught the most between 2008-2012 is Theragra chalcogramma, common name Alaska pollock.    
 
 #### 10. Use the data to do at least one analysis of your choice. 
 
