@@ -510,20 +510,6 @@ fisheries_tidy %>%
 
 ```r
 fisheries_refocused %>% 
-        summarize(average_catch = mean(catch, na.rm = T)) %>% #finding the average/mean catch value
-        arrange(desc(average_catch)) #rearranging for ease of viewing
-```
-
-```
-## # A tibble: 1 × 1
-##   average_catch
-##           <dbl>
-## 1          39.4
-```
-
-
-```r
-fisheries_refocused %>% 
         group_by(asfis_species_name) %>% #grouping the data by the categorical variable asfis_species_name
         summarize(average_catch = mean(catch, na.rm = T)) %>% #finding the average/mean catch value
         arrange(desc(average_catch)) #rearranging for ease of viewing
@@ -546,7 +532,7 @@ fisheries_refocused %>%
 ## # ℹ 1,536 more rows
 ```
 
-##### The fish species that was caught the most on average in the represented time period is species number 1210600208, Engraulis ringens.   
+##### The fish species that was caught the most on average in the represented time period is species Engraulis ringens (Peruvian anchoveta).   
 
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences.   

@@ -794,13 +794,6 @@ Theragra chalcogramma, common name Alaska pollock.</h5>
 <h5>I want to find the species that was caught the most on average over
 the entire time period represented in the data set:</h5>
 <pre class="r"><code>fisheries_refocused %&gt;% 
-        summarize(average_catch = mean(catch, na.rm = T)) %&gt;% #finding the average/mean catch value
-        arrange(desc(average_catch)) #rearranging for ease of viewing</code></pre>
-<pre><code>## # A tibble: 1 × 1
-##   average_catch
-##           &lt;dbl&gt;
-## 1          39.4</code></pre>
-<pre class="r"><code>fisheries_refocused %&gt;% 
         group_by(asfis_species_name) %&gt;% #grouping the data by the categorical variable asfis_species_name
         summarize(average_catch = mean(catch, na.rm = T)) %&gt;% #finding the average/mean catch value
         arrange(desc(average_catch)) #rearranging for ease of viewing</code></pre>
@@ -819,10 +812,10 @@ the entire time period represented in the data set:</h5>
 ## 10 Chelon haematocheilus            339 
 ## # ℹ 1,536 more rows</code></pre>
 </div>
-<div id="the-fish-species-that-was-caught-the-most-on-average-in-the-represented-time-period-is-species-number-1210600208-engraulis-ringens." class="section level5">
+<div id="the-fish-species-that-was-caught-the-most-on-average-in-the-represented-time-period-is-species-engraulis-ringens-peruvian-anchoveta." class="section level5">
 <h5>The fish species that was caught the most on average in the
-represented time period is species number 1210600208, Engraulis
-ringens.</h5>
+represented time period is species Engraulis ringens (Peruvian
+anchoveta).</h5>
 </div>
 </div>
 </div>
