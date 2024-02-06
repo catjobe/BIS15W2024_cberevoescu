@@ -1,7 +1,7 @@
 ---
-title: "Lab 7 Homework"
+title: "Lab 7 (HW 6) Homework"
 author: "Catrinel Berevoescu"
-date: "2024-02-05"
+date: "2024-02-06"
 output:
   html_document: 
     theme: spacelab
@@ -477,57 +477,31 @@ fisheries_refocused %>%
 
 
 ```r
-fisheries_refocused %>% 
-        filter(between(year, 2008, 2012)) %>% #filtering by the time frame
+fisheries_tidy %>% 
+        filter(between(year, 2008, 2012), asfis_species_name != "Osteichthyes") %>% #filtering by the time frame and filtering out Osteichthyes, which is not a species
         group_by(asfis_species_name) %>% #grouping the data by the categorical variable asfis_species_name
         summarize(total_catch = sum(catch, na.rm = T)) %>% #adding together fish of a certain species caught between 2008-2012 to find total fish caught during this time period
         arrange(desc(total_catch)) #arranging such that the species that was caught the most is shown first
 ```
 
 ```
-## # A tibble: 1,472 × 2
+## # A tibble: 1,471 × 2
 ##    asfis_species_name    total_catch
 ##    <chr>                       <dbl>
-##  1 Osteichthyes               107808
-##  2 Theragra chalcogramma       41075
-##  3 Engraulis ringens           35523
-##  4 Katsuwonus pelamis          32153
-##  5 Trichiurus lepturus         30400
-##  6 Clupea harengus             28527
-##  7 Thunnus albacares           20119
-##  8 Scomber japonicus           14723
-##  9 Gadus morhua                13253
-## 10 Thunnus alalunga            12019
-## # ℹ 1,462 more rows
+##  1 Theragra chalcogramma       41075
+##  2 Engraulis ringens           35523
+##  3 Katsuwonus pelamis          32153
+##  4 Trichiurus lepturus         30400
+##  5 Clupea harengus             28527
+##  6 Thunnus albacares           20119
+##  7 Scomber japonicus           14723
+##  8 Gadus morhua                13253
+##  9 Thunnus alalunga            12019
+## 10 Natantia                    11984
+## # ℹ 1,461 more rows
 ```
 
-
-```r
-fisheries_refocused %>% 
-        filter(between(year, 2008, 2012)) %>% #filtering by the time frame
-        group_by(asfis_species_number) %>% #grouping the data by the categorical variable asfis_species_number
-        summarize(total_catch = sum(catch, na.rm = T)) %>% #adding together fish of a certain species caught between 2008-2012 to find total fish caught during this time period
-        arrange(desc(total_catch)) #arranging such that the species that was caught the most is shown first
-```
-
-```
-## # A tibble: 1,477 × 2
-##    asfis_species_number total_catch
-##    <fct>                      <dbl>
-##  1 199XXXXXXX010             105651
-##  2 1480401601                 41075
-##  3 1210600208                 35523
-##  4 1750102501                 32153
-##  5 1750600302                 30400
-##  6 1210500105                 28527
-##  7 1750102610                 20119
-##  8 1750100201                 14723
-##  9 1480400202                 13253
-## 10 1750102605                 12019
-## # ℹ 1,467 more rows
-```
-
-##### Thus the species that is caught the most is Pisces miscellanea (species number = 199XXXXXXX010) from the Osteichthyes, which is a superclass of vertebrate animals that are more commonly known as "bony fish".    
+##### Thus the species that is caught the most is Theragra chalcogramma, common name Alaska pollock.    
 
 #### 10. Use the data to do at least one analysis of your choice. 
 
@@ -536,9 +510,9 @@ fisheries_refocused %>%
 
 ```r
 fisheries_refocused %>% 
-        group_by(asfis_species_number) %>%
-        summarize(average_catch = mean(catch, na.rm = T)) %>% 
-        arrange(desc(average_catch))
+        group_by(asfis_species_number) %>% #grouping the data by the categorical variable asfis_species_number
+        summarize(average_catch = mean(catch, na.rm = T)) %>% #finding the average/mean catch value
+        arrange(desc(average_catch)) #rearranging for ease of viewing
 ```
 
 ```
@@ -561,9 +535,9 @@ fisheries_refocused %>%
 
 ```r
 fisheries_refocused %>% 
-        group_by(asfis_species_name) %>% 
-        summarize(average_catch = mean(catch, na.rm = T)) %>% 
-        arrange(desc(average_catch))
+        group_by(asfis_species_name) %>% #grouping the data by the categorical variable asfis_species_name
+        summarize(average_catch = mean(catch, na.rm = T)) %>% #finding the average/mean catch value
+        arrange(desc(average_catch)) #rearranging for ease of viewing
 ```
 
 ```

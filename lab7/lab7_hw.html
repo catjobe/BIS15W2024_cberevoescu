@@ -11,9 +11,9 @@
 
 <meta name="author" content="Catrinel Berevoescu" />
 
-<meta name="date" content="2024-02-05" />
+<meta name="date" content="2024-02-06" />
 
-<title>Lab 7 Homework</title>
+<title>Lab 7 (HW 6) Homework</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -374,9 +374,9 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Lab 7 Homework</h1>
+<h1 class="title toc-ignore">Lab 7 (HW 6) Homework</h1>
 <h4 class="author">Catrinel Berevoescu</h4>
-<h4 class="date">2024-02-05</h4>
+<h4 class="date">2024-02-06</h4>
 
 </div>
 
@@ -764,49 +764,28 @@ France (101).</h5>
 <div id="which-species-had-the-highest-catch-total-between-2008-2012-hint-osteichthyes-is-not-a-species." class="section level4">
 <h4>9. Which species had the highest catch total between 2008-2012?
 (hint: Osteichthyes is not a species).</h4>
-<pre class="r"><code>fisheries_refocused %&gt;% 
-        filter(between(year, 2008, 2012)) %&gt;% #filtering by the time frame
+<pre class="r"><code>fisheries_tidy %&gt;% 
+        filter(between(year, 2008, 2012), asfis_species_name != &quot;Osteichthyes&quot;) %&gt;% #filtering by the time frame and filtering out Osteichthyes, which is not a species
         group_by(asfis_species_name) %&gt;% #grouping the data by the categorical variable asfis_species_name
         summarize(total_catch = sum(catch, na.rm = T)) %&gt;% #adding together fish of a certain species caught between 2008-2012 to find total fish caught during this time period
         arrange(desc(total_catch)) #arranging such that the species that was caught the most is shown first</code></pre>
-<pre><code>## # A tibble: 1,472 × 2
+<pre><code>## # A tibble: 1,471 × 2
 ##    asfis_species_name    total_catch
 ##    &lt;chr&gt;                       &lt;dbl&gt;
-##  1 Osteichthyes               107808
-##  2 Theragra chalcogramma       41075
-##  3 Engraulis ringens           35523
-##  4 Katsuwonus pelamis          32153
-##  5 Trichiurus lepturus         30400
-##  6 Clupea harengus             28527
-##  7 Thunnus albacares           20119
-##  8 Scomber japonicus           14723
-##  9 Gadus morhua                13253
-## 10 Thunnus alalunga            12019
-## # ℹ 1,462 more rows</code></pre>
-<pre class="r"><code>fisheries_refocused %&gt;% 
-        filter(between(year, 2008, 2012)) %&gt;% #filtering by the time frame
-        group_by(asfis_species_number) %&gt;% #grouping the data by the categorical variable asfis_species_number
-        summarize(total_catch = sum(catch, na.rm = T)) %&gt;% #adding together fish of a certain species caught between 2008-2012 to find total fish caught during this time period
-        arrange(desc(total_catch)) #arranging such that the species that was caught the most is shown first</code></pre>
-<pre><code>## # A tibble: 1,477 × 2
-##    asfis_species_number total_catch
-##    &lt;fct&gt;                      &lt;dbl&gt;
-##  1 199XXXXXXX010             105651
-##  2 1480401601                 41075
-##  3 1210600208                 35523
-##  4 1750102501                 32153
-##  5 1750600302                 30400
-##  6 1210500105                 28527
-##  7 1750102610                 20119
-##  8 1750100201                 14723
-##  9 1480400202                 13253
-## 10 1750102605                 12019
-## # ℹ 1,467 more rows</code></pre>
-<div id="thus-the-species-that-is-caught-the-most-is-pisces-miscellanea-species-number-199xxxxxxx010-from-the-osteichthyes-which-is-a-superclass-of-vertebrate-animals-that-are-more-commonly-known-as-bony-fish." class="section level5">
-<h5>Thus the species that is caught the most is Pisces miscellanea
-(species number = 199XXXXXXX010) from the Osteichthyes, which is a
-superclass of vertebrate animals that are more commonly known as “bony
-fish”.</h5>
+##  1 Theragra chalcogramma       41075
+##  2 Engraulis ringens           35523
+##  3 Katsuwonus pelamis          32153
+##  4 Trichiurus lepturus         30400
+##  5 Clupea harengus             28527
+##  6 Thunnus albacares           20119
+##  7 Scomber japonicus           14723
+##  8 Gadus morhua                13253
+##  9 Thunnus alalunga            12019
+## 10 Natantia                    11984
+## # ℹ 1,461 more rows</code></pre>
+<div id="thus-the-species-that-is-caught-the-most-is-theragra-chalcogramma-common-name-alaska-pollock." class="section level5">
+<h5>Thus the species that is caught the most is Theragra chalcogramma,
+common name Alaska pollock.</h5>
 </div>
 </div>
 <div id="use-the-data-to-do-at-least-one-analysis-of-your-choice." class="section level4">
@@ -815,9 +794,9 @@ fish”.</h5>
 <h5>I want to find the species that was caught the most on average over
 the entire time period represented in the data set:</h5>
 <pre class="r"><code>fisheries_refocused %&gt;% 
-        group_by(asfis_species_number) %&gt;%
-        summarize(average_catch = mean(catch, na.rm = T)) %&gt;% 
-        arrange(desc(average_catch))</code></pre>
+        group_by(asfis_species_number) %&gt;% #grouping the data by the categorical variable asfis_species_number
+        summarize(average_catch = mean(catch, na.rm = T)) %&gt;% #finding the average/mean catch value
+        arrange(desc(average_catch)) #rearranging for ease of viewing</code></pre>
 <pre><code>## # A tibble: 1,551 × 2
 ##    asfis_species_number average_catch
 ##    &lt;fct&gt;                        &lt;dbl&gt;
@@ -833,9 +812,9 @@ the entire time period represented in the data set:</h5>
 ## 10 1650100204                    339 
 ## # ℹ 1,541 more rows</code></pre>
 <pre class="r"><code>fisheries_refocused %&gt;% 
-        group_by(asfis_species_name) %&gt;% 
-        summarize(average_catch = mean(catch, na.rm = T)) %&gt;% 
-        arrange(desc(average_catch))</code></pre>
+        group_by(asfis_species_name) %&gt;% #grouping the data by the categorical variable asfis_species_name
+        summarize(average_catch = mean(catch, na.rm = T)) %&gt;% #finding the average/mean catch value
+        arrange(desc(average_catch)) #rearranging for ease of viewing</code></pre>
 <pre><code>## # A tibble: 1,546 × 2
 ##    asfis_species_name      average_catch
 ##    &lt;chr&gt;                           &lt;dbl&gt;
