@@ -1,7 +1,7 @@
 ---
 title: "Lab 7 Homework"
 author: "Catrinel Berevoescu"
-date: "2024-02-02"
+date: "2024-02-05"
 output:
   html_document: 
     theme: spacelab
@@ -303,7 +303,7 @@ fisheries_tidy$catch <- as.numeric(fisheries_tidy$catch)
 
 #### 3. How many countries are represented in the data? Provide a count and list their names.   
 
-##### There are 204 unique Countries represented in the data:    
+##### There are 203 unique Countries represented in the data:    
 
 
 ```r
@@ -394,7 +394,7 @@ fisheries_refocused %>%
 fisheries_refocused %>% 
         filter(year == 2000) %>% #filtering by the year 2000
         group_by(country) %>% #grouping the data by the categorical variable country
-        summarize(overall_catch = sum(catch, na.rm = TRUE)) %>% #calculating the overall catch values
+        summarize(overall_catch = sum(catch, na.rm = T)) %>% #calculating the overall catch values
         arrange(desc(overall_catch)) #arranging the data to show the countries that had the largest ovcerall catches in the year 2000 first
 ```
 
@@ -422,7 +422,7 @@ fisheries_refocused %>%
 
 ```r
 fisheries_refocused %>% 
-        filter(year >= 1990, year <= 2000, asfis_species_name == "Sardina pilchardus") %>% #filtering by the time frame and sardines
+        filter(between(year, 1990, 2000), asfis_species_name == "Sardina pilchardus") %>% #filtering by the time frame and sardines
         group_by(country) %>% #grouping the data by the categorical variable country
         summarize(total_sardines = sum(catch, na.rm = T)) %>% #finding total number of sardines caught for each country within the time frame
         arrange(desc(total_sardines)) #arranging the data to show the countries that caught the most sardines first
@@ -452,7 +452,7 @@ fisheries_refocused %>%
 
 ```r
 fisheries_refocused %>% 
-        filter(year >= "2008", year <= "2012", asfis_species_name == "Cephalopoda") %>% #filtering for the time frame and cephalopods
+        filter(between(year, 2008, 2012), asfis_species_name == "Cephalopoda") %>% #filtering for the time frame and cephalopods
         group_by(country) %>% #grouping the data by the categorical variable country
         summarize(total_cephalopods = sum(catch, na.rm = T)) %>% #adding together cephalopods caught between 2008-2012 to find total cephalopods caught by each country during this time period
         arrange(desc(total_cephalopods)) %>% #arranging such that the countries that caught the most cephalopods is shown at the top
@@ -478,7 +478,7 @@ fisheries_refocused %>%
 
 ```r
 fisheries_refocused %>% 
-        filter(year >= "2008", year <= "2012") %>% #filtering by the time frame
+        filter(between(year, 2008, 2012)) %>% #filtering by the time frame
         group_by(asfis_species_name) %>% #grouping the data by the categorical variable asfis_species_name
         summarize(total_catch = sum(catch, na.rm = T)) %>% #adding together fish of a certain species caught between 2008-2012 to find total fish caught during this time period
         arrange(desc(total_catch)) #arranging such that the species that was caught the most is shown first
@@ -504,7 +504,7 @@ fisheries_refocused %>%
 
 ```r
 fisheries_refocused %>% 
-        filter(year >= "2008", year <= "2012") %>% #filtering by the time frame
+        filter(between(year, 2008, 2012)) %>% #filtering by the time frame
         group_by(asfis_species_number) %>% #grouping the data by the categorical variable asfis_species_number
         summarize(total_catch = sum(catch, na.rm = T)) %>% #adding together fish of a certain species caught between 2008-2012 to find total fish caught during this time period
         arrange(desc(total_catch)) #arranging such that the species that was caught the most is shown first

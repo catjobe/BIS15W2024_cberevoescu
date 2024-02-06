@@ -11,7 +11,7 @@
 
 <meta name="author" content="Catrinel Berevoescu" />
 
-<meta name="date" content="2024-02-02" />
+<meta name="date" content="2024-02-05" />
 
 <title>Lab 7 Homework</title>
 
@@ -376,7 +376,7 @@ display: none;
 
 <h1 class="title toc-ignore">Lab 7 Homework</h1>
 <h4 class="author">Catrinel Berevoescu</h4>
-<h4 class="date">2024-02-02</h4>
+<h4 class="date">2024-02-05</h4>
 
 </div>
 
@@ -618,8 +618,8 @@ fisheries_tidy$catch &lt;- as.numeric(fisheries_tidy$catch)</code></pre>
 <div id="how-many-countries-are-represented-in-the-data-provide-a-count-and-list-their-names." class="section level4">
 <h4>3. How many countries are represented in the data? Provide a count
 and list their names.</h4>
-<div id="there-are-204-unique-countries-represented-in-the-data" class="section level5">
-<h5>There are 204 unique Countries represented in the data:</h5>
+<div id="there-are-203-unique-countries-represented-in-the-data" class="section level5">
+<h5>There are 203 unique Countries represented in the data:</h5>
 <pre class="r"><code>fisheries_tidy %&gt;% 
         summarize(n_countries = n_distinct(country))</code></pre>
 <pre><code>## # A tibble: 1 × 1
@@ -688,7 +688,7 @@ data:</h5>
 <pre class="r"><code>fisheries_refocused %&gt;% 
         filter(year == 2000) %&gt;% #filtering by the year 2000
         group_by(country) %&gt;% #grouping the data by the categorical variable country
-        summarize(overall_catch = sum(catch, na.rm = TRUE)) %&gt;% #calculating the overall catch values
+        summarize(overall_catch = sum(catch, na.rm = T)) %&gt;% #calculating the overall catch values
         arrange(desc(overall_catch)) #arranging the data to show the countries that had the largest ovcerall catches in the year 2000 first</code></pre>
 <pre><code>## # A tibble: 193 × 2
 ##    country                  overall_catch
@@ -713,7 +713,7 @@ was China, with 25899 fish caught.</h5>
 <h4>7. Which country caught the most sardines (<em>Sardina
 pilchardus</em>) between the years 1990-2000?</h4>
 <pre class="r"><code>fisheries_refocused %&gt;% 
-        filter(year &gt;= 1990, year &lt;= 2000, asfis_species_name == &quot;Sardina pilchardus&quot;) %&gt;% #filtering by the time frame and sardines
+        filter(between(year, 1990, 2000), asfis_species_name == &quot;Sardina pilchardus&quot;) %&gt;% #filtering by the time frame and sardines
         group_by(country) %&gt;% #grouping the data by the categorical variable country
         summarize(total_sardines = sum(catch, na.rm = T)) %&gt;% #finding total number of sardines caught for each country within the time frame
         arrange(desc(total_sardines)) #arranging the data to show the countries that caught the most sardines first</code></pre>
@@ -741,7 +741,7 @@ sardines caught.</h5>
 <h4>8. Which five countries caught the most cephalopods between
 2008-2012?</h4>
 <pre class="r"><code>fisheries_refocused %&gt;% 
-        filter(year &gt;= &quot;2008&quot;, year &lt;= &quot;2012&quot;, asfis_species_name == &quot;Cephalopoda&quot;) %&gt;% #filtering for the time frame and cephalopods
+        filter(between(year, 2008, 2012), asfis_species_name == &quot;Cephalopoda&quot;) %&gt;% #filtering for the time frame and cephalopods
         group_by(country) %&gt;% #grouping the data by the categorical variable country
         summarize(total_cephalopods = sum(catch, na.rm = T)) %&gt;% #adding together cephalopods caught between 2008-2012 to find total cephalopods caught by each country during this time period
         arrange(desc(total_cephalopods)) %&gt;% #arranging such that the countries that caught the most cephalopods is shown at the top
@@ -765,7 +765,7 @@ France (101).</h5>
 <h4>9. Which species had the highest catch total between 2008-2012?
 (hint: Osteichthyes is not a species).</h4>
 <pre class="r"><code>fisheries_refocused %&gt;% 
-        filter(year &gt;= &quot;2008&quot;, year &lt;= &quot;2012&quot;) %&gt;% #filtering by the time frame
+        filter(between(year, 2008, 2012)) %&gt;% #filtering by the time frame
         group_by(asfis_species_name) %&gt;% #grouping the data by the categorical variable asfis_species_name
         summarize(total_catch = sum(catch, na.rm = T)) %&gt;% #adding together fish of a certain species caught between 2008-2012 to find total fish caught during this time period
         arrange(desc(total_catch)) #arranging such that the species that was caught the most is shown first</code></pre>
@@ -784,7 +784,7 @@ France (101).</h5>
 ## 10 Thunnus alalunga            12019
 ## # ℹ 1,462 more rows</code></pre>
 <pre class="r"><code>fisheries_refocused %&gt;% 
-        filter(year &gt;= &quot;2008&quot;, year &lt;= &quot;2012&quot;) %&gt;% #filtering by the time frame
+        filter(between(year, 2008, 2012)) %&gt;% #filtering by the time frame
         group_by(asfis_species_number) %&gt;% #grouping the data by the categorical variable asfis_species_number
         summarize(total_catch = sum(catch, na.rm = T)) %&gt;% #adding together fish of a certain species caught between 2008-2012 to find total fish caught during this time period
         arrange(desc(total_catch)) #arranging such that the species that was caught the most is shown first</code></pre>
