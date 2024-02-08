@@ -773,7 +773,8 @@ appear as “NA”.</h3>
 ## #   birth_or_hatching_weight_g &lt;dbl&gt;, weaning_weight_g &lt;dbl&gt;, egg_mass_g &lt;dbl&gt;,
 ## #   incubation_d &lt;dbl&gt;, fledging_age_d &lt;dbl&gt;, longevity_y &lt;dbl&gt;,
 ## #   male_maturity_d &lt;dbl&gt;, inter_litter_or_interbirth_interval_y &lt;dbl&gt;, …</code></pre>
-<pre class="r"><code>amniota &lt;- read_csv(&quot;/Users/catrinelberevoescu/Desktop/BIS15W2024_cberevoescu/lab8/data/amniota.csv&quot;, na= c(&quot;NA&quot;, &quot; &quot;, &quot;.&quot;, &quot;-999&quot;, &quot;-999.0&quot;, &quot;-999.00&quot;, &quot;-999.000&quot;, &quot;-999.0000&quot;, &quot;-999.00000&quot;)) %&gt;% clean_names()</code></pre>
+<pre class="r"><code>z &lt;- c(&quot;NA&quot;, &quot; &quot;, &quot;.&quot;, &quot;-999&quot;, &quot;-999.0&quot;, &quot;-999.00&quot;, &quot;-999.000&quot;, &quot;-999.0000&quot;, &quot;-999.00000&quot;)
+amniota &lt;- read_csv(&quot;/Users/catrinelberevoescu/Desktop/BIS15W2024_cberevoescu/lab8/data/amniota.csv&quot;, na = z)</code></pre>
 <pre><code>## Warning: One or more parsing issues, call `problems()` on your data frame for details,
 ## e.g.:
 ##   dat &lt;- vroom(...)
@@ -787,6 +788,7 @@ appear as “NA”.</h3>
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>amniota &lt;- clean_names(amniota)</code></pre>
 <pre class="r"><code>summary(amniota)</code></pre>
 <pre><code>##     class              order              family             genus          
 ##  Length:21322       Length:21322       Length:21322       Length:21322      
@@ -976,20 +978,33 @@ is NOT part of that variable’s category.</h4>
 <h3>10. Now that we know how NA’s are represented in the
 <code>amniota</code> data, how would you load the data such that the
 values which represent NA’s are automatically converted?</h3>
-<pre class="r"><code>amniota &lt;- read_csv(&quot;/Users/catrinelberevoescu/Desktop/BIS15W2024_cberevoescu/lab8/data/amniota.csv&quot;, na= c(&quot;NA&quot;, &quot; &quot;, &quot;.&quot;, &quot;-999&quot;, &quot;-999.0&quot;, &quot;-999.00&quot;, &quot;-999.000&quot;, &quot;-999.0000&quot;, &quot;-999.00000&quot;)) %&gt;% clean_names()</code></pre>
+<p>Loading the data such that the values that represent NA’s are
+automatically converted (nuclear option):</p>
+<pre class="r"><code>read_csv(file = &quot;/Users/catrinelberevoescu/Desktop/BIS15W2024_cberevoescu/lab8/data/amniota.csv&quot;, na = c(&quot;NA&quot;, &quot; &quot;, &quot;.&quot;, &quot;-999&quot;, &quot;-999.0&quot;, &quot;-999.00&quot;, &quot;-999.000&quot;, &quot;-999.0000&quot;, &quot;-999.00000&quot;), show_col_types = FALSE) %&gt;% clean_names()</code></pre>
 <pre><code>## Warning: One or more parsing issues, call `problems()` on your data frame for details,
 ## e.g.:
 ##   dat &lt;- vroom(...)
 ##   problems(dat)</code></pre>
-<pre><code>## Rows: 21322 Columns: 36
-## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## chr  (6): class, order, family, genus, species, common_name
-## dbl (28): female_maturity_d, litter_or_clutch_size_n, litters_or_clutches_pe...
-## lgl  (2): subspecies, female_body_mass_at_maturity_g
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre><code>## # A tibble: 21,322 × 36
+##    class order     family genus species subspecies common_name female_maturity_d
+##    &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;lgl&gt;      &lt;chr&gt;                   &lt;dbl&gt;
+##  1 Aves  Accipitr… Accip… Acci… albogu… NA         Pied Gosha…               NA 
+##  2 Aves  Accipitr… Accip… Acci… badius  NA         Shikra                   363.
+##  3 Aves  Accipitr… Accip… Acci… bicolor NA         Bicolored …               NA 
+##  4 Aves  Accipitr… Accip… Acci… brachy… NA         New Britai…               NA 
+##  5 Aves  Accipitr… Accip… Acci… brevip… NA         Levant Spa…              363.
+##  6 Aves  Accipitr… Accip… Acci… castan… NA         Chestnut-f…               NA 
+##  7 Aves  Accipitr… Accip… Acci… chilen… NA         Chilean Ha…               NA 
+##  8 Aves  Accipitr… Accip… Acci… chiono… NA         White-brea…              548.
+##  9 Aves  Accipitr… Accip… Acci… cirroc… NA         Collared S…               NA 
+## 10 Aves  Accipitr… Accip… Acci… cooper… NA         Cooper&#39;s H…              730 
+## # ℹ 21,312 more rows
+## # ℹ 28 more variables: litter_or_clutch_size_n &lt;dbl&gt;,
+## #   litters_or_clutches_per_y &lt;dbl&gt;, adult_body_mass_g &lt;dbl&gt;,
+## #   maximum_longevity_y &lt;dbl&gt;, gestation_d &lt;dbl&gt;, weaning_d &lt;dbl&gt;,
+## #   birth_or_hatching_weight_g &lt;dbl&gt;, weaning_weight_g &lt;dbl&gt;, egg_mass_g &lt;dbl&gt;,
+## #   incubation_d &lt;dbl&gt;, fledging_age_d &lt;dbl&gt;, longevity_y &lt;dbl&gt;,
+## #   male_maturity_d &lt;dbl&gt;, inter_litter_or_interbirth_interval_y &lt;dbl&gt;, …</code></pre>
 </div>
 </div>
 <div id="push-your-final-code-to-github" class="section level2">

@@ -458,7 +458,8 @@ amniota %>%
 
 
 ```r
-amniota <- read_csv("/Users/catrinelberevoescu/Desktop/BIS15W2024_cberevoescu/lab8/data/amniota.csv", na= c("NA", " ", ".", "-999", "-999.0", "-999.00", "-999.000", "-999.0000", "-999.00000")) %>% clean_names()
+z <- c("NA", " ", ".", "-999", "-999.0", "-999.00", "-999.000", "-999.0000", "-999.00000")
+amniota <- read_csv("/Users/catrinelberevoescu/Desktop/BIS15W2024_cberevoescu/lab8/data/amniota.csv", na = z)
 ```
 
 ```
@@ -478,6 +479,10 @@ amniota <- read_csv("/Users/catrinelberevoescu/Desktop/BIS15W2024_cberevoescu/la
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+```
+
+```r
+amniota <- clean_names(amniota)
 ```
 
 
@@ -675,9 +680,11 @@ amphibio %>%
 
 ### 10. Now that we know how NA's are represented in the `amniota` data, how would you load the data such that the values which represent NA's are automatically converted?     
 
+Loading the data such that the values that represent NA's are automatically converted (nuclear option):     
+
 
 ```r
-amniota <- read_csv("/Users/catrinelberevoescu/Desktop/BIS15W2024_cberevoescu/lab8/data/amniota.csv", na= c("NA", " ", ".", "-999", "-999.0", "-999.00", "-999.000", "-999.0000", "-999.00000")) %>% clean_names()
+read_csv(file = "/Users/catrinelberevoescu/Desktop/BIS15W2024_cberevoescu/lab8/data/amniota.csv", na = c("NA", " ", ".", "-999", "-999.0", "-999.00", "-999.000", "-999.0000", "-999.00000"), show_col_types = FALSE) %>% clean_names()
 ```
 
 ```
@@ -688,15 +695,26 @@ amniota <- read_csv("/Users/catrinelberevoescu/Desktop/BIS15W2024_cberevoescu/la
 ```
 
 ```
-## Rows: 21322 Columns: 36
-## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: ","
-## chr  (6): class, order, family, genus, species, common_name
-## dbl (28): female_maturity_d, litter_or_clutch_size_n, litters_or_clutches_pe...
-## lgl  (2): subspecies, female_body_mass_at_maturity_g
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+## # A tibble: 21,322 × 36
+##    class order     family genus species subspecies common_name female_maturity_d
+##    <chr> <chr>     <chr>  <chr> <chr>   <lgl>      <chr>                   <dbl>
+##  1 Aves  Accipitr… Accip… Acci… albogu… NA         Pied Gosha…               NA 
+##  2 Aves  Accipitr… Accip… Acci… badius  NA         Shikra                   363.
+##  3 Aves  Accipitr… Accip… Acci… bicolor NA         Bicolored …               NA 
+##  4 Aves  Accipitr… Accip… Acci… brachy… NA         New Britai…               NA 
+##  5 Aves  Accipitr… Accip… Acci… brevip… NA         Levant Spa…              363.
+##  6 Aves  Accipitr… Accip… Acci… castan… NA         Chestnut-f…               NA 
+##  7 Aves  Accipitr… Accip… Acci… chilen… NA         Chilean Ha…               NA 
+##  8 Aves  Accipitr… Accip… Acci… chiono… NA         White-brea…              548.
+##  9 Aves  Accipitr… Accip… Acci… cirroc… NA         Collared S…               NA 
+## 10 Aves  Accipitr… Accip… Acci… cooper… NA         Cooper's H…              730 
+## # ℹ 21,312 more rows
+## # ℹ 28 more variables: litter_or_clutch_size_n <dbl>,
+## #   litters_or_clutches_per_y <dbl>, adult_body_mass_g <dbl>,
+## #   maximum_longevity_y <dbl>, gestation_d <dbl>, weaning_d <dbl>,
+## #   birth_or_hatching_weight_g <dbl>, weaning_weight_g <dbl>, egg_mass_g <dbl>,
+## #   incubation_d <dbl>, fledging_age_d <dbl>, longevity_y <dbl>,
+## #   male_maturity_d <dbl>, inter_litter_or_interbirth_interval_y <dbl>, …
 ```
 
 ## Push your final code to GitHub!
