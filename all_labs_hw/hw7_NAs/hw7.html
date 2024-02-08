@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Your Name Here" />
+<meta name="author" content="Catrinel Berevoescu" />
 
 <meta name="date" content="2024-02-08" />
 
@@ -375,7 +375,7 @@ display: none;
 
 
 <h1 class="title toc-ignore">Homework 7</h1>
-<h4 class="author">Your Name Here</h4>
+<h4 class="author">Catrinel Berevoescu</h4>
 <h4 class="date">2024-02-08</h4>
 
 </div>
@@ -401,50 +401,596 @@ library(naniar)</code></pre>
 </div>
 <div id="data" class="section level2">
 <h2>Data</h2>
-<p><strong>1. For this homework, we will use two different data sets.
-Please load <code>amniota</code> and <code>amphibio</code>.</strong></p>
+<div id="for-this-homework-we-will-use-two-different-data-sets.-please-load-amniota-and-amphibio." class="section level3">
+<h3>1. For this homework, we will use two different data sets. Please
+load <code>amniota</code> and <code>amphibio</code>.</h3>
 <p><code>amniota</code> data:<br />
 Myhrvold N, Baldridge E, Chan B, Sivam D, Freeman DL, Ernest SKM (2015).
 “An amniote life-history database to perform comparative analyses with
 birds, mammals, and reptiles.” <em>Ecology</em>, <em>96</em>, 3109. doi:
 10.1890/15-0846.1 (URL: <a href="https://doi.org/10.1890/15-0846.1" class="uri">https://doi.org/10.1890/15-0846.1</a>).</p>
+<pre class="r"><code>amniota &lt;- read_csv(&quot;/Users/catrinelberevoescu/Desktop/BIS15W2024_cberevoescu/lab8/data/amniota.csv&quot;) %&gt;% clean_names()</code></pre>
+<pre><code>## Rows: 21322 Columns: 36
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr  (6): class, order, family, genus, species, common_name
+## dbl (30): subspecies, female_maturity_d, litter_or_clutch_size_n, litters_or...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <p><code>amphibio</code> data:<br />
 Oliveira BF, São-Pedro VA, Santos-Barrera G, Penone C, Costa GC (2017).
 “AmphiBIO, a global database for amphibian ecological traits.”
 <em>Scientific Data</em>, <em>4</em>, 170123. doi:
 10.1038/sdata.2017.123 (URL: <a href="https://doi.org/10.1038/sdata.2017.123" class="uri">https://doi.org/10.1038/sdata.2017.123</a>).</p>
+<pre class="r"><code>amphibio &lt;- read_csv(&quot;/Users/catrinelberevoescu/Desktop/BIS15W2024_cberevoescu/lab8/data/amphibio.csv&quot;) %&gt;% clean_names()</code></pre>
+<pre><code>## Rows: 6776 Columns: 38
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr  (6): id, Order, Family, Genus, Species, OBS
+## dbl (31): Fos, Ter, Aqu, Arb, Leaves, Flowers, Seeds, Arthro, Vert, Diu, Noc...
+## lgl  (1): Fruits
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
 </div>
 <div id="questions" class="section level2">
 <h2>Questions</h2>
-<p><strong>2. Do some exploratory analysis of the <code>amniota</code>
-data set. Use the function(s) of your choice. Try to get an idea of how
-NA’s are represented in the data.</strong></p>
-<p><strong>3. Do some exploratory analysis of the <code>amphibio</code>
-data set. Use the function(s) of your choice. Try to get an idea of how
-NA’s are represented in the data.</strong></p>
-<p><strong>4. How many total NA’s are in each data set? Do these values
-make sense? Are NA’s represented by values?</strong></p>
-<p><strong>5. Make any necessary replacements in the data such that all
-NA’s appear as “NA”.</strong></p>
-<p><strong>6. Use the package <code>naniar</code> to produce a summary,
+<div id="do-some-exploratory-analysis-of-the-amniota-data-set.-use-the-functions-of-your-choice.-try-to-get-an-idea-of-how-nas-are-represented-in-the-data." class="section level3">
+<h3>2. Do some exploratory analysis of the <code>amniota</code> data
+set. Use the function(s) of your choice. Try to get an idea of how NA’s
+are represented in the data.</h3>
+<pre class="r"><code>glimpse(amniota)</code></pre>
+<pre><code>## Rows: 21,322
+## Columns: 36
+## $ class                                 &lt;chr&gt; &quot;Aves&quot;, &quot;Aves&quot;, &quot;Aves&quot;, &quot;Aves&quot;, …
+## $ order                                 &lt;chr&gt; &quot;Accipitriformes&quot;, &quot;Accipitrifor…
+## $ family                                &lt;chr&gt; &quot;Accipitridae&quot;, &quot;Accipitridae&quot;, …
+## $ genus                                 &lt;chr&gt; &quot;Accipiter&quot;, &quot;Accipiter&quot;, &quot;Accip…
+## $ species                               &lt;chr&gt; &quot;albogularis&quot;, &quot;badius&quot;, &quot;bicolo…
+## $ subspecies                            &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ common_name                           &lt;chr&gt; &quot;Pied Goshawk&quot;, &quot;Shikra&quot;, &quot;Bicol…
+## $ female_maturity_d                     &lt;dbl&gt; -999.000, 363.468, -999.000, -99…
+## $ litter_or_clutch_size_n               &lt;dbl&gt; -999.000, 3.250, 2.700, -999.000…
+## $ litters_or_clutches_per_y             &lt;dbl&gt; -999, 1, -999, -999, 1, -999, -9…
+## $ adult_body_mass_g                     &lt;dbl&gt; 251.500, 140.000, 345.000, 142.0…
+## $ maximum_longevity_y                   &lt;dbl&gt; -999.00000, -999.00000, -999.000…
+## $ gestation_d                           &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ weaning_d                             &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ birth_or_hatching_weight_g            &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ weaning_weight_g                      &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ egg_mass_g                            &lt;dbl&gt; -999.00, 21.00, 32.00, -999.00, …
+## $ incubation_d                          &lt;dbl&gt; -999.00, 30.00, -999.00, -999.00…
+## $ fledging_age_d                        &lt;dbl&gt; -999.00, 32.00, -999.00, -999.00…
+## $ longevity_y                           &lt;dbl&gt; -999.00000, -999.00000, -999.000…
+## $ male_maturity_d                       &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ inter_litter_or_interbirth_interval_y &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ female_body_mass_g                    &lt;dbl&gt; 352.500, 168.500, 390.000, -999.…
+## $ male_body_mass_g                      &lt;dbl&gt; 223.000, 125.000, 212.000, 142.0…
+## $ no_sex_body_mass_g                    &lt;dbl&gt; -999.0, 123.0, -999.0, -999.0, -…
+## $ egg_width_mm                          &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ egg_length_mm                         &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ fledging_mass_g                       &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ adult_svl_cm                          &lt;dbl&gt; -999.00, 30.00, 39.50, -999.00, …
+## $ male_svl_cm                           &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ female_svl_cm                         &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ birth_or_hatching_svl_cm              &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ female_svl_at_maturity_cm             &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ female_body_mass_at_maturity_g        &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ no_sex_svl_cm                         &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ no_sex_maturity_d                     &lt;dbl&gt; -999, -999, -999, -999, -999, -9…</code></pre>
+<p>How Many NA’s are Represented in Amniota:</p>
+<pre class="r"><code>miss_var_summary(amniota)</code></pre>
+<pre><code>## # A tibble: 36 × 3
+##    variable                  n_miss pct_miss
+##    &lt;chr&gt;                      &lt;int&gt;    &lt;dbl&gt;
+##  1 class                          0        0
+##  2 order                          0        0
+##  3 family                         0        0
+##  4 genus                          0        0
+##  5 species                        0        0
+##  6 subspecies                     0        0
+##  7 common_name                    0        0
+##  8 female_maturity_d              0        0
+##  9 litter_or_clutch_size_n        0        0
+## 10 litters_or_clutches_per_y      0        0
+## # ℹ 26 more rows</code></pre>
+</div>
+<div id="do-some-exploratory-analysis-of-the-amphibio-data-set.-use-the-functions-of-your-choice.-try-to-get-an-idea-of-how-nas-are-represented-in-the-data." class="section level3">
+<h3>3. Do some exploratory analysis of the <code>amphibio</code> data
+set. Use the function(s) of your choice. Try to get an idea of how NA’s
+are represented in the data.</h3>
+<pre class="r"><code>glimpse(amphibio)</code></pre>
+<pre><code>## Rows: 6,776
+## Columns: 38
+## $ id                      &lt;chr&gt; &quot;Anf0001&quot;, &quot;Anf0002&quot;, &quot;Anf0003&quot;, &quot;Anf0004&quot;, &quot;A…
+## $ order                   &lt;chr&gt; &quot;Anura&quot;, &quot;Anura&quot;, &quot;Anura&quot;, &quot;Anura&quot;, &quot;Anura&quot;, &quot;…
+## $ family                  &lt;chr&gt; &quot;Allophrynidae&quot;, &quot;Alytidae&quot;, &quot;Alytidae&quot;, &quot;Alyt…
+## $ genus                   &lt;chr&gt; &quot;Allophryne&quot;, &quot;Alytes&quot;, &quot;Alytes&quot;, &quot;Alytes&quot;, &quot;A…
+## $ species                 &lt;chr&gt; &quot;Allophryne ruthveni&quot;, &quot;Alytes cisternasii&quot;, &quot;…
+## $ fos                     &lt;dbl&gt; NA, NA, NA, NA, NA, 1, 1, 1, 1, 1, 1, 1, 1, NA…
+## $ ter                     &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+## $ aqu                     &lt;dbl&gt; 1, 1, 1, 1, NA, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+## $ arb                     &lt;dbl&gt; 1, 1, 1, 1, 1, 1, NA, NA, NA, NA, NA, NA, NA, …
+## $ leaves                  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ flowers                 &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ seeds                   &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ fruits                  &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ arthro                  &lt;dbl&gt; 1, 1, 1, NA, 1, 1, 1, 1, 1, NA, 1, 1, NA, NA, …
+## $ vert                    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, 1, NA, NA, NA, 1, 1, N…
+## $ diu                     &lt;dbl&gt; 1, NA, NA, NA, NA, NA, 1, 1, 1, NA, 1, 1, NA, …
+## $ noc                     &lt;dbl&gt; 1, 1, 1, NA, 1, 1, 1, 1, 1, NA, 1, 1, 1, NA, N…
+## $ crepu                   &lt;dbl&gt; 1, NA, NA, NA, NA, 1, NA, NA, NA, NA, NA, NA, …
+## $ wet_warm                &lt;dbl&gt; NA, NA, NA, NA, 1, 1, NA, NA, NA, NA, 1, NA, N…
+## $ wet_cold                &lt;dbl&gt; 1, NA, NA, NA, NA, NA, 1, NA, NA, NA, NA, NA, …
+## $ dry_warm                &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ dry_cold                &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ body_mass_g             &lt;dbl&gt; 31.00, 6.10, NA, NA, 2.31, 13.40, 21.80, NA, N…
+## $ age_at_maturity_min_y   &lt;dbl&gt; NA, 2.0, 2.0, NA, 3.0, 2.0, 3.0, NA, NA, NA, 4…
+## $ age_at_maturity_max_y   &lt;dbl&gt; NA, 2.0, 2.0, NA, 3.0, 3.0, 5.0, NA, NA, NA, 4…
+## $ body_size_mm            &lt;dbl&gt; 31.0, 50.0, 55.0, NA, 40.0, 55.0, 80.0, 60.0, …
+## $ size_at_maturity_min_mm &lt;dbl&gt; NA, 27, NA, NA, NA, 35, NA, NA, NA, NA, NA, NA…
+## $ size_at_maturity_max_mm &lt;dbl&gt; NA, 36.0, NA, NA, NA, 40.5, NA, NA, NA, NA, NA…
+## $ longevity_max_y         &lt;dbl&gt; NA, 6, NA, NA, NA, 7, 9, NA, NA, NA, NA, NA, N…
+## $ litter_size_min_n       &lt;dbl&gt; 300, 60, 40, NA, 7, 53, 300, 1500, 1000, NA, 2…
+## $ litter_size_max_n       &lt;dbl&gt; 300, 180, 40, NA, 20, 171, 1500, 1500, 1000, N…
+## $ reproductive_output_y   &lt;dbl&gt; 1, 4, 1, 4, 1, 4, 6, 1, 1, 1, 1, 1, 1, 1, NA, …
+## $ offspring_size_min_mm   &lt;dbl&gt; NA, 2.6, NA, NA, 5.4, 2.6, 1.5, NA, 1.5, NA, 1…
+## $ offspring_size_max_mm   &lt;dbl&gt; NA, 3.5, NA, NA, 7.0, 5.0, 2.0, NA, 1.5, NA, 1…
+## $ dir                     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, N…
+## $ lar                     &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, N…
+## $ viv                     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, N…
+## $ obs                     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</code></pre>
+<p>How Many NA’s are Represented in Amphibio:</p>
+<pre class="r"><code>miss_var_summary(amphibio)</code></pre>
+<pre><code>## # A tibble: 38 × 3
+##    variable n_miss pct_miss
+##    &lt;chr&gt;     &lt;int&gt;    &lt;dbl&gt;
+##  1 fruits     6774    100. 
+##  2 flowers    6772     99.9
+##  3 seeds      6772     99.9
+##  4 leaves     6752     99.6
+##  5 dry_cold   6735     99.4
+##  6 vert       6657     98.2
+##  7 obs        6651     98.2
+##  8 wet_cold   6625     97.8
+##  9 crepu      6608     97.5
+## 10 dry_warm   6572     97.0
+## # ℹ 28 more rows</code></pre>
+</div>
+<div id="how-many-total-nas-are-in-each-data-set-do-these-values-make-sense-are-nas-represented-by-values" class="section level3">
+<h3>4. How many total NA’s are in each data set? Do these values make
+sense? Are NA’s represented by values?</h3>
+<p>Amniota Data Set:</p>
+<pre class="r"><code>amniota %&gt;% 
+  summarise(total_na = sum(is.na(.))) #total NAs</code></pre>
+<pre><code>## # A tibble: 1 × 1
+##   total_na
+##      &lt;int&gt;
+## 1        0</code></pre>
+<div id="there-are-no-nas-in-the-amniota-data-set.-the-fact-that-there-are-no-nas-in-the-amniota-data-set-does-not-make-sense.-when-using-the-summary-function-below-it-does-seem-that-there-are-nas-represented-by-values--999--999.0--999.000" class="section level4">
+<h4>There are NO NAs in the Amniota data set. The fact that there are NO
+NAs in the Amniota data set does NOT make sense. When using the
+summary() function (below), it DOES seem that there are NA’s represented
+by values (-999, -999.0, -999.000):</h4>
+<pre class="r"><code>summary(amniota)</code></pre>
+<pre><code>##     class              order              family             genus          
+##  Length:21322       Length:21322       Length:21322       Length:21322      
+##  Class :character   Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+##                                                                             
+##                                                                             
+##                                                                             
+##    species            subspecies   common_name        female_maturity_d 
+##  Length:21322       Min.   :-999   Length:21322       Min.   :-30258.7  
+##  Class :character   1st Qu.:-999   Class :character   1st Qu.:  -999.0  
+##  Mode  :character   Median :-999   Mode  :character   Median :  -999.0  
+##                     Mean   :-999                      Mean   :  -723.7  
+##                     3rd Qu.:-999                      3rd Qu.:  -999.0  
+##                     Max.   :-999                      Max.   :  9131.2  
+##  litter_or_clutch_size_n litters_or_clutches_per_y adult_body_mass_g  
+##  Min.   :-999.000        Min.   :-999.0            Min.   :     -999  
+##  1st Qu.:-999.000        1st Qu.:-999.0            1st Qu.:        4  
+##  Median :   1.692        Median :-999.0            Median :       24  
+##  Mean   :-383.909        Mean   :-766.8            Mean   :    29107  
+##  3rd Qu.:   3.200        3rd Qu.:-999.0            3rd Qu.:      135  
+##  Max.   : 156.000        Max.   :  52.0            Max.   :149000000  
+##  maximum_longevity_y  gestation_d       weaning_d     
+##  Min.   :-999.000    Min.   :-999.0   Min.   :-999.0  
+##  1st Qu.:-999.000    1st Qu.:-999.0   1st Qu.:-999.0  
+##  Median :-999.000    Median :-999.0   Median :-999.0  
+##  Mean   :-737.061    Mean   :-874.9   Mean   :-892.4  
+##  3rd Qu.:   1.083    3rd Qu.:-999.0   3rd Qu.:-999.0  
+##  Max.   : 211.000    Max.   :7396.9   Max.   :1826.2  
+##  birth_or_hatching_weight_g weaning_weight_g     egg_mass_g     
+##  Min.   :   -999.0          Min.   :    -999   Min.   :-999.00  
+##  1st Qu.:   -999.0          1st Qu.:    -999   1st Qu.:-999.00  
+##  Median :   -999.0          Median :    -999   Median :-999.00  
+##  Mean   :    -88.6          Mean   :    1116   Mean   :-739.64  
+##  3rd Qu.:   -999.0          3rd Qu.:    -999   3rd Qu.:   0.56  
+##  Max.   :2250000.0          Max.   :17000000   Max.   :1500.00  
+##   incubation_d    fledging_age_d    longevity_y       male_maturity_d 
+##  Min.   :-999.0   Min.   :-999.0   Min.   :-999.000   Min.   :-999.0  
+##  1st Qu.:-999.0   1st Qu.:-999.0   1st Qu.:-999.000   1st Qu.:-999.0  
+##  Median :-999.0   Median :-999.0   Median :-999.000   Median :-999.0  
+##  Mean   :-820.5   Mean   :-909.4   Mean   :-737.821   Mean   :-827.8  
+##  3rd Qu.:-999.0   3rd Qu.:-999.0   3rd Qu.:   1.042   3rd Qu.:-999.0  
+##  Max.   :1762.0   Max.   : 345.0   Max.   : 177.000   Max.   :9131.2  
+##  inter_litter_or_interbirth_interval_y female_body_mass_g male_body_mass_g 
+##  Min.   :-999.000                      Min.   :   -999    Min.   :   -999  
+##  1st Qu.:-999.000                      1st Qu.:   -999    1st Qu.:   -999  
+##  Median :-999.000                      Median :   -999    Median :   -999  
+##  Mean   :-932.502                      Mean   :     41    Mean   :   1243  
+##  3rd Qu.:-999.000                      3rd Qu.:     14    3rd Qu.:     13  
+##  Max.   :   4.847                      Max.   :3700000    Max.   :4545000  
+##  no_sex_body_mass_g   egg_width_mm    egg_length_mm    fledging_mass_g 
+##  Min.   :     -999   Min.   :-999.0   Min.   :-999.0   Min.   :-999.0  
+##  1st Qu.:     -999   1st Qu.:-999.0   1st Qu.:-999.0   1st Qu.:-999.0  
+##  Median :     -999   Median :-999.0   Median :-999.0   Median :-999.0  
+##  Mean   :    30689   Mean   :-970.5   Mean   :-968.9   Mean   :-984.6  
+##  3rd Qu.:       28   3rd Qu.:-999.0   3rd Qu.:-999.0   3rd Qu.:-999.0  
+##  Max.   :136000000   Max.   : 125.0   Max.   : 455.0   Max.   :9992.0  
+##   adult_svl_cm     male_svl_cm     female_svl_cm    birth_or_hatching_svl_cm
+##  Min.   :-999.0   Min.   :-999.0   Min.   :-999.0   Min.   :-999.0          
+##  1st Qu.:-999.0   1st Qu.:-999.0   1st Qu.:-999.0   1st Qu.:-999.0          
+##  Median :-999.0   Median :-999.0   Median :-999.0   Median :-999.0          
+##  Mean   :-656.2   Mean   :-985.1   Mean   :-947.4   Mean   :-940.3          
+##  3rd Qu.:   9.5   3rd Qu.:-999.0   3rd Qu.:-999.0   3rd Qu.:-999.0          
+##  Max.   :3049.0   Max.   : 315.2   Max.   :1125.0   Max.   : 760.0          
+##  female_svl_at_maturity_cm female_body_mass_at_maturity_g no_sex_svl_cm   
+##  Min.   :-999.0            Min.   :  -999.0               Min.   :-999.0  
+##  1st Qu.:-999.0            1st Qu.:  -999.0               1st Qu.:-999.0  
+##  Median :-999.0            Median :  -999.0               Median :-999.0  
+##  Mean   :-989.4            Mean   :  -980.6               Mean   :-747.1  
+##  3rd Qu.:-999.0            3rd Qu.:  -999.0               3rd Qu.:-999.0  
+##  Max.   : 580.0            Max.   :194000.0               Max.   :3300.0  
+##  no_sex_maturity_d
+##  Min.   : -999.0  
+##  1st Qu.: -999.0  
+##  Median : -999.0  
+##  Mean   : -942.6  
+##  3rd Qu.: -999.0  
+##  Max.   :14610.0</code></pre>
+<p>Amphibio Data Set:</p>
+<pre class="r"><code>amphibio %&gt;% 
+  summarise(total_na = sum(is.na(.)))</code></pre>
+<pre><code>## # A tibble: 1 × 1
+##   total_na
+##      &lt;int&gt;
+## 1   170566</code></pre>
+</div>
+<div id="there-are-are-nas-in-the-amphibio-data-set-170566-in-total.-the-fact-that-there-are-nas-in-the-amphibio-data-set-does-make-sense.-when-using-the-summary-function-below-it-does-not-seem-that-there-are-nas-represented-by-values" class="section level4">
+<h4>There are ARE NAs in the Amphibio data set, 170566 in total. The
+fact that there are NAs in the Amphibio data set does make sense. When
+using the summary() function (below), it does NOT seem that there are
+NA’s represented by values:</h4>
+<pre class="r"><code>summary(amphibio)</code></pre>
+<pre><code>##       id               order              family             genus          
+##  Length:6776        Length:6776        Length:6776        Length:6776       
+##  Class :character   Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+##                                                                             
+##                                                                             
+##                                                                             
+##                                                                             
+##    species               fos            ter            aqu            arb      
+##  Length:6776        Min.   :1      Min.   :1      Min.   :1      Min.   :1     
+##  Class :character   1st Qu.:1      1st Qu.:1      1st Qu.:1      1st Qu.:1     
+##  Mode  :character   Median :1      Median :1      Median :1      Median :1     
+##                     Mean   :1      Mean   :1      Mean   :1      Mean   :1     
+##                     3rd Qu.:1      3rd Qu.:1      3rd Qu.:1      3rd Qu.:1     
+##                     Max.   :1      Max.   :1      Max.   :1      Max.   :1     
+##                     NA&#39;s   :6053   NA&#39;s   :1104   NA&#39;s   :2810   NA&#39;s   :4347  
+##      leaves        flowers         seeds       fruits            arthro    
+##  Min.   :1      Min.   :1      Min.   :1      Mode:logical   Min.   :1     
+##  1st Qu.:1      1st Qu.:1      1st Qu.:1      TRUE:2         1st Qu.:1     
+##  Median :1      Median :1      Median :1      NA&#39;s:6774      Median :1     
+##  Mean   :1      Mean   :1      Mean   :1                     Mean   :1     
+##  3rd Qu.:1      3rd Qu.:1      3rd Qu.:1                     3rd Qu.:1     
+##  Max.   :1      Max.   :1      Max.   :1                     Max.   :1     
+##  NA&#39;s   :6752   NA&#39;s   :6772   NA&#39;s   :6772                  NA&#39;s   :5534  
+##       vert           diu            noc           crepu         wet_warm   
+##  Min.   :1      Min.   :1      Min.   :1      Min.   :1      Min.   :1     
+##  1st Qu.:1      1st Qu.:1      1st Qu.:1      1st Qu.:1      1st Qu.:1     
+##  Median :1      Median :1      Median :1      Median :1      Median :1     
+##  Mean   :1      Mean   :1      Mean   :1      Mean   :1      Mean   :1     
+##  3rd Qu.:1      3rd Qu.:1      3rd Qu.:1      3rd Qu.:1      3rd Qu.:1     
+##  Max.   :1      Max.   :1      Max.   :1      Max.   :1      Max.   :1     
+##  NA&#39;s   :6657   NA&#39;s   :5876   NA&#39;s   :5156   NA&#39;s   :6608   NA&#39;s   :5997  
+##     wet_cold       dry_warm       dry_cold     body_mass_g      
+##  Min.   :1      Min.   :1      Min.   :1      Min.   :    0.16  
+##  1st Qu.:1      1st Qu.:1      1st Qu.:1      1st Qu.:    2.60  
+##  Median :1      Median :1      Median :1      Median :    9.29  
+##  Mean   :1      Mean   :1      Mean   :1      Mean   :   94.56  
+##  3rd Qu.:1      3rd Qu.:1      3rd Qu.:1      3rd Qu.:   31.82  
+##  Max.   :1      Max.   :1      Max.   :1      Max.   :26000.00  
+##  NA&#39;s   :6625   NA&#39;s   :6572   NA&#39;s   :6735   NA&#39;s   :6185      
+##  age_at_maturity_min_y age_at_maturity_max_y  body_size_mm    
+##  Min.   :0.25          Min.   : 0.300        Min.   :   8.40  
+##  1st Qu.:1.00          1st Qu.: 2.000        1st Qu.:  29.00  
+##  Median :2.00          Median : 3.000        Median :  43.00  
+##  Mean   :2.14          Mean   : 2.964        Mean   :  66.65  
+##  3rd Qu.:3.00          3rd Qu.: 4.000        3rd Qu.:  69.15  
+##  Max.   :7.00          Max.   :12.000        Max.   :1520.00  
+##  NA&#39;s   :6392          NA&#39;s   :6392          NA&#39;s   :1549     
+##  size_at_maturity_min_mm size_at_maturity_max_mm longevity_max_y 
+##  Min.   :  8.80          Min.   : 10.10          Min.   :  0.17  
+##  1st Qu.: 27.50          1st Qu.: 32.00          1st Qu.:  6.00  
+##  Median : 43.00          Median : 50.00          Median : 10.00  
+##  Mean   : 56.63          Mean   : 67.46          Mean   : 11.68  
+##  3rd Qu.: 58.00          3rd Qu.: 75.50          3rd Qu.: 15.00  
+##  Max.   :350.00          Max.   :400.00          Max.   :121.80  
+##  NA&#39;s   :6529            NA&#39;s   :6528            NA&#39;s   :6417    
+##  litter_size_min_n litter_size_max_n reproductive_output_y
+##  Min.   :    1.0   Min.   :    1     Min.   : 0.080       
+##  1st Qu.:   18.0   1st Qu.:   30     1st Qu.: 1.000       
+##  Median :   80.0   Median :  186     Median : 1.000       
+##  Mean   :  530.9   Mean   : 1034     Mean   : 1.034       
+##  3rd Qu.:  300.0   3rd Qu.:  700     3rd Qu.: 1.000       
+##  Max.   :25000.0   Max.   :45054     Max.   :15.000       
+##  NA&#39;s   :5153      NA&#39;s   :5153      NA&#39;s   :2344         
+##  offspring_size_min_mm offspring_size_max_mm      dir              lar        
+##  Min.   : 0.200        Min.   : 0.400        Min.   :0.0000   Min.   :0.0000  
+##  1st Qu.: 1.400        1st Qu.: 1.600        1st Qu.:0.0000   1st Qu.:0.0000  
+##  Median : 2.000        Median : 2.300        Median :0.0000   Median :1.0000  
+##  Mean   : 2.455        Mean   : 2.857        Mean   :0.2984   Mean   :0.6921  
+##  3rd Qu.: 3.000        3rd Qu.: 3.500        3rd Qu.:1.0000   3rd Qu.:1.0000  
+##  Max.   :20.000        Max.   :25.000        Max.   :1.0000   Max.   :1.0000  
+##  NA&#39;s   :5446          NA&#39;s   :5446          NA&#39;s   :1079     NA&#39;s   :1079    
+##       viv             obs           
+##  Min.   :0.0000   Length:6776       
+##  1st Qu.:0.0000   Class :character  
+##  Median :0.0000   Mode  :character  
+##  Mean   :0.0095                     
+##  3rd Qu.:0.0000                     
+##  Max.   :1.0000                     
+##  NA&#39;s   :1079</code></pre>
+</div>
+</div>
+<div id="make-any-necessary-replacements-in-the-data-such-that-all-nas-appear-as-na." class="section level3">
+<h3>5. Make any necessary replacements in the data such that all NA’s
+appear as “NA”.</h3>
+<pre class="r"><code>amniota %&gt;% 
+        replace_with_na(replace = list(c(-999.0, -999.00, -999.000, -999.0000, -999.00000, -999)))</code></pre>
+<pre><code>## # A tibble: 21,322 × 36
+##    class order     family genus species subspecies common_name female_maturity_d
+##    &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt;                   &lt;dbl&gt;
+##  1 Aves  Accipitr… Accip… Acci… albogu…       -999 Pied Gosha…             -999 
+##  2 Aves  Accipitr… Accip… Acci… badius        -999 Shikra                   363.
+##  3 Aves  Accipitr… Accip… Acci… bicolor       -999 Bicolored …             -999 
+##  4 Aves  Accipitr… Accip… Acci… brachy…       -999 New Britai…             -999 
+##  5 Aves  Accipitr… Accip… Acci… brevip…       -999 Levant Spa…              363.
+##  6 Aves  Accipitr… Accip… Acci… castan…       -999 Chestnut-f…             -999 
+##  7 Aves  Accipitr… Accip… Acci… chilen…       -999 Chilean Ha…             -999 
+##  8 Aves  Accipitr… Accip… Acci… chiono…       -999 White-brea…              548.
+##  9 Aves  Accipitr… Accip… Acci… cirroc…       -999 Collared S…             -999 
+## 10 Aves  Accipitr… Accip… Acci… cooper…       -999 Cooper&#39;s H…              730 
+## # ℹ 21,312 more rows
+## # ℹ 28 more variables: litter_or_clutch_size_n &lt;dbl&gt;,
+## #   litters_or_clutches_per_y &lt;dbl&gt;, adult_body_mass_g &lt;dbl&gt;,
+## #   maximum_longevity_y &lt;dbl&gt;, gestation_d &lt;dbl&gt;, weaning_d &lt;dbl&gt;,
+## #   birth_or_hatching_weight_g &lt;dbl&gt;, weaning_weight_g &lt;dbl&gt;, egg_mass_g &lt;dbl&gt;,
+## #   incubation_d &lt;dbl&gt;, fledging_age_d &lt;dbl&gt;, longevity_y &lt;dbl&gt;,
+## #   male_maturity_d &lt;dbl&gt;, inter_litter_or_interbirth_interval_y &lt;dbl&gt;, …</code></pre>
+<pre class="r"><code>amniota &lt;- read_csv(&quot;/Users/catrinelberevoescu/Desktop/BIS15W2024_cberevoescu/lab8/data/amniota.csv&quot;, na= c(&quot;NA&quot;, &quot; &quot;, &quot;.&quot;, &quot;-999&quot;, &quot;-999.0&quot;, &quot;-999.00&quot;, &quot;-999.000&quot;, &quot;-999.0000&quot;, &quot;-999.00000&quot;)) %&gt;% clean_names()</code></pre>
+<pre><code>## Warning: One or more parsing issues, call `problems()` on your data frame for details,
+## e.g.:
+##   dat &lt;- vroom(...)
+##   problems(dat)</code></pre>
+<pre><code>## Rows: 21322 Columns: 36
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr  (6): class, order, family, genus, species, common_name
+## dbl (28): female_maturity_d, litter_or_clutch_size_n, litters_or_clutches_pe...
+## lgl  (2): subspecies, female_body_mass_at_maturity_g
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>summary(amniota)</code></pre>
+<pre><code>##     class              order              family             genus          
+##  Length:21322       Length:21322       Length:21322       Length:21322      
+##  Class :character   Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+##                                                                             
+##                                                                             
+##                                                                             
+##                                                                             
+##    species          subspecies     common_name        female_maturity_d 
+##  Length:21322       Mode:logical   Length:21322       Min.   :-30258.7  
+##  Class :character   NA&#39;s:21322     Class :character   1st Qu.:   288.4  
+##  Mode  :character                  Mode  :character   Median :   365.0  
+##                                                       Mean   :   691.2  
+##                                                       3rd Qu.:   819.3  
+##                                                       Max.   :  9131.2  
+##                                                       NA&#39;s   :17849     
+##  litter_or_clutch_size_n litters_or_clutches_per_y adult_body_mass_g  
+##  Min.   :  0.900         Min.   : 0.120            Min.   :        0  
+##  1st Qu.:  2.000         1st Qu.: 1.000            1st Qu.:       15  
+##  Median :  2.800         Median : 1.050            Median :       44  
+##  Mean   :  3.826         Mean   : 1.752            Mean   :    37493  
+##  3rd Qu.:  4.150         3rd Qu.: 2.000            3rd Qu.:      238  
+##  Max.   :156.000         Max.   :52.000            Max.   :149000000  
+##  NA&#39;s   :8244            NA&#39;s   :16374             NA&#39;s   :4645       
+##  maximum_longevity_y  gestation_d        weaning_d      
+##  Min.   :  0.083     Min.   :   5.00   Min.   :   1.94  
+##  1st Qu.:  6.000     1st Qu.:  29.91   1st Qu.:  27.75  
+##  Median : 12.308     Median :  63.92   Median :  51.60  
+##  Mean   : 16.466     Mean   : 105.28   Mean   : 113.05  
+##  3rd Qu.: 22.000     3rd Qu.: 151.88   3rd Qu.: 129.83  
+##  Max.   :211.000     Max.   :7396.92   Max.   :1826.25  
+##  NA&#39;s   :15822       NA&#39;s   :18926     NA&#39;s   :19279    
+##  birth_or_hatching_weight_g weaning_weight_g     egg_mass_g      
+##  Min.   :0.00e+00           Min.   :       1   Min.   :   0.218  
+##  1st Qu.:1.30e+00           1st Qu.:      13   1st Qu.:   2.100  
+##  Median :5.90e+00           Median :      43   Median :   5.100  
+##  Mean   :4.48e+03           Mean   :   41386   Mean   :  22.252  
+##  3rd Qu.:4.39e+01           3rd Qu.:     850   3rd Qu.:  20.100  
+##  Max.   :2.25e+06           Max.   :17000000   Max.   :1500.000  
+##  NA&#39;s   :17779              NA&#39;s   :20258      NA&#39;s   :15907     
+##   incubation_d     fledging_age_d   longevity_y      male_maturity_d  
+##  Min.   :   2.00   Min.   :  1.0   Min.   :  0.083   Min.   :  30.44  
+##  1st Qu.:  17.00   1st Qu.: 16.5   1st Qu.:  5.500   1st Qu.: 365.00  
+##  Median :  29.25   Median : 27.5   Median : 10.700   Median : 365.25  
+##  Mean   :  46.67   Mean   : 36.8   Mean   : 13.521   Mean   : 787.16  
+##  3rd Qu.:  59.50   3rd Qu.: 46.0   3rd Qu.: 18.200   3rd Qu.: 913.00  
+##  Max.   :1762.00   Max.   :345.0   Max.   :177.000   Max.   :9131.25  
+##  NA&#39;s   :17682     NA&#39;s   :19478   NA&#39;s   :15822     NA&#39;s   :19278    
+##  inter_litter_or_interbirth_interval_y female_body_mass_g male_body_mass_g 
+##  Min.   :0.047                         Min.   :      0    Min.   :      0  
+##  1st Qu.:0.318                         1st Qu.:     14    1st Qu.:     16  
+##  Median :0.999                         Median :     41    Median :     48  
+##  Mean   :0.907                         Mean   :   2076    Mean   :   6197  
+##  3rd Qu.:1.000                         3rd Qu.:    220    3rd Qu.:    246  
+##  Max.   :4.847                         Max.   :3700000    Max.   :4545000  
+##  NA&#39;s   :19904                         NA&#39;s   :14113      NA&#39;s   :14679    
+##  no_sex_body_mass_g   egg_width_mm    egg_length_mm    fledging_mass_g  
+##  Min.   :        0   Min.   :  2.50   Min.   :  2.50   Min.   :   4.85  
+##  1st Qu.:       13   1st Qu.:  8.00   1st Qu.: 10.94   1st Qu.:  14.60  
+##  Median :       35   Median : 13.00   Median : 19.98   Median :  24.80  
+##  Mean   :    68952   Mean   : 22.99   Mean   : 36.40   Mean   : 452.27  
+##  3rd Qu.:      164   3rd Qu.: 35.90   3rd Qu.: 58.92   3rd Qu.: 107.00  
+##  Max.   :136000000   Max.   :125.00   Max.   :455.00   Max.   :9992.00  
+##  NA&#39;s   :11663       NA&#39;s   :20727    NA&#39;s   :20702    NA&#39;s   :21111    
+##   adult_svl_cm      male_svl_cm     female_svl_cm      birth_or_hatching_svl_cm
+##  Min.   :   1.79   Min.   :  1.57   Min.   :   1.800   Min.   :  0.400         
+##  1st Qu.:   9.50   1st Qu.: 21.41   1st Qu.:   5.756   1st Qu.:  2.450         
+##  Median :  18.50   Median : 35.85   Median :   8.150   Median :  3.300         
+##  Mean   :  38.20   Mean   : 50.44   Mean   :  20.609   Mean   : 12.099         
+##  3rd Qu.:  40.50   3rd Qu.: 63.39   3rd Qu.:  17.721   3rd Qu.:  5.256         
+##  Max.   :3049.00   Max.   :315.20   Max.   :1125.000   Max.   :759.999         
+##  NA&#39;s   :14274     NA&#39;s   :21040    NA&#39;s   :20242      NA&#39;s   :20085           
+##  female_svl_at_maturity_cm female_body_mass_at_maturity_g no_sex_svl_cm   
+##  Min.   :  2.85            Mode:logical                   Min.   :   1.7  
+##  1st Qu.:  4.90            NA&#39;s:21322                     1st Qu.:   5.7  
+##  Median :  6.00                                           Median :   7.7  
+##  Mean   : 18.69                                           Mean   :  20.0  
+##  3rd Qu.:  8.40                                           3rd Qu.:  11.0  
+##  Max.   :580.00                                           Max.   :3300.0  
+##  NA&#39;s   :21120                                            NA&#39;s   :16052   
+##  no_sex_maturity_d
+##  Min.   :   33.0  
+##  1st Qu.:  365.3  
+##  Median :  913.1  
+##  Mean   : 1604.5  
+##  3rd Qu.: 2008.9  
+##  Max.   :14610.0  
+##  NA&#39;s   :20860</code></pre>
+</div>
+<div id="use-the-package-naniar-to-produce-a-summary-including-percentages-of-missing-data-in-each-column-for-the-amniota-data." class="section level3">
+<h3>6. Use the package <code>naniar</code> to produce a summary,
 including percentages, of missing data in each column for the
-<code>amniota</code> data.</strong></p>
-<p><strong>7. Use the package <code>naniar</code> to produce a summary,
+<code>amniota</code> data.</h3>
+<pre class="r"><code>miss_var_summary(amniota) #summary with percentages of missing data for each variable in amniota data</code></pre>
+<pre><code>## # A tibble: 36 × 3
+##    variable                       n_miss pct_miss
+##    &lt;chr&gt;                           &lt;int&gt;    &lt;dbl&gt;
+##  1 subspecies                      21322    100  
+##  2 female_body_mass_at_maturity_g  21322    100  
+##  3 female_svl_at_maturity_cm       21120     99.1
+##  4 fledging_mass_g                 21111     99.0
+##  5 male_svl_cm                     21040     98.7
+##  6 no_sex_maturity_d               20860     97.8
+##  7 egg_width_mm                    20727     97.2
+##  8 egg_length_mm                   20702     97.1
+##  9 weaning_weight_g                20258     95.0
+## 10 female_svl_cm                   20242     94.9
+## # ℹ 26 more rows</code></pre>
+</div>
+<div id="use-the-package-naniar-to-produce-a-summary-including-percentages-of-missing-data-in-each-column-for-the-amphibio-data." class="section level3">
+<h3>7. Use the package <code>naniar</code> to produce a summary,
 including percentages, of missing data in each column for the
-<code>amphibio</code> data.</strong></p>
-<p><strong>8. For the <code>amniota</code> data, calculate the number of
-NAs in the <code>egg_mass_g</code> column sorted by taxonomic class;
-i.e. how many NA’s are present in the <code>egg_mass_g</code> column in
-birds, mammals, and reptiles? Does this results make sense biologically?
-How do these results affect your interpretation of NA’s?</strong></p>
-<p><strong>9. The <code>amphibio</code> data have variables that
-classify species as fossorial (burrowing), terrestrial, aquatic, or
-arboreal.Calculate the number of NA’s in each of these variables. Do you
-think that the authors intend us to think that there are NA’s in these
-columns or could they represent something else? Explain.</strong></p>
-<p><strong>10. Now that we know how NA’s are represented in the
+<code>amphibio</code> data.</h3>
+<pre class="r"><code>miss_var_summary(amphibio) #summary with percentages of missing data for each variable in amphibio data</code></pre>
+<pre><code>## # A tibble: 38 × 3
+##    variable n_miss pct_miss
+##    &lt;chr&gt;     &lt;int&gt;    &lt;dbl&gt;
+##  1 fruits     6774    100. 
+##  2 flowers    6772     99.9
+##  3 seeds      6772     99.9
+##  4 leaves     6752     99.6
+##  5 dry_cold   6735     99.4
+##  6 vert       6657     98.2
+##  7 obs        6651     98.2
+##  8 wet_cold   6625     97.8
+##  9 crepu      6608     97.5
+## 10 dry_warm   6572     97.0
+## # ℹ 28 more rows</code></pre>
+</div>
+<div id="for-the-amniota-data-calculate-the-number-of-nas-in-the-egg_mass_g-column-sorted-by-taxonomic-class-i.e.-how-many-nas-are-present-in-the-egg_mass_g-column-in-birds-mammals-and-reptiles-does-this-results-make-sense-biologically-how-do-these-results-affect-your-interpretation-of-nas" class="section level3">
+<h3>8. For the <code>amniota</code> data, calculate the number of NAs in
+the <code>egg_mass_g</code> column sorted by taxonomic class; i.e. how
+many NA’s are present in the <code>egg_mass_g</code> column in birds,
+mammals, and reptiles? Does this results make sense biologically? How do
+these results affect your interpretation of NA’s?</h3>
+<pre class="r"><code>amniota %&gt;%
+  group_by(class) %&gt;%
+  select(class, egg_mass_g) %&gt;% 
+  miss_var_summary() %&gt;% 
+  arrange(desc(pct_miss))</code></pre>
+<pre><code>## # A tibble: 3 × 4
+## # Groups:   class [3]
+##   class    variable   n_miss pct_miss
+##   &lt;chr&gt;    &lt;chr&gt;       &lt;int&gt;    &lt;dbl&gt;
+## 1 Mammalia egg_mass_g   4953    100  
+## 2 Reptilia egg_mass_g   6040     92.0
+## 3 Aves     egg_mass_g   4914     50.1</code></pre>
+<div id="these-results-do-make-sense-biologically.-mammals-are-shown-to-have-100-missing-egg_mass_g-values-which-makes-sense-because-the-vast-majority-of-mammals-do-not-produce-eggs." class="section level4">
+<h4>These results DO make sense biologically. Mammals are shown to have
+100% missing <code>egg_mass_g values</code>, which makes sense because
+the vast majority of Mammals do not produce eggs.</h4>
+</div>
+<div id="these-results-indicate-that-some-of-the-nas-exist-because-of-biological-reasons-and-not-because-of-issues-with-measurement-taking---thus-changing-my-interpretation-of-some-of-the-nas." class="section level4">
+<h4>These results indicate that some of the NA’s exist because of
+biological reasons and not because of issues with measurement taking -
+thus changing my interpretation of some of the NA’s.</h4>
+</div>
+</div>
+<div id="the-amphibio-data-have-variables-that-classify-species-as-fossorial-burrowing-terrestrial-aquatic-or-arboreal.-calculate-the-number-of-nas-in-each-of-these-variables.-do-you-think-that-the-authors-intend-us-to-think-that-there-are-nas-in-these-columns-or-could-they-represent-something-else-explain." class="section level3">
+<h3>9. The <code>amphibio</code> data have variables that classify
+species as fossorial (burrowing), terrestrial, aquatic, or arboreal.
+Calculate the number of NA’s in each of these variables. Do you think
+that the authors intend us to think that there are NA’s in these columns
+or could they represent something else? Explain.</h3>
+<p>Calculating the number of NA’s in the fossorial (burrowing),
+terrestrial, aquatic, or arboreal variables:</p>
+<pre class="r"><code>amphibio %&gt;%
+  select(fos, ter, aqu, arb) %&gt;% 
+  miss_var_summary() %&gt;% 
+  arrange(desc(pct_miss))</code></pre>
+<pre><code>## # A tibble: 4 × 3
+##   variable n_miss pct_miss
+##   &lt;chr&gt;     &lt;int&gt;    &lt;dbl&gt;
+## 1 fos        6053     89.3
+## 2 arb        4347     64.2
+## 3 aqu        2810     41.5
+## 4 ter        1104     16.3</code></pre>
+<div id="since-these-variables-are-used-to-categorize-the-species-i-believe-that-the-authors-intended-to-indicate-which-categories-that-a-certain-species-is-part-of-1-or-not-na.-the-nas-represent-that-the-species-is-not-part-of-that-variables-category." class="section level4">
+<h4>Since these variables are used to categorize the species, I believe
+that the authors intended to indicate which categories that a certain
+species is part of (1) OR not (NA). The NA’s represent that the species
+is NOT part of that variable’s category.</h4>
+</div>
+</div>
+<div id="now-that-we-know-how-nas-are-represented-in-the-amniota-data-how-would-you-load-the-data-such-that-the-values-which-represent-nas-are-automatically-converted" class="section level3">
+<h3>10. Now that we know how NA’s are represented in the
 <code>amniota</code> data, how would you load the data such that the
-values which represent NA’s are automatically converted?</strong></p>
+values which represent NA’s are automatically converted?</h3>
+<pre class="r"><code>amniota &lt;- read_csv(&quot;/Users/catrinelberevoescu/Desktop/BIS15W2024_cberevoescu/lab8/data/amniota.csv&quot;, na= c(&quot;NA&quot;, &quot; &quot;, &quot;.&quot;, &quot;-999&quot;, &quot;-999.0&quot;, &quot;-999.00&quot;, &quot;-999.000&quot;, &quot;-999.0000&quot;, &quot;-999.00000&quot;)) %&gt;% clean_names()</code></pre>
+<pre><code>## Warning: One or more parsing issues, call `problems()` on your data frame for details,
+## e.g.:
+##   dat &lt;- vroom(...)
+##   problems(dat)</code></pre>
+<pre><code>## Rows: 21322 Columns: 36
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr  (6): class, order, family, genus, species, common_name
+## dbl (28): female_maturity_d, litter_or_clutch_size_n, litters_or_clutches_pe...
+## lgl  (2): subspecies, female_body_mass_at_maturity_g
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
 </div>
 <div id="push-your-final-code-to-github" class="section level2">
 <h2>Push your final code to GitHub!</h2>
