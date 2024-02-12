@@ -11,7 +11,7 @@
 
 <meta name="author" content="Catrinel Berevoescu" />
 
-<meta name="date" content="2024-02-08" />
+<meta name="date" content="2024-02-11" />
 
 <title>Homework 7</title>
 
@@ -376,7 +376,7 @@ display: none;
 
 <h1 class="title toc-ignore">Homework 7</h1>
 <h4 class="author">Catrinel Berevoescu</h4>
-<h4 class="date">2024-02-08</h4>
+<h4 class="date">2024-02-11</h4>
 
 </div>
 
@@ -1174,7 +1174,8 @@ is NOT part of that variable’s category.</h4>
 values which represent NA’s are automatically converted?</h3>
 <p>Loading the data such that the values that represent NA’s are
 automatically converted (nuclear option):</p>
-<pre class="r"><code>amniota_new &lt;- read_csv(&quot;data/amniota.csv&quot;, na = c(&quot;-999&quot;))  %&gt;% clean_names()</code></pre>
+<pre class="r"><code>amniota_new &lt;- read_csv(file = &quot;data/amniota.csv&quot;, na=c(&quot;-999&quot;)) %&gt;% 
+  clean_names()</code></pre>
 <pre><code>## Warning: One or more parsing issues, call `problems()` on your data frame for details,
 ## e.g.:
 ##   dat &lt;- vroom(...)

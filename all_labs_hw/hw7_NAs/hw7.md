@@ -1,7 +1,7 @@
 ---
 title: "Homework 7"
 author: "Catrinel Berevoescu"
-date: "2024-02-08"
+date: "2024-02-11"
 output:
   html_document: 
     theme: spacelab
@@ -900,7 +900,8 @@ Loading the data such that the values that represent NA's are automatically conv
 
 
 ```r
-amniota_new <- read_csv("data/amniota.csv", na = c("-999"))  %>% clean_names()
+amniota_new <- read_csv(file = "data/amniota.csv", na=c("-999")) %>% 
+  clean_names()
 ```
 
 ```
@@ -921,6 +922,7 @@ amniota_new <- read_csv("data/amniota.csv", na = c("-999"))  %>% clean_names()
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 ```
+
 
 ```r
 amniota_new

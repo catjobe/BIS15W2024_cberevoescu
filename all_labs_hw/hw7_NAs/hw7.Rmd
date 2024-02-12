@@ -184,7 +184,11 @@ amphibio %>%
 Loading the data such that the values that represent NA's are automatically converted (nuclear option):     
 
 ```{r}
-amniota_new <- read_csv("data/amniota.csv", na = c("-999"))  %>% clean_names()
+amniota_new <- read_csv(file = "data/amniota.csv", na=c("-999")) %>% 
+  clean_names()
+```
+
+```{r}
 amniota_new
 ```
 
