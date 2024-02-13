@@ -1,7 +1,7 @@
 ---
 title: "Homework 7"
 author: "Catrinel Berevoescu"
-date: "2024-02-12"
+date: "2024-02-13"
 output:
   html_document: 
     theme: spacelab
@@ -625,7 +625,7 @@ amniota %>%
 ## 3 Aves     egg_mass_g   4914     50.1
 ```
 
-#### These results DO make some sense biologically. Mammals are shown to have 100% missing `egg_mass_g values`, which makes sense because the vast majority of Mammals do not produce eggs. The large number of NA's for the Aves (birds) and Reptilia (Reptiles) makes less sense biologically because most birds and many reptiles lay eggs.    
+#### These results make SOME sense biologically. Mammals are shown to have 100% missing `egg_mass_g values`, which DOES makes sense because the vast majority of Mammals do not lay eggs. The large number of NA's for the Aves (birds) and Reptilia (Reptiles) makes LESS sense biologically because most birds and many reptiles lay eggs.    
 #### These results indicate that some of the NA's exist because of biological reasons and not because of issues with measurement taking - thus changing my interpretation of some of the NA's.    
 
 ### 9. The `amphibio` data have variables that classify species as fossorial (burrowing), terrestrial, aquatic, or arboreal. Calculate the number of NA's in each of these variables. Do you think that the authors intend us to think that there are NA's in these columns or could they represent something else? Explain.     
