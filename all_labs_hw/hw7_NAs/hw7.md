@@ -121,9 +121,9 @@ glimpse(amniota)
 ## $ no_sex_maturity_d                     <dbl> -999, -999, -999, -999, -999, -9…
 ```
 
-#### NA's are represented in the data set amniota with the values -999, -999.0, -999.00, -999.000, -999.0000, -999.00000.    
+#### NA's are represented in the data set `amniota` with the values -999, -999.0, -999.00, -999.000, -999.0000, -999.00000.    
 
-How Many NA's are Represented in Amniota:    
+How Many NA's are Represented in `amniota`:    
 
 
 ```r
@@ -287,7 +287,7 @@ summary(amphibio) #this indicates that 0s COULD have been used as "NA's" for the
 
 #### There are no strange/outlandish values that could clearly have been used as placeholders for NA's in this dataset. It seems that NA's are represented by NA in the `amphibio` data set.    
 
-How Many NA's are Represented in Amphibio:    
+How Many NA's are Represented in `amphibio`:    
 
 
 ```r
@@ -313,7 +313,7 @@ miss_var_summary(amphibio)
 
 ### 4. How many total NA's are in each data set? Do these values make sense? Are NA's represented by values?    
 
-Amniota Data Set:   
+`amniota` Data Set:   
 
 
 ```r
@@ -328,7 +328,7 @@ amniota %>%
 ## 1        0
 ```
 
-#### There are NO NAs in the Amniota data set. The fact that there are NO NAs in the Amniota data set does NOT make sense. When using the summary() function (below), it DOES seem that there are NA's represented by values (-999, -999.0, -999.000):    
+#### There are NO NAs in the `amniota` data set. The fact that there are NO NAs in the `amniota` data set does NOT make sense. When using the summary() function (below), it DOES seem that there are NA's represented by values (-999, -999.0, -999.000):    
 
 
 ```r
@@ -415,7 +415,7 @@ summary(amniota)
 ##  Max.   :14610.0
 ```
 
-Amphibio Data Set:   
+`amphibio` Data Set:   
 
 
 ```r
@@ -430,7 +430,7 @@ amphibio %>%
 ## 1   170566
 ```
 
-#### There are ARE NAs in the Amphibio data set, 170566 in total. The fact that there are NAs in the Amphibio data set does make sense. When using the summary() function (below), it does NOT seem that there are NA's represented by placeholder values:    
+#### There are ARE NAs in the `amphibio` data set, 170566 in total. The fact that there are NAs in the `amphibio` data set does make sense. When using the summary() function (below), it does NOT seem that there are NA's represented by placeholder values:    
 
 
 ```r
@@ -522,7 +522,7 @@ summary(amphibio)
 
 ### 5. Make any necessary replacements in the data such that all NA's appear as "NA".  
 
-Amniota Data Set:    
+`amniota` Data Set:    
 
 
 ```r
@@ -554,7 +554,7 @@ amniota
 ## #   male_maturity_d <dbl>, inter_litter_or_interbirth_interval_y <dbl>, …
 ```
 
-#### I determined that there are no clear placeholder values for NA's in the Amphibio data set - it seems that all the NA's are already represented by NA's.    
+#### I determined that there are no clear placeholder values for NA's in the `amphibio` data set - it seems that all the NA's are already represented by NA's.    
 
 ### 6. Use the package `naniar` to produce a summary, including percentages, of missing data in each column for the `amniota` data.  
 

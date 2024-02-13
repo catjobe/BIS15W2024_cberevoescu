@@ -481,9 +481,9 @@ are represented in the data.</h3>
 ## $ no_sex_svl_cm                         &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
 ## $ no_sex_maturity_d                     &lt;dbl&gt; -999, -999, -999, -999, -999, -9…</code></pre>
 <div id="nas-are-represented-in-the-data-set-amniota-with-the-values--999--999.0--999.00--999.000--999.0000--999.00000." class="section level4">
-<h4>NA’s are represented in the data set amniota with the values -999,
--999.0, -999.00, -999.000, -999.0000, -999.00000.</h4>
-<p>How Many NA’s are Represented in Amniota:</p>
+<h4>NA’s are represented in the data set <code>amniota</code> with the
+values -999, -999.0, -999.00, -999.000, -999.0000, -999.00000.</h4>
+<p>How Many NA’s are Represented in <code>amniota</code>:</p>
 <pre class="r"><code>miss_var_summary(amniota)</code></pre>
 <pre><code>## # A tibble: 36 × 3
 ##    variable                  n_miss pct_miss
@@ -631,7 +631,7 @@ are represented in the data.</h3>
 <h4>There are no strange/outlandish values that could clearly have been
 used as placeholders for NA’s in this dataset. It seems that NA’s are
 represented by NA in the <code>amphibio</code> data set.</h4>
-<p>How Many NA’s are Represented in Amphibio:</p>
+<p>How Many NA’s are Represented in <code>amphibio</code>:</p>
 <pre class="r"><code>miss_var_summary(amphibio)</code></pre>
 <pre><code>## # A tibble: 38 × 3
 ##    variable n_miss pct_miss
@@ -652,7 +652,7 @@ represented by NA in the <code>amphibio</code> data set.</h4>
 <div id="how-many-total-nas-are-in-each-data-set-do-these-values-make-sense-are-nas-represented-by-values" class="section level3">
 <h3>4. How many total NA’s are in each data set? Do these values make
 sense? Are NA’s represented by values?</h3>
-<p>Amniota Data Set:</p>
+<p><code>amniota</code> Data Set:</p>
 <pre class="r"><code>amniota %&gt;% 
   summarise(total_na = sum(is.na(.))) #total NAs</code></pre>
 <pre><code>## # A tibble: 1 × 1
@@ -660,10 +660,10 @@ sense? Are NA’s represented by values?</h3>
 ##      &lt;int&gt;
 ## 1        0</code></pre>
 <div id="there-are-no-nas-in-the-amniota-data-set.-the-fact-that-there-are-no-nas-in-the-amniota-data-set-does-not-make-sense.-when-using-the-summary-function-below-it-does-seem-that-there-are-nas-represented-by-values--999--999.0--999.000" class="section level4">
-<h4>There are NO NAs in the Amniota data set. The fact that there are NO
-NAs in the Amniota data set does NOT make sense. When using the
-summary() function (below), it DOES seem that there are NA’s represented
-by values (-999, -999.0, -999.000):</h4>
+<h4>There are NO NAs in the <code>amniota</code> data set. The fact that
+there are NO NAs in the <code>amniota</code> data set does NOT make
+sense. When using the summary() function (below), it DOES seem that
+there are NA’s represented by values (-999, -999.0, -999.000):</h4>
 <pre class="r"><code>summary(amniota)</code></pre>
 <pre><code>##     class              order              family             genus          
 ##  Length:21322       Length:21322       Length:21322       Length:21322      
@@ -742,7 +742,7 @@ by values (-999, -999.0, -999.000):</h4>
 ##  Mean   : -942.6  
 ##  3rd Qu.: -999.0  
 ##  Max.   :14610.0</code></pre>
-<p>Amphibio Data Set:</p>
+<p><code>amphibio</code> Data Set:</p>
 <pre class="r"><code>amphibio %&gt;% 
   summarise(total_na = sum(is.na(.)))</code></pre>
 <pre><code>## # A tibble: 1 × 1
@@ -751,10 +751,10 @@ by values (-999, -999.0, -999.000):</h4>
 ## 1   170566</code></pre>
 </div>
 <div id="there-are-are-nas-in-the-amphibio-data-set-170566-in-total.-the-fact-that-there-are-nas-in-the-amphibio-data-set-does-make-sense.-when-using-the-summary-function-below-it-does-not-seem-that-there-are-nas-represented-by-placeholder-values" class="section level4">
-<h4>There are ARE NAs in the Amphibio data set, 170566 in total. The
-fact that there are NAs in the Amphibio data set does make sense. When
-using the summary() function (below), it does NOT seem that there are
-NA’s represented by placeholder values:</h4>
+<h4>There are ARE NAs in the <code>amphibio</code> data set, 170566 in
+total. The fact that there are NAs in the <code>amphibio</code> data set
+does make sense. When using the summary() function (below), it does NOT
+seem that there are NA’s represented by placeholder values:</h4>
 <pre class="r"><code>summary(amphibio)</code></pre>
 <pre><code>##       id               order              family             genus          
 ##  Length:6776        Length:6776        Length:6776        Length:6776       
@@ -841,7 +841,7 @@ NA’s represented by placeholder values:</h4>
 <div id="make-any-necessary-replacements-in-the-data-such-that-all-nas-appear-as-na." class="section level3">
 <h3>5. Make any necessary replacements in the data such that all NA’s
 appear as “NA”.</h3>
-<p>Amniota Data Set:</p>
+<p><code>amniota</code> Data Set:</p>
 <pre class="r"><code>amniota &lt;- amniota %&gt;% 
   replace_with_na_all(condition = ~.x == -999) 
 amniota</code></pre>
@@ -867,8 +867,8 @@ amniota</code></pre>
 ## #   male_maturity_d &lt;dbl&gt;, inter_litter_or_interbirth_interval_y &lt;dbl&gt;, …</code></pre>
 <div id="i-determined-that-there-are-no-clear-placeholder-values-for-nas-in-the-amphibio-data-set---it-seems-that-all-the-nas-are-already-represented-by-nas." class="section level4">
 <h4>I determined that there are no clear placeholder values for NA’s in
-the Amphibio data set - it seems that all the NA’s are already
-represented by NA’s.</h4>
+the <code>amphibio</code> data set - it seems that all the NA’s are
+already represented by NA’s.</h4>
 </div>
 </div>
 <div id="use-the-package-naniar-to-produce-a-summary-including-percentages-of-missing-data-in-each-column-for-the-amniota-data." class="section level3">
