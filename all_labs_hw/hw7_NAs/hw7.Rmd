@@ -55,7 +55,7 @@ amphibio <- read_csv("/Users/catrinelberevoescu/Desktop/BIS15W2024_cberevoescu/l
 glimpse(amniota)
 ```
 
-NA's are represented in the data set amniota with the value -999.    
+#### NA's are represented in the data set amniota with the values -999, -999.0, -999.00, -999.000, -999.0000, -999.00000.    
 
 How Many NA's are Represented in Amniota:    
 
@@ -70,8 +70,10 @@ glimpse(amphibio) #this shows that the variable fruits is logical
 ```
 
 ```{r}
-summary(amphibio) #this indicates that 0s could have been used as "NA's" for the variables dir, lar, viv, considering that the data in these columns is binary as in other columns in this data set
+summary(amphibio) #this indicates that 0s COULD have been used as "NA's" for the variables dir, lar, viv, considering that the data in these columns is binary as in other columns in this data set
 ```
+
+#### There are no strange/outlandish values that could clearly have been used as placeholders for NA's in this dataset. It seems that NA's are represented by NA in the `amphibio` data set.    
 
 How Many NA's are Represented in Amphibio:    
 
@@ -101,7 +103,7 @@ amphibio %>%
   summarise(total_na = sum(is.na(.)))
 ```
 
-#### There are ARE NAs in the Amphibio data set, 170566 in total. The fact that there are NAs in the Amphibio data set does make sense. When using the summary() function (below), it does NOT seem that there are NA's represented by values:    
+#### There are ARE NAs in the Amphibio data set, 170566 in total. The fact that there are NAs in the Amphibio data set does make sense. When using the summary() function (below), it does NOT seem that there are NA's represented by placeholder values:    
 
 ```{r}
 summary(amphibio)
@@ -113,33 +115,11 @@ Amniota Data Set:
 
 ```{r}
 amniota <- amniota %>% 
-  replace_with_na_all(condition = ~.x == -999)
+  replace_with_na_all(condition = ~.x == -999) 
 amniota
 ```
 
-```{r}
-summary(amniota)
-```
-
-I noticed that the minimum values for the variables female_body_mass_g, male_body_mass_g, no_sex_body_mass_g, adult_body_mass_g is 0, which does not make sense for body mass.   
-
-```{r}
-amniota %>% 
-  select(female_body_mass_g, male_body_mass_g, no_sex_body_mass_g, adult_body_mass_g) %>% 
-  summarize(across(contains("body_mass"), min, na.rm = T))
-```
-
-Amphibio Data Set:   
-
-```{r}
-amphibio <- amphibio %>% 
-  replace_with_na_all(condition = ~.x == 0)
-amphibio
-```
-
-```{r}
-summary(amphibio)
-```
+#### I determined that there are no clear placeholder values for NA's in the Amphibio data set - it seems that all the NA's are already represented by NA's.    
 
 ### 6. Use the package `naniar` to produce a summary, including percentages, of missing data in each column for the `amniota` data.  
 
@@ -163,7 +143,7 @@ amniota %>%
   arrange(desc(pct_miss))
 ```
 
-#### These results DO make sense biologically. Mammals are shown to have 100% missing `egg_mass_g values`, which makes sense because the vast majority of Mammals do not produce eggs.   
+#### These results DO make some sense biologically. Mammals are shown to have 100% missing `egg_mass_g values`, which makes sense because the vast majority of Mammals do not produce eggs. The large number of NA's for the Aves (birds) and Reptilia (Reptiles) makes less sense biologically because most birds and many reptiles lay eggs.    
 #### These results indicate that some of the NA's exist because of biological reasons and not because of issues with measurement taking - thus changing my interpretation of some of the NA's.    
 
 ### 9. The `amphibio` data have variables that classify species as fossorial (burrowing), terrestrial, aquatic, or arboreal. Calculate the number of NA's in each of these variables. Do you think that the authors intend us to think that there are NA's in these columns or could they represent something else? Explain.     
@@ -177,7 +157,8 @@ amphibio %>%
   arrange(desc(pct_miss))
 ```
 
-#### Since these variables are used to categorize the species, I believe that the authors intended to indicate which categories that a certain species is part of (1) OR not (NA). The NA's represent that the species is NOT part of that variable's category.    
+#### There are 6053 NA's in the fossorial variable, 4347 NA's in the arboreal variable, 2810 NA's in the aquatic variable, and 1104 NA's in the terrestrial variable.    
+#### Since these variables are used to categorize the species, I believe that the authors intended to indicate which categories that a certain species is part of (1) OR not (NA). The NA's could represent that the species is NOT part of that variable's category.    
 
 ### 10. Now that we know how NA's are represented in the `amniota` data, how would you load the data such that the values which represent NA's are automatically converted?     
 
