@@ -1,11 +1,11 @@
 ---
 title: "Homework 8"
 author: "Catrinel Berevoescu"
-date: "2024-02-13"
+date: "2024-02-14"
 output:
   html_document: 
     theme: spacelab
-    keep_md: yes
+    keep_md: true
 ---
 
 
@@ -22,6 +22,7 @@ Make sure to use the formatting conventions of RMarkdown to make your report nea
 ```r
 library(tidyverse)
 library(janitor)
+library(naniar)
 ```
 
 ## Install `here`    
@@ -30,7 +31,7 @@ The package `here` is a nice option for keeping directories clear when loading f
 
 
 ```r
-#install.packages("here")
+#install.packages("here") #I don't want to reinstall this package
 ```
 
 ## Data   
@@ -40,6 +41,8 @@ For this homework, we will use a data set compiled by the Office of Environment 
 This homework loosely follows the tutorial of [R Ladies Sydney](https://rladiessydney.org/). If you get stuck, check it out!  
 
 ### 1. Start by loading the data `sydneybeaches`. Do some exploratory analysis to get an idea of the data structure.   
+
+#### Loading the data `sydneybeaches`:     
 
 
 ```r
@@ -57,6 +60,47 @@ sydneybeaches <- read_csv("data/sydneybeaches.csv") %>% clean_names()
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 ```
 
+#### Exploratory Analysis of `sydneybeaches`:    
+
+
+```r
+glimpse(sydneybeaches) #looking at a general summary of the sydneybeaches data set
+```
+
+```
+## Rows: 3,690
+## Columns: 8
+## $ beach_id              <dbl> 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, …
+## $ region                <chr> "Sydney City Ocean Beaches", "Sydney City Ocean …
+## $ council               <chr> "Randwick Council", "Randwick Council", "Randwic…
+## $ site                  <chr> "Clovelly Beach", "Clovelly Beach", "Clovelly Be…
+## $ longitude             <dbl> 151.2675, 151.2675, 151.2675, 151.2675, 151.2675…
+## $ latitude              <dbl> -33.91449, -33.91449, -33.91449, -33.91449, -33.…
+## $ date                  <chr> "02/01/2013", "06/01/2013", "12/01/2013", "18/01…
+## $ enterococci_cfu_100ml <dbl> 19, 3, 2, 13, 8, 7, 11, 97, 3, 0, 6, 0, 1, 8, 3,…
+```
+
+
+```r
+miss_var_summary(sydneybeaches) #looking for the number of NAs in the dataset
+```
+
+```
+## # A tibble: 8 × 3
+##   variable              n_miss pct_miss
+##   <chr>                  <int>    <dbl>
+## 1 enterococci_cfu_100ml     29    0.786
+## 2 beach_id                   0    0    
+## 3 region                     0    0    
+## 4 council                    0    0    
+## 5 site                       0    0    
+## 6 longitude                  0    0    
+## 7 latitude                   0    0    
+## 8 date                       0    0
+```
+
+#### The dataset `sydneybeaches` is composed of 8 variables (beach_id (numerical), region (character), council (character), site (character), longitude (numerical), latitude (numerical), date (character), and enterococci_cfu_100ml (numerical)). There are 3690 observations (rows) in this data set. There also appears to be some NA's in the enterococci_cfu_100ml column.      
+
 If you want to try `here`, first notice the output when you load the `here` library. It gives you information on the current working directory. You can then use it to easily and intuitively load files.     
 
 
@@ -65,7 +109,7 @@ library("here")
 ```
 
 ```
-## here() starts at /Users/catjobe/Desktop/BIS15W2024_cberevoescu
+## here() starts at /Users/catrinelberevoescu/Desktop/BIS15W2024_cberevoescu
 ```
 
 The quotes show the folder structure from the root directory.     
@@ -88,7 +132,7 @@ sydneybeaches <- read_csv(here("all_labs_hw", "hw8_tidy_data", "data", "sydneybe
 
 ### 2. Are these data "tidy" per the definitions of the tidyverse? How do you know? Are they in wide or long format?   
 
-#### It does seem that the data is "tidy" per the definitions of the tidyverse. It appears that the variables have their own columns, each observation has its own row , and each value has its own cell. The data appears to be in long format.        
+#### It does seem that the data is "tidy" per the definitions of the tidyverse. It appears that the variables have their own columns, each observation has its own row , and each value has its own cell. The data also appears to be in long format, as there are columns for each of the variables measured in the data (and no column represents an observation).        
 
 
 ```r
@@ -144,7 +188,7 @@ sydneybeaches_long
 ```r
 sydneybeaches_wide <- sydneybeaches_long %>% 
   pivot_wider(names_from = "date",
-              values_from = "enterococci_cfu_100ml")
+              values_from = "enterococci_cfu_100ml") #pivoting the data to transform the data set into the wide format
 sydneybeaches_wide
 ```
 
@@ -179,7 +223,7 @@ sydneybeaches_wide
 sydneybeaches_wide %>% 
   pivot_longer(-site,
                names_to = "date",
-               values_to = "enterococci_cfu_100ml")
+               values_to = "enterococci_cfu_100ml") #pivoting the data to transform the data set into the long format
 ```
 
 ```
@@ -204,7 +248,7 @@ sydneybeaches_wide %>%
 
 ```r
 sydneybeaches_long %>% 
-  separate(date, into = c("day", "month", "year"), sep = "/")
+  separate(date, into = c("day", "month", "year"), sep = "/") #separating the dates into columns day, month, and year
 ```
 
 ```
@@ -226,12 +270,14 @@ sydneybeaches_long %>%
 
 ### 7. What is the average `enterococci_cfu_100ml` by year for each beach. Think about which data you will use- long or wide.   
 
+For the purposes of this analysis, I used the long data:    
+
 
 ```r
 average_enterococci_cfu_100ml <- sydneybeaches_long %>% 
   separate(date, into = c("day", "month", "year"), sep = "/") %>% 
   group_by(site, year) %>% 
-  summarize(enterococci_cfu_100ml_mean = mean(enterococci_cfu_100ml, na.rm = T), .groups = NULL)
+  summarize(enterococci_cfu_100ml_mean = mean(enterococci_cfu_100ml, na.rm = T), .groups = NULL) #calculating the average `enterococci_cfu_100ml` by year for each beach
 ```
 
 ```
@@ -267,7 +313,7 @@ average_enterococci_cfu_100ml
 ```r
 average_enterococci_cfu_100ml %>% 
   pivot_wider(names_from = "year",
-              values_from = "enterococci_cfu_100ml_mean") %>% 
+              values_from = "enterococci_cfu_100ml_mean") %>% #pivoting the data from question 7 into wide format
   group_by(site) %>% 
   summarize(across(contains("201"), \(x) mean(x, na.rm = T)))
 ```
@@ -288,6 +334,8 @@ average_enterococci_cfu_100ml %>%
 ## 10 South Maroubra Rockpool  96.4   40.6   47.3    59.3  46.9  112.  
 ## 11 Tamarama Beach           29.7   39.6   57.0    50.3  20.4   15.5
 ```
+
+Combining the code from question 7 and 8 into one larger code chunk (going from long -> wide format without the creation of an intermediate object, `average_enterococci_cfu_100ml`):    
 
 
 ```r
@@ -325,23 +373,8 @@ sydneybeaches_long %>%
   pivot_wider(names_from = "year",
               values_from = "enterococci_cfu_100ml") %>% 
   group_by(site) %>% 
-  summarize(across(contains("201"), mean, na.rm = T)) %>% 
+  summarize(across(contains("201"), \(x) mean(x, na.rm = T))) %>% 
   arrange(desc(2013))
-```
-
-```
-## Warning: There was 1 warning in `summarize()`.
-## ℹ In argument: `across(contains("201"), mean, na.rm = T)`.
-## ℹ In group 1: `site = "Bondi Beach"`.
-## Caused by warning:
-## ! The `...` argument of `across()` is deprecated as of dplyr 1.1.0.
-## Supply arguments directly to `.fns` through an anonymous function instead.
-## 
-##   # Previously
-##   across(a:b, mean, na.rm = TRUE)
-## 
-##   # Now
-##   across(a:b, \(x) mean(x, na.rm = TRUE))
 ```
 
 ```

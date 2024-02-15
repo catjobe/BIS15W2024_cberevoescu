@@ -11,7 +11,7 @@
 
 <meta name="author" content="Catrinel Berevoescu" />
 
-<meta name="date" content="2024-02-13" />
+<meta name="date" content="2024-02-14" />
 
 <title>Homework 8</title>
 
@@ -376,7 +376,7 @@ display: none;
 
 <h1 class="title toc-ignore">Homework 8</h1>
 <h4 class="author">Catrinel Berevoescu</h4>
-<h4 class="date">2024-02-13</h4>
+<h4 class="date">2024-02-14</h4>
 
 </div>
 
@@ -395,14 +395,15 @@ report neat and clean!</p>
 <div id="load-the-libraries" class="section level2">
 <h2>Load the libraries</h2>
 <pre class="r"><code>library(tidyverse)
-library(janitor)</code></pre>
+library(janitor)
+library(naniar)</code></pre>
 </div>
 <div id="install-here" class="section level2">
 <h2>Install <code>here</code></h2>
 <p>The package <code>here</code> is a nice option for keeping
 directories clear when loading files. I will demonstrate below and let
 you decide if it is something you want to use.</p>
-<pre class="r"><code>#install.packages(&quot;here&quot;)</code></pre>
+<pre class="r"><code>#install.packages(&quot;here&quot;) #I don&#39;t want to reinstall this package</code></pre>
 </div>
 <div id="data" class="section level2">
 <h2>Data</h2>
@@ -419,6 +420,8 @@ check it out!</p>
 <div id="start-by-loading-the-data-sydneybeaches.-do-some-exploratory-analysis-to-get-an-idea-of-the-data-structure." class="section level3">
 <h3>1. Start by loading the data <code>sydneybeaches</code>. Do some
 exploratory analysis to get an idea of the data structure.</h3>
+<div id="loading-the-data-sydneybeaches" class="section level4">
+<h4>Loading the data <code>sydneybeaches</code>:</h4>
 <pre class="r"><code>sydneybeaches &lt;- read_csv(&quot;data/sydneybeaches.csv&quot;) %&gt;% clean_names()</code></pre>
 <pre><code>## Rows: 3690 Columns: 8
 ## ── Column specification ────────────────────────────────────────────────────────
@@ -428,12 +431,46 @@ exploratory analysis to get an idea of the data structure.</h3>
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div id="exploratory-analysis-of-sydneybeaches" class="section level4">
+<h4>Exploratory Analysis of <code>sydneybeaches</code>:</h4>
+<pre class="r"><code>glimpse(sydneybeaches) #looking at a general summary of the sydneybeaches data set</code></pre>
+<pre><code>## Rows: 3,690
+## Columns: 8
+## $ beach_id              &lt;dbl&gt; 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, …
+## $ region                &lt;chr&gt; &quot;Sydney City Ocean Beaches&quot;, &quot;Sydney City Ocean …
+## $ council               &lt;chr&gt; &quot;Randwick Council&quot;, &quot;Randwick Council&quot;, &quot;Randwic…
+## $ site                  &lt;chr&gt; &quot;Clovelly Beach&quot;, &quot;Clovelly Beach&quot;, &quot;Clovelly Be…
+## $ longitude             &lt;dbl&gt; 151.2675, 151.2675, 151.2675, 151.2675, 151.2675…
+## $ latitude              &lt;dbl&gt; -33.91449, -33.91449, -33.91449, -33.91449, -33.…
+## $ date                  &lt;chr&gt; &quot;02/01/2013&quot;, &quot;06/01/2013&quot;, &quot;12/01/2013&quot;, &quot;18/01…
+## $ enterococci_cfu_100ml &lt;dbl&gt; 19, 3, 2, 13, 8, 7, 11, 97, 3, 0, 6, 0, 1, 8, 3,…</code></pre>
+<pre class="r"><code>miss_var_summary(sydneybeaches) #looking for the number of NAs in the dataset</code></pre>
+<pre><code>## # A tibble: 8 × 3
+##   variable              n_miss pct_miss
+##   &lt;chr&gt;                  &lt;int&gt;    &lt;dbl&gt;
+## 1 enterococci_cfu_100ml     29    0.786
+## 2 beach_id                   0    0    
+## 3 region                     0    0    
+## 4 council                    0    0    
+## 5 site                       0    0    
+## 6 longitude                  0    0    
+## 7 latitude                   0    0    
+## 8 date                       0    0</code></pre>
+</div>
+<div id="the-dataset-sydneybeaches-is-composed-of-8-variables-beach_id-numerical-region-character-council-character-site-character-longitude-numerical-latitude-numerical-date-character-and-enterococci_cfu_100ml-numerical.-there-are-3690-observations-rows-in-this-data-set.-there-also-appears-to-be-some-nas-in-the-enterococci_cfu_100ml-column." class="section level4">
+<h4>The dataset <code>sydneybeaches</code> is composed of 8 variables
+(beach_id (numerical), region (character), council (character), site
+(character), longitude (numerical), latitude (numerical), date
+(character), and enterococci_cfu_100ml (numerical)). There are 3690
+observations (rows) in this data set. There also appears to be some NA’s
+in the enterococci_cfu_100ml column.</h4>
 <p>If you want to try <code>here</code>, first notice the output when
 you load the <code>here</code> library. It gives you information on the
 current working directory. You can then use it to easily and intuitively
 load files.</p>
 <pre class="r"><code>library(&quot;here&quot;)</code></pre>
-<pre><code>## here() starts at /Users/catjobe/Desktop/BIS15W2024_cberevoescu</code></pre>
+<pre><code>## here() starts at /Users/catrinelberevoescu/Desktop/BIS15W2024_cberevoescu</code></pre>
 <p>The quotes show the folder structure from the root directory.</p>
 <pre class="r"><code>sydneybeaches &lt;- read_csv(here(&quot;all_labs_hw&quot;, &quot;hw8_tidy_data&quot;, &quot;data&quot;, &quot;sydneybeaches.csv&quot;)) %&gt;% clean_names()</code></pre>
 <pre><code>## Rows: 3690 Columns: 8
@@ -445,14 +482,17 @@ load files.</p>
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
+</div>
 <div id="are-these-data-tidy-per-the-definitions-of-the-tidyverse-how-do-you-know-are-they-in-wide-or-long-format" class="section level3">
 <h3>2. Are these data “tidy” per the definitions of the tidyverse? How
 do you know? Are they in wide or long format?</h3>
-<div id="it-does-seem-that-the-data-is-tidy-per-the-definitions-of-the-tidyverse.-it-appears-that-the-variables-have-their-own-columns-each-observation-has-its-own-row-and-each-value-has-its-own-cell.-the-data-appears-to-be-in-long-format." class="section level4">
+<div id="it-does-seem-that-the-data-is-tidy-per-the-definitions-of-the-tidyverse.-it-appears-that-the-variables-have-their-own-columns-each-observation-has-its-own-row-and-each-value-has-its-own-cell.-the-data-also-appears-to-be-in-long-format-as-there-are-columns-for-each-of-the-variables-measured-in-the-data-and-no-column-represents-an-observation." class="section level4">
 <h4>It does seem that the data is “tidy” per the definitions of the
 tidyverse. It appears that the variables have their own columns, each
 observation has its own row , and each value has its own cell. The data
-appears to be in long format.</h4>
+also appears to be in long format, as there are columns for each of the
+variables measured in the data (and no column represents an
+observation).</h4>
 <pre class="r"><code>sydneybeaches</code></pre>
 <pre><code>## # A tibble: 3,690 × 8
 ##    beach_id region  council site  longitude latitude date  enterococci_cfu_100ml
@@ -498,7 +538,7 @@ beach only appears once (wide format). Name the object
 <code>sydneybeaches_wide</code>.</h3>
 <pre class="r"><code>sydneybeaches_wide &lt;- sydneybeaches_long %&gt;% 
   pivot_wider(names_from = &quot;date&quot;,
-              values_from = &quot;enterococci_cfu_100ml&quot;)
+              values_from = &quot;enterococci_cfu_100ml&quot;) #pivoting the data to transform the data set into the wide format
 sydneybeaches_wide</code></pre>
 <pre><code>## # A tibble: 11 × 345
 ##    site         `02/01/2013` `06/01/2013` `12/01/2013` `18/01/2013` `30/01/2013`
@@ -528,7 +568,7 @@ names.</h3>
 <pre class="r"><code>sydneybeaches_wide %&gt;% 
   pivot_longer(-site,
                names_to = &quot;date&quot;,
-               values_to = &quot;enterococci_cfu_100ml&quot;)</code></pre>
+               values_to = &quot;enterococci_cfu_100ml&quot;) #pivoting the data to transform the data set into the long format</code></pre>
 <pre><code>## # A tibble: 3,784 × 3
 ##    site           date       enterococci_cfu_100ml
 ##    &lt;chr&gt;          &lt;chr&gt;                      &lt;dbl&gt;
@@ -549,7 +589,7 @@ names.</h3>
 columns day, month, and year. Do this on the
 <code>sydneybeaches_long</code> data.</h3>
 <pre class="r"><code>sydneybeaches_long %&gt;% 
-  separate(date, into = c(&quot;day&quot;, &quot;month&quot;, &quot;year&quot;), sep = &quot;/&quot;)</code></pre>
+  separate(date, into = c(&quot;day&quot;, &quot;month&quot;, &quot;year&quot;), sep = &quot;/&quot;) #separating the dates into columns day, month, and year</code></pre>
 <pre><code>## # A tibble: 3,690 × 5
 ##    site           day   month year  enterococci_cfu_100ml
 ##    &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;                 &lt;dbl&gt;
@@ -568,10 +608,11 @@ columns day, month, and year. Do this on the
 <div id="what-is-the-average-enterococci_cfu_100ml-by-year-for-each-beach.-think-about-which-data-you-will-use--long-or-wide." class="section level3">
 <h3>7. What is the average <code>enterococci_cfu_100ml</code> by year
 for each beach. Think about which data you will use- long or wide.</h3>
+<p>For the purposes of this analysis, I used the long data:</p>
 <pre class="r"><code>average_enterococci_cfu_100ml &lt;- sydneybeaches_long %&gt;% 
   separate(date, into = c(&quot;day&quot;, &quot;month&quot;, &quot;year&quot;), sep = &quot;/&quot;) %&gt;% 
   group_by(site, year) %&gt;% 
-  summarize(enterococci_cfu_100ml_mean = mean(enterococci_cfu_100ml, na.rm = T), .groups = NULL)</code></pre>
+  summarize(enterococci_cfu_100ml_mean = mean(enterococci_cfu_100ml, na.rm = T), .groups = NULL) #calculating the average `enterococci_cfu_100ml` by year for each beach</code></pre>
 <pre><code>## `summarise()` has grouped output by &#39;site&#39;. You can override using the
 ## `.groups` argument.</code></pre>
 <pre class="r"><code>average_enterococci_cfu_100ml</code></pre>
@@ -596,7 +637,7 @@ for each beach. Think about which data you will use- long or wide.</h3>
 wide format.</h3>
 <pre class="r"><code>average_enterococci_cfu_100ml %&gt;% 
   pivot_wider(names_from = &quot;year&quot;,
-              values_from = &quot;enterococci_cfu_100ml_mean&quot;) %&gt;% 
+              values_from = &quot;enterococci_cfu_100ml_mean&quot;) %&gt;% #pivoting the data from question 7 into wide format
   group_by(site) %&gt;% 
   summarize(across(contains(&quot;201&quot;), \(x) mean(x, na.rm = T)))</code></pre>
 <pre><code>## # A tibble: 11 × 7
@@ -613,6 +654,9 @@ wide format.</h3>
 ##  9 South Maroubra Beach     39.3   14.9    8.25   10.7   8.26  12.5 
 ## 10 South Maroubra Rockpool  96.4   40.6   47.3    59.3  46.9  112.  
 ## 11 Tamarama Beach           29.7   39.6   57.0    50.3  20.4   15.5</code></pre>
+<p>Combining the code from question 7 and 8 into one larger code chunk
+(going from long -&gt; wide format without the creation of an
+intermediate object, <code>average_enterococci_cfu_100ml</code>):</p>
 <pre class="r"><code>sydneybeaches_long %&gt;% 
   separate(date, into = c(&quot;day&quot;, &quot;month&quot;, &quot;year&quot;), sep = &quot;/&quot;) %&gt;% 
   pivot_wider(names_from = &quot;year&quot;,
@@ -641,20 +685,8 @@ wide format.</h3>
   pivot_wider(names_from = &quot;year&quot;,
               values_from = &quot;enterococci_cfu_100ml&quot;) %&gt;% 
   group_by(site) %&gt;% 
-  summarize(across(contains(&quot;201&quot;), mean, na.rm = T)) %&gt;% 
+  summarize(across(contains(&quot;201&quot;), \(x) mean(x, na.rm = T))) %&gt;% 
   arrange(desc(2013))</code></pre>
-<pre><code>## Warning: There was 1 warning in `summarize()`.
-## ℹ In argument: `across(contains(&quot;201&quot;), mean, na.rm = T)`.
-## ℹ In group 1: `site = &quot;Bondi Beach&quot;`.
-## Caused by warning:
-## ! The `...` argument of `across()` is deprecated as of dplyr 1.1.0.
-## Supply arguments directly to `.fns` through an anonymous function instead.
-## 
-##   # Previously
-##   across(a:b, mean, na.rm = TRUE)
-## 
-##   # Now
-##   across(a:b, \(x) mean(x, na.rm = TRUE))</code></pre>
 <pre><code>## # A tibble: 11 × 7
 ##    site                    `2013` `2014` `2015` `2016` `2017` `2018`
 ##    &lt;chr&gt;                    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
