@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 output:
   html_document: 
     theme: spacelab
-    keep_md: yes
+    keep_md: true
 ---
 
 ```{r setup, include=FALSE}
@@ -81,22 +81,79 @@ colleges %>%
 ### 3. Based on your answer to #2, make a plot that shows the number of colleges in the top 10 cities.    
 
 ```{r}
-
+colleges %>% 
+  group_by(city) %>% 
+  summarise(number_colleges = n()) %>% 
+  arrange(desc(number_colleges)) %>% 
+  top_n(10, number_colleges) %>% 
+  ggplot(aes(x = city, y = number_colleges)) +
+  geom_col() +
+  coord_flip()
 ```
 
-### 4. The column `COSTT4_A` is the annual cost of each institution. Which city has the highest average cost? Where is it located?
+### 4. The column `COSTT4_A` is the annual cost of each institution. Which city has the highest average cost? Where is it located?   
 
-### 5. Based on your answer to #4, make a plot that compares the cost of the individual colleges in the most expensive city. Bonus! Add UC Davis here to see how it compares :>).
+```{r}
+colleges %>% 
+  group_by(city) %>% 
+  summarise(average_cost = mean(costt4_a, na.rm = T)) %>% 
+  arrange(desc(average_cost))
+```
 
-### 6. The column `ADM_RATE` is the admissions rate by college and `C150_4_POOLED` is the four-year completion rate. Use a scatterplot to show the relationship between these two variables. What do you think this means?
+```{r}
+colleges %>% 
+  filter(city == "Claremont")
+```
 
-### 7. Is there a relationship between cost and four-year completion rate? (You don't need to do the stats, just produce a plot). What do you think this means?
+#### Thus, the city with the highest average cost is Claremont with an average annual cost of $66498.00. It is located in California.   
+
+### 5. Based on your answer to #4, make a plot that compares the cost of the individual colleges in the most expensive city. Bonus! Add UC Davis here to see how it compares :>).   
+
+```{r}
+colleges %>% 
+  filter(city == "Claremont" | instnm == "University of California-Davis") %>% 
+  ggplot(aes(x = instnm, y = costt4_a)) +
+  geom_col() +
+  coord_flip()
+```
+
+#### It appears, from the available data, that UC Davis has an annual cost that is almost half that of any of the colleges in the most expensive city, Claremont, CA.    
+
+### 6. The column `ADM_RATE` is the admissions rate by college and `C150_4_POOLED` is the four-year completion rate. Use a scatterplot to show the relationship between these two variables. What do you think this means?    
+
+```{r}
+colleges %>% 
+  ggplot(aes(y = c150_4_pooled, x = adm_rate)) +
+  geom_point() + 
+  geom_smooth(method = lm, se = T, na.rm = T)
+```
+
+#### This plot appears to show that the higher the admission rate, the LOWER the four-year completion rate.
+
+### 7. Is there a relationship between cost and four-year completion rate? (You don't need to do the stats, just produce a plot). What do you think this means?    
+
+```{r}
+colleges %>% 
+  ggplot(aes(x = costt4_a, y = c150_4_pooled)) +
+  geom_point() +
+  geom_smooth(method = lm, se = T, na.rm = T)
+```
+
+#### This appears to show that the more expensive the school (annual cost), the LARGER the four-year completion rate.    
 
 ### 8. The column titled `INSTNM` is the institution name. We are only interested in the University of California colleges. Make a new data frame that is restricted to UC institutions. You can remove `Hastings College of Law` and `UC San Francisco` as we are only interested in undergraduate institutions.
+
+
+```{r}
+#uc_colleges <- colleges %>% 
+  #filter(instnm == "University of California - ")
+#uc_colleges
+```
 
 Remove `Hastings College of Law` and `UC San Francisco` and store the final data frame as a new object `univ_calif_final`.
 
 Use `separate()` to separate institution name into two new columns "UNIV" and "CAMPUS".
+
 
 ### 9. The column `ADM_RATE` is the admissions rate by campus. Which UC has the lowest and highest admissions rates? Produce a numerical summary and an appropriate plot.
 
