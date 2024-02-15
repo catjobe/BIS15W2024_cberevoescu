@@ -1,7 +1,7 @@
 ---
 title: "Homework 8"
 author: "Catrinel Berevoescu"
-date: "2024-02-14"
+date: "2024-02-15"
 output:
   html_document: 
     theme: spacelab
@@ -394,7 +394,7 @@ sydneybeaches_long %>%
 ## 11 Tamarama Beach           29.7   39.6   57.0    50.3  20.4   15.5
 ```
 
-#### Thus, the beach that was the MOST polluted in 2013 was Bondi Beach, with a enterococci_cfu_100ml of 32.224138 cfu.    
+#### Thus, the beach that was the MOST polluted in 2013 was Bondi Beach, with a enterococci_cfu_100ml of 32.224138 cfu/100mL.    
 
 ### 10. Please complete the class project survey at: [BIS 15L Group Project](https://forms.gle/H2j69Z3ZtbLH3efW6). 
 

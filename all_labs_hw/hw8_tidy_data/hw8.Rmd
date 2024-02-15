@@ -158,7 +158,7 @@ sydneybeaches_long %>%
   arrange(desc(2013))
 ```
 
-#### Thus, the beach that was the MOST polluted in 2013 was Bondi Beach, with a enterococci_cfu_100ml of 32.224138 cfu.    
+#### Thus, the beach that was the MOST polluted in 2013 was Bondi Beach, with a enterococci_cfu_100ml of 32.224138 cfu/100mL.    
 
 ### 10. Please complete the class project survey at: [BIS 15L Group Project](https://forms.gle/H2j69Z3ZtbLH3efW6). 
 
