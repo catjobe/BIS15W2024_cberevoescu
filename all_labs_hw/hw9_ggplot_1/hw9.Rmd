@@ -30,7 +30,7 @@ library(naniar)
 For this homework, we will take a departure from biological data and use data about California colleges. These data are a subset of the national college scorecard (https://collegescorecard.ed.gov/data/). Load the `ca_college_data.csv` as a new object called `colleges`.    
 
 ```{r}
-colleges <- read_csv("data/ca_college_data.csv") %>% clean_names()
+colleges <- read_csv("data/ca_college_data.csv")
 ```
 The variables are a bit hard to decipher, here is a key:  
 
@@ -47,6 +47,12 @@ PFTFTUG1_EF: Percentage of undergraduate students who are first-time, full-time 
 
 ### 1. Use your preferred function(s) to have a look at the data and get an idea of its structure. Make sure you summarize NA's and determine whether or not the data are tidy. You may also consider dealing with any naming issues.    
 
+#### Cleaning/Fixing the Variable Names:   
+
+```{r}
+colleges <- clean_names(colleges)
+```
+
 #### Looking at the data to get an idea of its structure:    
 
 ```{r}
@@ -61,7 +67,7 @@ miss_var_summary(colleges)
 
 #### Determining if the data is tidy:    
 
-#### Since the variables have their own columns, each observation has its own row , and each value has its own cell. the data appears to be tidy.     
+#### Since the variables have their own columns, each observation has its own row, and each value has its own cell, the data appears to be tidy.     
 
 ```{r}
 colleges
@@ -71,9 +77,19 @@ colleges
 
 ```{r}
 colleges %>% 
-  group_by(city) %>% 
-  summarise(number_colleges = n()) %>% 
-  arrange(desc(number_colleges))
+  group_by(city) %>% #grouping by the variable city
+  summarise(number_colleges = n()) %>% #finding the number of colleges per city
+  arrange(desc(number_colleges)) #arranging from highest to lowest number of colleges in a city
+```
+
+Using the head() argument to clearly visualize only the cities in California with the highest number of colleges:     
+
+```{r}
+colleges %>% 
+  group_by(city) %>% #grouping by the variable city
+  summarise(number_colleges = n()) %>% #finding the number of colleges per city
+  arrange(desc(number_colleges)) %>% #arranging from highest to lowest number of colleges in a city
+  head(10, number_colleges) #only listing the top 10 cities with the largest number of colleges
 ```
 
 #### The cities with the highest numbers of colleges include Los Angeles (24), San Diego (18), and San Francisco (15).       
@@ -82,27 +98,27 @@ colleges %>%
 
 ```{r}
 colleges %>% 
-  group_by(city) %>% 
-  summarise(number_colleges = n()) %>% 
-  arrange(desc(number_colleges)) %>% 
-  top_n(10, number_colleges) %>% 
-  ggplot(aes(x = city, y = number_colleges)) +
+  group_by(city) %>% #grouping by the variable city
+  summarise(number_colleges = n()) %>% #finding the number of colleges per city
+  arrange(desc(number_colleges)) %>% #arranging from highest to lowest number of colleges in a city
+  head(10, number_colleges) %>% #only listing the top 10 cities with the largest number of colleges
+  ggplot(aes(x = city, y = number_colleges)) + #creating the plot that shows the number of colleges in the top 10 cities
   geom_col() +
-  coord_flip()
+  coord_flip() #flipping the axes for ease of viewing
 ```
 
 ### 4. The column `COSTT4_A` is the annual cost of each institution. Which city has the highest average cost? Where is it located?   
 
 ```{r}
 colleges %>% 
-  group_by(city) %>% 
-  summarise(average_cost = mean(costt4_a, na.rm = T)) %>% 
-  arrange(desc(average_cost))
+  group_by(city) %>% #grouping by the variable city
+  summarise(average_cost = mean(costt4_a, na.rm = T)) %>% #finding the average cost of institutions in each city
+  arrange(desc(average_cost)) #arranging from highest to lowest average cost
 ```
 
 ```{r}
 colleges %>% 
-  filter(city == "Claremont")
+  filter(city == "Claremont") #filtering by the city that has the highest average cost
 ```
 
 #### Thus, the city with the highest average cost is Claremont with an average annual cost of $66498.00. It is located in California.   
@@ -111,10 +127,18 @@ colleges %>%
 
 ```{r}
 colleges %>% 
-  filter(city == "Claremont" | instnm == "University of California-Davis") %>% 
-  ggplot(aes(x = instnm, y = costt4_a)) +
+  filter(city == "Claremont") %>% #filtering by only the most expensive city
+  ggplot(aes(x = instnm, y = costt4_a)) + #creating the plot
   geom_col() +
-  coord_flip()
+  coord_flip() #flipping the axes for ease of viewing
+```
+
+```{r}
+colleges %>% 
+  filter(city == "Claremont" | instnm == "University of California-Davis") %>% #filtering by the most expensive city and UC Davis, for comparison
+  ggplot(aes(x = instnm, y = costt4_a)) + #creating the plot
+  geom_col() +
+  coord_flip() #flipping the axes for ease of viewing
 ```
 
 #### It appears, from the available data, that UC Davis has an annual cost that is almost half that of any of the colleges in the most expensive city, Claremont, CA.    
@@ -123,40 +147,98 @@ colleges %>%
 
 ```{r}
 colleges %>% 
-  ggplot(aes(y = c150_4_pooled, x = adm_rate)) +
+  ggplot(aes(y = c150_4_pooled, x = adm_rate)) + #creating the plot
   geom_point() + 
-  geom_smooth(method = lm, se = T, na.rm = T)
+  geom_smooth(method = lm, se = T, na.rm = T) #adding a regression line
 ```
 
-#### This plot appears to show that the higher the admission rate, the LOWER the four-year completion rate.
+#### This plot appears to show that the HIGHER the admission rate of the college, the LOWER the four-year completion rate.
 
 ### 7. Is there a relationship between cost and four-year completion rate? (You don't need to do the stats, just produce a plot). What do you think this means?    
 
 ```{r}
 colleges %>% 
-  ggplot(aes(x = costt4_a, y = c150_4_pooled)) +
+  ggplot(aes(x = costt4_a, y = c150_4_pooled)) + #creating the plot
   geom_point() +
-  geom_smooth(method = lm, se = T, na.rm = T)
+  geom_smooth(method = lm, se = T, na.rm = T) #adding a regression line
 ```
 
-#### This appears to show that the more expensive the school (annual cost), the LARGER the four-year completion rate.    
+#### There DOES appear to be a relationship between cost and four-year completion rate. The plot above appears to show that the MORE expensive the school (annual cost), the LARGER the four-year completion rate.    
 
 ### 8. The column titled `INSTNM` is the institution name. We are only interested in the University of California colleges. Make a new data frame that is restricted to UC institutions. You can remove `Hastings College of Law` and `UC San Francisco` as we are only interested in undergraduate institutions.
 
+Creating a data frame that is restricted to UC institutions:   
 
 ```{r}
-#uc_colleges <- colleges %>% 
-  #filter(instnm == "University of California - ")
-#uc_colleges
+uc_colleges <- colleges %>% 
+  filter(grepl('University of California', instnm)) #filtering by only UC institutions
+uc_colleges
 ```
 
-Remove `Hastings College of Law` and `UC San Francisco` and store the final data frame as a new object `univ_calif_final`.
+Removing `Hastings College of Law` and `UC San Francisco` and storing the final data frame as a new object `univ_calif_final`:        
 
-Use `separate()` to separate institution name into two new columns "UNIV" and "CAMPUS".
+```{r}
+univ_calif_final <- uc_colleges %>% 
+  filter(instnm != "University of California-Hastings College of Law", instnm != "University of California-San Francisco") #removing the non-undergraduate institutions
+univ_calif_final
+```
 
+Using `separate()` to separate institution name into two new columns "UNIV" and "CAMPUS":    
 
-### 9. The column `ADM_RATE` is the admissions rate by campus. Which UC has the lowest and highest admissions rates? Produce a numerical summary and an appropriate plot.
+```{r}
+univ_calif_final <- univ_calif_final %>% 
+  separate(instnm, into = c("univ", "campus"), sep = "-")
+univ_calif_final
+```
 
-### 10. If you wanted to get a degree in biological or biomedical sciences, which campus confers the majority of these degrees? Produce a numerical summary and an appropriate plot.
+### 9. The column `ADM_RATE` is the admissions rate by campus. Which UC has the lowest and highest admissions rates? Produce a numerical summary and an appropriate plot.   
+
+#### Numerical Summary:    
+
+```{r}
+univ_calif_final %>% 
+  summarise(min_adm_rate = min(adm_rate, na.rm = T),
+            max_adm_rate = max(adm_rate, na.rm = T)) #summarizing the data based off of minimum and maximum admission rate values
+```
+
+#### The UC with the lowest admission rate is UC Berkeley, with an admissions rate of 0.1693 (16.93%):       
+
+```{r}
+univ_calif_final %>% 
+  filter(adm_rate == 0.1693) #filtering by the college with the lowest admission rate
+```
+
+#### The UC with the highest admission rate is UC Riverside, with an admissions rate of 0.6634 (66.34%):       
+
+```{r}
+univ_calif_final %>% 
+  filter(adm_rate == 0.6634) #filtering by the college with the highest admission rate
+```
+
+#### Plot comparing the admissions rate by UC campus:    
+
+```{r}
+univ_calif_final %>% 
+  ggplot(aes(x = campus, y = adm_rate)) +
+  geom_col()
+```
+
+### 10. If you wanted to get a degree in biological or biomedical sciences, which campus confers the majority of these degrees? Produce a numerical summary and an appropriate plot.    
+
+```{r}
+univ_calif_final %>%
+  select(campus, pcip26) %>% #selecting by the variables of interest
+  arrange(desc(pcip26)) #arranging from highest to lowest for ease of viewing
+```
+
+#### Thus, the campus that confers the majority of the biological or biomedical sciences degrees is San Diego (0.2165).      
+
+#### Plot showing which campus confers the majority of biological or biomedical sciences degrees:  
+
+```{r}
+univ_calif_final %>% 
+  ggplot(aes(x = campus, y = pcip26)) +
+  geom_col()
+```
 
 ## Knit Your Output and Post to [GitHub](https://github.com/FRS417-DataScienceBiologists)
