@@ -511,6 +511,18 @@ univ_calif_final %>%
 
 #### Thus, the campus that confers the majority of the biological or biomedical sciences degrees is San Diego (0.2165).      
 
+#### Numerical Summary:    
+
+
+```r
+summary(univ_calif_final$pcip26)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.1053  0.1075  0.1520  0.1538  0.1939  0.2165
+```
+
 #### Plot showing which campus confers the majority of biological or biomedical sciences degrees:  
 
 
@@ -520,6 +532,6 @@ univ_calif_final %>%
   geom_col()
 ```
 
-![](hw9_files/figure-html/unnamed-chunk-25-1.png)<!-- -->
+![](hw9_files/figure-html/unnamed-chunk-26-1.png)<!-- -->
 
 ## Knit Your Output and Post to [GitHub](https://github.com/FRS417-DataScienceBiologists)
