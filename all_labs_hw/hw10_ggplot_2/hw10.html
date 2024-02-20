@@ -9,9 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Please Add Your Name Here" />
+<meta name="author" content="Catrinel Berevoescu" />
 
-<meta name="date" content="2024-02-19" />
+<meta name="date" content="2024-02-20" />
 
 <title>Homework 10</title>
 
@@ -375,8 +375,8 @@ display: none;
 
 
 <h1 class="title toc-ignore">Homework 10</h1>
-<h4 class="author">Please Add Your Name Here</h4>
-<h4 class="date">2024-02-19</h4>
+<h4 class="author">Catrinel Berevoescu</h4>
+<h4 class="date">2024-02-20</h4>
 
 </div>
 
@@ -416,37 +416,220 @@ Chihuahuan Desert ecosystem near Portal, Arizona, USA. Ecology
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<ol style="list-style-type: decimal">
-<li><p>Use the function(s) of your choice to get an idea of its
-structure, including how NA’s are treated. Are the data tidy?</p></li>
-<li><p>How many genera and species are represented in the data? What are
+<div id="use-the-functions-of-your-choice-to-get-an-idea-of-its-structure-including-how-nas-are-treated.-are-the-data-tidy" class="section level3">
+<h3>1. Use the function(s) of your choice to get an idea of its
+structure, including how NA’s are treated. Are the data tidy?</h3>
+<div id="structure-of-deserts-data-set" class="section level4">
+<h4>Structure of <code>deserts</code> data set:</h4>
+<pre class="r"><code>glimpse(deserts)</code></pre>
+<pre><code>## Rows: 34,786
+## Columns: 13
+## $ record_id       &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,…
+## $ month           &lt;dbl&gt; 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, …
+## $ day             &lt;dbl&gt; 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16…
+## $ year            &lt;dbl&gt; 1977, 1977, 1977, 1977, 1977, 1977, 1977, 1977, 1977, …
+## $ plot_id         &lt;dbl&gt; 2, 3, 2, 7, 3, 1, 2, 1, 1, 6, 5, 7, 3, 8, 6, 4, 3, 2, …
+## $ species_id      &lt;chr&gt; &quot;NL&quot;, &quot;NL&quot;, &quot;DM&quot;, &quot;DM&quot;, &quot;DM&quot;, &quot;PF&quot;, &quot;PE&quot;, &quot;DM&quot;, &quot;DM&quot;, …
+## $ sex             &lt;chr&gt; &quot;M&quot;, &quot;M&quot;, &quot;F&quot;, &quot;M&quot;, &quot;M&quot;, &quot;M&quot;, &quot;F&quot;, &quot;M&quot;, &quot;F&quot;, &quot;F&quot;, &quot;F&quot;,…
+## $ hindfoot_length &lt;dbl&gt; 32, 33, 37, 36, 35, 14, NA, 37, 34, 20, 53, 38, 35, NA…
+## $ weight          &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ genus           &lt;chr&gt; &quot;Neotoma&quot;, &quot;Neotoma&quot;, &quot;Dipodomys&quot;, &quot;Dipodomys&quot;, &quot;Dipod…
+## $ species         &lt;chr&gt; &quot;albigula&quot;, &quot;albigula&quot;, &quot;merriami&quot;, &quot;merriami&quot;, &quot;merri…
+## $ taxa            &lt;chr&gt; &quot;Rodent&quot;, &quot;Rodent&quot;, &quot;Rodent&quot;, &quot;Rodent&quot;, &quot;Rodent&quot;, &quot;Rod…
+## $ plot_type       &lt;chr&gt; &quot;Control&quot;, &quot;Long-term Krat Exclosure&quot;, &quot;Control&quot;, &quot;Rod…</code></pre>
+</div>
+<div id="how-nas-are-treated" class="section level4">
+<h4>How NA’s are treated:</h4>
+<p>It appears that the NA’s are already represented by NA.</p>
+<pre class="r"><code>miss_var_summary(deserts)</code></pre>
+<pre><code>## # A tibble: 13 × 3
+##    variable        n_miss pct_miss
+##    &lt;chr&gt;            &lt;int&gt;    &lt;dbl&gt;
+##  1 hindfoot_length   3348     9.62
+##  2 weight            2503     7.20
+##  3 sex               1748     5.03
+##  4 record_id            0     0   
+##  5 month                0     0   
+##  6 day                  0     0   
+##  7 year                 0     0   
+##  8 plot_id              0     0   
+##  9 species_id           0     0   
+## 10 genus                0     0   
+## 11 species              0     0   
+## 12 taxa                 0     0   
+## 13 plot_type            0     0</code></pre>
+<pre class="r"><code>summary(deserts)</code></pre>
+<pre><code>##    record_id         month             day            year         plot_id     
+##  Min.   :    1   Min.   : 1.000   Min.   : 1.0   Min.   :1977   Min.   : 1.00  
+##  1st Qu.: 8964   1st Qu.: 4.000   1st Qu.: 9.0   1st Qu.:1984   1st Qu.: 5.00  
+##  Median :17762   Median : 6.000   Median :16.0   Median :1990   Median :11.00  
+##  Mean   :17804   Mean   : 6.474   Mean   :16.1   Mean   :1990   Mean   :11.34  
+##  3rd Qu.:26655   3rd Qu.:10.000   3rd Qu.:23.0   3rd Qu.:1997   3rd Qu.:17.00  
+##  Max.   :35548   Max.   :12.000   Max.   :31.0   Max.   :2002   Max.   :24.00  
+##                                                                                
+##   species_id            sex            hindfoot_length     weight      
+##  Length:34786       Length:34786       Min.   : 2.00   Min.   :  4.00  
+##  Class :character   Class :character   1st Qu.:21.00   1st Qu.: 20.00  
+##  Mode  :character   Mode  :character   Median :32.00   Median : 37.00  
+##                                        Mean   :29.29   Mean   : 42.67  
+##                                        3rd Qu.:36.00   3rd Qu.: 48.00  
+##                                        Max.   :70.00   Max.   :280.00  
+##                                        NA&#39;s   :3348    NA&#39;s   :2503    
+##     genus             species              taxa            plot_type        
+##  Length:34786       Length:34786       Length:34786       Length:34786      
+##  Class :character   Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+##                                                                             
+##                                                                             
+##                                                                             
+## </code></pre>
+</div>
+<div id="determining-whether-the-data-is-tidy" class="section level4">
+<h4>Determining whether the data is tidy:</h4>
+</div>
+<div id="the-data-does-appear-to-be-tidy-since-the-variables-have-their-own-columns-each-observation-has-its-own-row-and-each-value-has-its-own-cell." class="section level4">
+<h4>The data does appear to be tidy, since the variables have their own
+columns, each observation has its own row, and each value has its own
+cell.</h4>
+<pre class="r"><code>deserts</code></pre>
+<pre><code>## # A tibble: 34,786 × 13
+##    record_id month   day  year plot_id species_id sex   hindfoot_length weight
+##        &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;           &lt;dbl&gt;  &lt;dbl&gt;
+##  1         1     7    16  1977       2 NL         M                  32     NA
+##  2         2     7    16  1977       3 NL         M                  33     NA
+##  3         3     7    16  1977       2 DM         F                  37     NA
+##  4         4     7    16  1977       7 DM         M                  36     NA
+##  5         5     7    16  1977       3 DM         M                  35     NA
+##  6         6     7    16  1977       1 PF         M                  14     NA
+##  7         7     7    16  1977       2 PE         F                  NA     NA
+##  8         8     7    16  1977       1 DM         M                  37     NA
+##  9         9     7    16  1977       1 DM         F                  34     NA
+## 10        10     7    16  1977       6 PF         F                  20     NA
+## # ℹ 34,776 more rows
+## # ℹ 4 more variables: genus &lt;chr&gt;, species &lt;chr&gt;, taxa &lt;chr&gt;, plot_type &lt;chr&gt;</code></pre>
+</div>
+</div>
+<div id="how-many-genera-and-species-are-represented-in-the-data-what-are-the-total-number-of-observations-which-species-is-most-least-frequently-sampled-in-the-study" class="section level3">
+<h3>2. How many genera and species are represented in the data? What are
 the total number of observations? Which species is most/ least
-frequently sampled in the study?</p></li>
-<li><p>What is the proportion of taxa included in this study? Show a
-table and plot that reflects this count.</p></li>
-<li><p>For the taxa included in the study, use the fill option to show
-the proportion of individuals sampled by
-<code>plot_type.</code></p></li>
-<li><p>What is the range of weight for each species included in the
+frequently sampled in the study?</h3>
+<pre class="r"><code>deserts %&gt;% 
+  summarise(n_genera = n_distinct(genus),
+            n_species = n_distinct(species),
+            n_total_observations = n())</code></pre>
+<pre><code>## # A tibble: 1 × 3
+##   n_genera n_species n_total_observations
+##      &lt;int&gt;     &lt;int&gt;                &lt;int&gt;
+## 1       26        40                34786</code></pre>
+<div id="there-are-26-distinct-genera-and-40-distinct-species-represented-in-the-data." class="section level4">
+<h4>There are 26 distinct genera and 40 distinct species represented in
+the data.</h4>
+</div>
+<div id="there-are-34786-total-observations-in-the-deserts-data-set." class="section level4">
+<h4>There are 34786 total observations in the <code>deserts</code> data
+set.</h4>
+<pre class="r"><code>deserts %&gt;% 
+  count(species) %&gt;% 
+  arrange(n)</code></pre>
+<pre><code>## # A tibble: 40 × 2
+##    species          n
+##    &lt;chr&gt;        &lt;int&gt;
+##  1 clarki           1
+##  2 scutalatus       1
+##  3 tereticaudus     1
+##  4 tigris           1
+##  5 uniparens        1
+##  6 viridis          1
+##  7 leucophrys       2
+##  8 savannarum       2
+##  9 fuscus           5
+## 10 undulatus        5
+## # ℹ 30 more rows</code></pre>
+</div>
+<div id="thus-the-species-is-least-frequently-sampled-in-the-study-are-clarki-scutalatus-tereticaudus-tigris-uniparens-viridis-each-only-represented-1-time-in-the-data-set." class="section level4">
+<h4>Thus, the species is least frequently sampled in the study are
+clarki, scutalatus, tereticaudus, tigris, uniparens, viridis, each only
+represented 1 time in the data set.</h4>
+<pre class="r"><code>deserts %&gt;% 
+  count(species) %&gt;% 
+  arrange(desc(n))</code></pre>
+<pre><code>## # A tibble: 40 × 2
+##    species          n
+##    &lt;chr&gt;        &lt;int&gt;
+##  1 merriami     10596
+##  2 penicillatus  3123
+##  3 ordii         3027
+##  4 baileyi       2891
+##  5 megalotis     2609
+##  6 spectabilis   2504
+##  7 torridus      2249
+##  8 flavus        1597
+##  9 eremicus      1299
+## 10 albigula      1252
+## # ℹ 30 more rows</code></pre>
+</div>
+<div id="thus-the-species-is-most-frequently-sampled-in-the-study-is-merriami-represented-10596-times-in-the-data-set." class="section level4">
+<h4>Thus, the species is most frequently sampled in the study is
+merriami, represented 10596 times in the data set.</h4>
+</div>
+</div>
+<div id="what-is-the-proportion-of-taxa-included-in-this-study-show-a-table-and-plot-that-reflects-this-count." class="section level3">
+<h3>3. What is the proportion of taxa included in this study? Show a
+table and plot that reflects this count.</h3>
+<div id="table-of-the-proportion-of-taxa-included-in-this-study" class="section level4">
+<h4>Table of the proportion of taxa included in this study:</h4>
+<pre class="r"><code>taxa_proportions &lt;- deserts %&gt;% 
+  tabyl(taxa)
+taxa_proportions</code></pre>
+<pre><code>##     taxa     n      percent
+##     Bird   450 0.0129362387
+##   Rabbit    75 0.0021560398
+##  Reptile    14 0.0004024608
+##   Rodent 34247 0.9845052607</code></pre>
+</div>
+<div id="plot-that-represents-the-proportion-of-taxa-included-in-this-study" class="section level4">
+<h4>Plot that represents the proportion of taxa included in this
+study:</h4>
+<pre class="r"><code>#taxa_proportions %&gt;% 
+  #ggplot(aes(x = taxa, y = percent)) +
+  #geom_col() +</code></pre>
+</div>
+</div>
+<div id="for-the-taxa-included-in-the-study-use-the-fill-option-to-show-the-proportion-of-individuals-sampled-by-plot_type." class="section level3">
+<h3>4. For the taxa included in the study, use the fill option to show
+the proportion of individuals sampled by <code>plot_type.</code></h3>
+</div>
+<div id="what-is-the-range-of-weight-for-each-species-included-in-the-study-remove-any-observations-of-weight-that-are-na-so-they-do-not-show-up-in-the-plot." class="section level3">
+<h3>5. What is the range of weight for each species included in the
 study? Remove any observations of weight that are NA so they do not show
-up in the plot.</p></li>
-<li><p>Add another layer to your answer from #5 using
+up in the plot.</h3>
+</div>
+<div id="add-another-layer-to-your-answer-from-5-using-geom_point-to-get-an-idea-of-how-many-measurements-were-taken-for-each-species." class="section level3">
+<h3>6. Add another layer to your answer from #5 using
 <code>geom_point</code> to get an idea of how many measurements were
-taken for each species.</p></li>
-<li><p><a href="https://en.wikipedia.org/wiki/Merriam&#39;s_kangaroo_rat">Dipodomys
+taken for each species.</h3>
+</div>
+<div id="dipodomys-merriami-is-the-most-frequently-sampled-animal-in-the-study.-how-have-the-number-of-observations-of-this-species-changed-over-the-years-included-in-the-study" class="section level3">
+<h3>7. <a href="https://en.wikipedia.org/wiki/Merriam&#39;s_kangaroo_rat">Dipodomys
 merriami</a> is the most frequently sampled animal in the study. How
 have the number of observations of this species changed over the years
-included in the study?</p></li>
-<li><p>What is the relationship between <code>weight</code> and
+included in the study?</h3>
+</div>
+<div id="what-is-the-relationship-between-weight-and-hindfoot-length-consider-whether-or-not-over-plotting-is-an-issue." class="section level3">
+<h3>8. What is the relationship between <code>weight</code> and
 <code>hindfoot</code> length? Consider whether or not over plotting is
-an issue.</p></li>
-<li><p>Which two species have, on average, the highest weight? Once you
+an issue.</h3>
+</div>
+<div id="which-two-species-have-on-average-the-highest-weight-once-you-have-identified-them-make-a-new-column-that-is-a-ratio-of-weight-to-hindfoot_length.-make-a-plot-that-shows-the-range-of-this-new-ratio-and-fill-by-sex." class="section level3">
+<h3>9. Which two species have, on average, the highest weight? Once you
 have identified them, make a new column that is a ratio of
 <code>weight</code> to <code>hindfoot_length</code>. Make a plot that
-shows the range of this new ratio and fill by sex.</p></li>
-<li><p>Make one plot of your choice! Make sure to include at least two
-of the aesthetics options you have learned.</p></li>
-</ol>
+shows the range of this new ratio and fill by sex.</h3>
+</div>
+<div id="make-one-plot-of-your-choice-make-sure-to-include-at-least-two-of-the-aesthetics-options-you-have-learned." class="section level3">
+<h3>10. Make one plot of your choice! Make sure to include at least two
+of the aesthetics options you have learned.</h3>
+</div>
 </div>
 <div id="push-your-final-code-to-github" class="section level2">
 <h2>Push your final code to GitHub!</h2>
