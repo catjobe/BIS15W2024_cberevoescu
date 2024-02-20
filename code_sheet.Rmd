@@ -401,6 +401,171 @@ versus using across()
   #summarize(across(c(species, island, sex), n_distinct))
 ```
 
+# Lab 8
 
+## `nanair` package    
+
+`miss_var_summary` provides a summary of NA's across the data frame.    
+
+Using `mutate()` and `na_if()` to replace 0's with NA's. This chunk allows us to address problems in a single variable.    
+
+```{r}
+#data.frame <- data.frame %>% 
+  #mutate(variable=na_if(variable, 0))
+```
+
+Using `miss_var_summary` with `group_by()`. This helps us better evaluate where NA's are in the data.    
+
+```{r}
+#data.frame %>%
+  #group_by(variable) %>%
+  #miss_var_summary(variable=T)
+```
+
+Using `naniar` to replace a specific value (like -999) with NA across the entire data set.   
+
+```{r}
+#data.frame %>% 
+  #replace_with_na_all(condition = ~.x == -999)%>% 
+#miss_var_summary()
+```
+
+`naniar` has some built-in examples of common values or character strings used to represent NA's. The chunk below will use these built-in parameters to replace NA's across the entire data set.    
+
+```{r}
+#common_na_strings
+```
+
+```{r}
+#common_na_numbers
+```
+
+```{r}
+#data.frame %>% 
+  #replace_with_na_all(condition = ~.x %in% c(common_na_strings, common_na_numbers)) %>% 
+  #mutate(variable=na_if(variable, "not measured"))
+```
+
+## Dealing with NA's in advance- nuclear option   
+
+```{r}
+#read_csv(file = "data/mammal_lifehistories_v3.csv", na = c("NA", " ", ".", "-999", "not measured")) %>% clean_names()
+```
+
+# Lab 9    
+
+## Tidy data    
+
+Most "wild" data are organized incorrectly for work in R and, as you might expect, the tools used to transform data are a core part of the tidyverse. I will attempt to summarize the most important points below, but you should read [chapter 12 of the data science text](https://r4ds.had.co.nz/tidy-data.html) for a more thorough explanation.  
+
+`Tidy` data follows three conventions:   
+(1) each variable has its own column  
+(2) each observation has its own row  
+(3) each value has its own cell  
+
+## `pivot_longer()`  
+
+Scientists frequently use spreadsheets that are organized to make data entry efficient - **wide format**. Wide format creates a problem because column names may actually represent values of a variable. The command `pivot_longer()` shifts data from wide to long format.   
+
+Rules:  
++ `pivot_longer`(cols, names_to, values_to)
++ `cols` - Columns to pivot to longer format
++ `names_to` - Name of the new column; contains column names of gathered columns as values
++ `values_to` - Name of the new column; contains the data stored in the values of gathered columns.    
+
+## Potential Examples:    
+
+### 1. column names are data.  
+
+#### Solution:   
+
+Reshape the table to long format while keeping track of column names and values, using `pivot_longer()`.    
+
+```{r}
+#dataframe %>% 
+  #pivot_longer(-patient, 
+               #names_to = "drug", 
+               #values_to="heartrate" 
+               #)
+```
+
+### 2. some column names are data.  
+
+#### Solution 1: specify a range of columns that you want to pivot.    
+
+```{r}
+#dataframe <- 
+  #dataframe %>% 
+  #pivot_longer(wk1:wk76, # a range of columns
+               #names_to = "week",
+               #values_to = "rank", 
+               #values_drop_na = TRUE #this will drop the NA's
+               #)
+```
+
+#### Solution 2: OR, specify columns that you want to stay fixed.    
+
+```{r}
+#dataframe <- 
+  #dataframe %>% 
+  #pivot_longer(-c(artist, track, date.entered), #specific columns to stay fixed
+               #names_to = "week",
+               #values_to = "rank",
+               #values_drop_na = TRUE
+               #)
+```
+
+#### Solution 3: identify columns by a prefix, remove the prefix and all NA's.    
+
+```{r}
+#dataframe %>% 
+   #pivot_longer(
+   #cols = starts_with("wk"), #columns that start with "wk"
+   #names_to = "week",
+   #names_prefix = "wk",
+   #values_to = "rank",
+   #values_drop_na = TRUE)
+```
+
+### 3. more than one variable in a column name.   
+
+`names_sep` helps pull these apart, but we still have "exp" and "rep" to deal with.   
+
+```{r}
+#dataframe %>% 
+  #pivot_longer(
+    #exp1_rep1:exp3_rep3,
+    #names_to= c("experiment", "replicate"),
+    #names_sep="_",
+    #values_to="mRNA_expression"
+  #)
+```
+
+## `unite()`    
+
+`unite()` is the opposite of separate(), give a new column name and then list the columns to combine with a separation character.    
+
+## `pivot_wider()`    
+
+The opposite of `pivot_longer()`. You use `pivot_wider()` when you have an observation scattered across multiple rows.      
+
+Rules:  
++ `pivot_wider`(names_from, values_from)  
++ `names_from` - Values in the `names_from` column will become new column names  
++ `values_from` - Cell values will be taken from the `values_from` column    
+
+# Lab 10    
+
+## Data Types    
+
++ `discrete` quantitative data that only contains integers
++ `continuous` quantitative data that can take any numerical value
++ `categorical` qualitative data that can take on a limited number of values    
+
+## Basic Syntax.   
+
+**plot= data + geom_ + aesthetics**.  
+
+First call the ggplot function, identify the data, and specify the axes. Then add the `geom` type to describe how we want our data represented. Lastly, add aesthetics.     
 
 

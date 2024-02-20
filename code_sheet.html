@@ -369,10 +369,10 @@ Automatically run code chunk: command + return</p>
 <pre class="r"><code>#install.packages(&quot;tidyverse&quot;)
 library(&quot;tidyverse&quot;)</code></pre>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.4
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
 ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
 ## ✔ ggplot2   3.4.4     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+## ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
 ## ✔ purrr     1.0.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
@@ -666,6 +666,171 @@ across multiple variables.</p>
 <p>versus using across()</p>
 <pre class="r"><code>#penguins %&gt;%
   #summarize(across(c(species, island, sex), n_distinct))</code></pre>
+</div>
+</div>
+<div id="lab-8" class="section level1">
+<h1>Lab 8</h1>
+<div id="nanair-package" class="section level2">
+<h2><code>nanair</code> package</h2>
+<p><code>miss_var_summary</code> provides a summary of NA’s across the
+data frame.</p>
+<p>Using <code>mutate()</code> and <code>na_if()</code> to replace 0’s
+with NA’s. This chunk allows us to address problems in a single
+variable.</p>
+<pre class="r"><code>#data.frame &lt;- data.frame %&gt;% 
+  #mutate(variable=na_if(variable, 0))</code></pre>
+<p>Using <code>miss_var_summary</code> with <code>group_by()</code>.
+This helps us better evaluate where NA’s are in the data.</p>
+<pre class="r"><code>#data.frame %&gt;%
+  #group_by(variable) %&gt;%
+  #miss_var_summary(variable=T)</code></pre>
+<p>Using <code>naniar</code> to replace a specific value (like -999)
+with NA across the entire data set.</p>
+<pre class="r"><code>#data.frame %&gt;% 
+  #replace_with_na_all(condition = ~.x == -999)%&gt;% 
+#miss_var_summary()</code></pre>
+<p><code>naniar</code> has some built-in examples of common values or
+character strings used to represent NA’s. The chunk below will use these
+built-in parameters to replace NA’s across the entire data set.</p>
+<pre class="r"><code>#common_na_strings</code></pre>
+<pre class="r"><code>#common_na_numbers</code></pre>
+<pre class="r"><code>#data.frame %&gt;% 
+  #replace_with_na_all(condition = ~.x %in% c(common_na_strings, common_na_numbers)) %&gt;% 
+  #mutate(variable=na_if(variable, &quot;not measured&quot;))</code></pre>
+</div>
+<div id="dealing-with-nas-in-advance--nuclear-option" class="section level2">
+<h2>Dealing with NA’s in advance- nuclear option</h2>
+<pre class="r"><code>#read_csv(file = &quot;data/mammal_lifehistories_v3.csv&quot;, na = c(&quot;NA&quot;, &quot; &quot;, &quot;.&quot;, &quot;-999&quot;, &quot;not measured&quot;)) %&gt;% clean_names()</code></pre>
+</div>
+</div>
+<div id="lab-9" class="section level1">
+<h1>Lab 9</h1>
+<div id="tidy-data" class="section level2">
+<h2>Tidy data</h2>
+<p>Most “wild” data are organized incorrectly for work in R and, as you
+might expect, the tools used to transform data are a core part of the
+tidyverse. I will attempt to summarize the most important points below,
+but you should read <a href="https://r4ds.had.co.nz/tidy-data.html">chapter 12 of the data
+science text</a> for a more thorough explanation.</p>
+<p><code>Tidy</code> data follows three conventions:<br />
+(1) each variable has its own column<br />
+(2) each observation has its own row<br />
+(3) each value has its own cell</p>
+</div>
+<div id="pivot_longer" class="section level2">
+<h2><code>pivot_longer()</code></h2>
+<p>Scientists frequently use spreadsheets that are organized to make
+data entry efficient - <strong>wide format</strong>. Wide format creates
+a problem because column names may actually represent values of a
+variable. The command <code>pivot_longer()</code> shifts data from wide
+to long format.</p>
+<p>Rules:<br />
++ <code>pivot_longer</code>(cols, names_to, values_to) +
+<code>cols</code> - Columns to pivot to longer format +
+<code>names_to</code> - Name of the new column; contains column names of
+gathered columns as values + <code>values_to</code> - Name of the new
+column; contains the data stored in the values of gathered columns.</p>
+</div>
+<div id="potential-examples" class="section level2">
+<h2>Potential Examples:</h2>
+<div id="column-names-are-data." class="section level3">
+<h3>1. column names are data.</h3>
+<div id="solution" class="section level4">
+<h4>Solution:</h4>
+<p>Reshape the table to long format while keeping track of column names
+and values, using <code>pivot_longer()</code>.</p>
+<pre class="r"><code>#dataframe %&gt;% 
+  #pivot_longer(-patient, 
+               #names_to = &quot;drug&quot;, 
+               #values_to=&quot;heartrate&quot; 
+               #)</code></pre>
+</div>
+</div>
+<div id="some-column-names-are-data." class="section level3">
+<h3>2. some column names are data.</h3>
+<div id="solution-1-specify-a-range-of-columns-that-you-want-to-pivot." class="section level4">
+<h4>Solution 1: specify a range of columns that you want to pivot.</h4>
+<pre class="r"><code>#dataframe &lt;- 
+  #dataframe %&gt;% 
+  #pivot_longer(wk1:wk76, # a range of columns
+               #names_to = &quot;week&quot;,
+               #values_to = &quot;rank&quot;, 
+               #values_drop_na = TRUE #this will drop the NA&#39;s
+               #)</code></pre>
+</div>
+<div id="solution-2-or-specify-columns-that-you-want-to-stay-fixed." class="section level4">
+<h4>Solution 2: OR, specify columns that you want to stay fixed.</h4>
+<pre class="r"><code>#dataframe &lt;- 
+  #dataframe %&gt;% 
+  #pivot_longer(-c(artist, track, date.entered), #specific columns to stay fixed
+               #names_to = &quot;week&quot;,
+               #values_to = &quot;rank&quot;,
+               #values_drop_na = TRUE
+               #)</code></pre>
+</div>
+<div id="solution-3-identify-columns-by-a-prefix-remove-the-prefix-and-all-nas." class="section level4">
+<h4>Solution 3: identify columns by a prefix, remove the prefix and all
+NA’s.</h4>
+<pre class="r"><code>#dataframe %&gt;% 
+   #pivot_longer(
+   #cols = starts_with(&quot;wk&quot;), #columns that start with &quot;wk&quot;
+   #names_to = &quot;week&quot;,
+   #names_prefix = &quot;wk&quot;,
+   #values_to = &quot;rank&quot;,
+   #values_drop_na = TRUE)</code></pre>
+</div>
+</div>
+<div id="more-than-one-variable-in-a-column-name." class="section level3">
+<h3>3. more than one variable in a column name.</h3>
+<p><code>names_sep</code> helps pull these apart, but we still have
+“exp” and “rep” to deal with.</p>
+<pre class="r"><code>#dataframe %&gt;% 
+  #pivot_longer(
+    #exp1_rep1:exp3_rep3,
+    #names_to= c(&quot;experiment&quot;, &quot;replicate&quot;),
+    #names_sep=&quot;_&quot;,
+    #values_to=&quot;mRNA_expression&quot;
+  #)</code></pre>
+</div>
+</div>
+<div id="unite" class="section level2">
+<h2><code>unite()</code></h2>
+<p><code>unite()</code> is the opposite of separate(), give a new column
+name and then list the columns to combine with a separation
+character.</p>
+</div>
+<div id="pivot_wider" class="section level2">
+<h2><code>pivot_wider()</code></h2>
+<p>The opposite of <code>pivot_longer()</code>. You use
+<code>pivot_wider()</code> when you have an observation scattered across
+multiple rows.</p>
+<p>Rules:<br />
++ <code>pivot_wider</code>(names_from, values_from)<br />
++ <code>names_from</code> - Values in the <code>names_from</code> column
+will become new column names<br />
++ <code>values_from</code> - Cell values will be taken from the
+<code>values_from</code> column</p>
+</div>
+</div>
+<div id="lab-10" class="section level1">
+<h1>Lab 10</h1>
+<div id="data-types" class="section level2">
+<h2>Data Types</h2>
+<ul>
+<li><code>discrete</code> quantitative data that only contains
+integers</li>
+<li><code>continuous</code> quantitative data that can take any
+numerical value</li>
+<li><code>categorical</code> qualitative data that can take on a limited
+number of values</li>
+</ul>
+</div>
+<div id="basic-syntax." class="section level2">
+<h2>Basic Syntax.</h2>
+<p><strong>plot= data + geom_ + aesthetics</strong>.</p>
+<p>First call the ggplot function, identify the data, and specify the
+axes. Then add the <code>geom</code> type to describe how we want our
+data represented. Lastly, add aesthetics.</p>
 </div>
 </div>
 
