@@ -11,7 +11,7 @@
 
 <meta name="author" content="Catrinel Berevoescu" />
 
-<meta name="date" content="2024-02-15" />
+<meta name="date" content="2024-02-19" />
 
 <title>Homework 9</title>
 
@@ -376,7 +376,7 @@ display: none;
 
 <h1 class="title toc-ignore">Homework 9</h1>
 <h4 class="author">Catrinel Berevoescu</h4>
-<h4 class="date">2024-02-15</h4>
+<h4 class="date">2024-02-19</h4>
 
 </div>
 
@@ -657,7 +657,7 @@ data frame that is restricted to UC institutions. You can remove
 as we are only interested in undergraduate institutions.</h3>
 <p>Creating a data frame that is restricted to UC institutions:</p>
 <pre class="r"><code>uc_colleges &lt;- colleges %&gt;% 
-  filter(grepl(&#39;University of California&#39;, instnm)) #filtering by only UC institutions
+   filter_all(any_vars(str_detect(., pattern = &quot;University of California&quot;))) #filtering by only UC institutions
 uc_colleges</code></pre>
 <pre><code>## # A tibble: 10 × 10
 ##    instnm      city  stabbr zip   adm_rate sat_avg pcip26 costt4_a c150_4_pooled

@@ -1,7 +1,7 @@
 ---
 title: "Homework 9"
 author: "Catrinel Berevoescu"
-date: "2024-02-15"
+date: "2024-02-19"
 output:
   html_document: 
     theme: spacelab
@@ -343,7 +343,7 @@ Creating a data frame that is restricted to UC institutions:
 
 ```r
 uc_colleges <- colleges %>% 
-  filter(grepl('University of California', instnm)) #filtering by only UC institutions
+   filter_all(any_vars(str_detect(., pattern = "University of California"))) #filtering by only UC institutions
 uc_colleges
 ```
 
