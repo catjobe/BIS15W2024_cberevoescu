@@ -196,9 +196,16 @@ univ_calif_final
 #### Numerical Summary:    
 
 ```{r}
+summary(univ_calif_final$adm_rate)
+```
+
+
+```{r}
 univ_calif_final %>% 
   summarise(min_adm_rate = min(adm_rate, na.rm = T),
-            max_adm_rate = max(adm_rate, na.rm = T)) #summarizing the data based off of minimum and maximum admission rate values
+            max_adm_rate = max(adm_rate, na.rm = T),
+            med_adm_rate = median(adm_rate, na.rm = T),
+            mean_adm_rate = mean(adm_rate, na.rm = T)) #summarizing the data based off of minimum and maximum admission rate values
 ```
 
 #### The UC with the lowest admission rate is UC Berkeley, with an admissions rate of 0.1693 (16.93%):       

@@ -1,7 +1,7 @@
 ---
 title: "Homework 9"
 author: "Catrinel Berevoescu"
-date: "2024-02-19"
+date: "2024-02-20"
 output:
   html_document: 
     theme: spacelab
@@ -418,16 +418,29 @@ univ_calif_final
 
 
 ```r
-univ_calif_final %>% 
-  summarise(min_adm_rate = min(adm_rate, na.rm = T),
-            max_adm_rate = max(adm_rate, na.rm = T)) #summarizing the data based off of minimum and maximum admission rate values
+summary(univ_calif_final$adm_rate)
 ```
 
 ```
-## # A tibble: 1 × 2
-##   min_adm_rate max_adm_rate
-##          <dbl>        <dbl>
-## 1        0.169        0.663
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.1693  0.3124  0.3821  0.3918  0.4617  0.6634
+```
+
+
+
+```r
+univ_calif_final %>% 
+  summarise(min_adm_rate = min(adm_rate, na.rm = T),
+            max_adm_rate = max(adm_rate, na.rm = T),
+            med_adm_rate = median(adm_rate, na.rm = T),
+            mean_adm_rate = mean(adm_rate, na.rm = T)) #summarizing the data based off of minimum and maximum admission rate values
+```
+
+```
+## # A tibble: 1 × 4
+##   min_adm_rate max_adm_rate med_adm_rate mean_adm_rate
+##          <dbl>        <dbl>        <dbl>         <dbl>
+## 1        0.169        0.663        0.382         0.392
 ```
 
 #### The UC with the lowest admission rate is UC Berkeley, with an admissions rate of 0.1693 (16.93%):       
@@ -471,7 +484,7 @@ univ_calif_final %>%
   geom_col()
 ```
 
-![](hw9_files/figure-html/unnamed-chunk-22-1.png)<!-- -->
+![](hw9_files/figure-html/unnamed-chunk-23-1.png)<!-- -->
 
 ### 10. If you wanted to get a degree in biological or biomedical sciences, which campus confers the majority of these degrees? Produce a numerical summary and an appropriate plot.    
 
@@ -507,6 +520,6 @@ univ_calif_final %>%
   geom_col()
 ```
 
-![](hw9_files/figure-html/unnamed-chunk-24-1.png)<!-- -->
+![](hw9_files/figure-html/unnamed-chunk-25-1.png)<!-- -->
 
 ## Knit Your Output and Post to [GitHub](https://github.com/FRS417-DataScienceBiologists)
