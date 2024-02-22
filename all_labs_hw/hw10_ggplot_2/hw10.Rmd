@@ -179,6 +179,16 @@ deserts %>%
   summarize(n_observations = n()) #number of observations for each year
 ```
 
+
+```{r}
+deserts %>% 
+  ggplot(aes(x = year)) + #creating the plot
+  geom_bar() + #creating the barplot
+  labs(title = "Number of Observations by Year",
+       x = "Year") + #adding labels
+  theme(plot.title = element_text(size = rel(1.3), hjust = 0.5)) #resizing and moving labels
+```
+
 Using a scatterplot to get an idea of the trend of sampling over the years:    
 
 ```{r}
@@ -194,15 +204,6 @@ deserts %>%
 ```
 
 #### Based on the plot above, there appears to be a loose association between the years in which this data was collected and the number of observations. It appears that as time has passed, MORE observations have been made. In other words, as the number of observations of this species increased over the years included in the study.  
-
-```{r}
-deserts %>% 
-  ggplot(aes(x = year)) + #creating the plot
-  geom_bar() + #creating the barplot
-  labs(title = "Number of Observations by Year",
-       x = "Year") + #adding labels
-  theme(plot.title = element_text(size = rel(1.3), hjust = 0.5)) #resizing and moving labels
-```
 
 ### 8. What is the relationship between `weight` and `hindfoot` length? Consider whether or not over plotting is an issue. 
 
