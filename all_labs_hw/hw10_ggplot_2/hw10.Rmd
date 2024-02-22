@@ -141,6 +141,8 @@ deserts %>%
 
 ### 5. What is the range of weight for each species included in the study? Remove any observations of weight that are NA so they do not show up in the plot.    
 
+The range of weights for each species included in the study:    
+
 ```{r}
 deserts %>% 
   filter(weight != "NA") %>% #removing any observations of weight NA 
@@ -244,7 +246,7 @@ deserts
 top_species_desert %>% 
   filter(sex != "NA") %>% #removing NA's
   ggplot(aes(x = species, y = weight_to_hindfoot_length_ratio, fill = sex)) + #creating the plot
-  geom_boxplot(alpha = 0.5) #creating the boxplot and making the boxes more transparent
+  geom_boxplot(alpha = 0.5, na.rm = T) #creating the boxplot and making the boxes more transparent
 ```
 
 ### 10. Make one plot of your choice! Make sure to include at least two of the aesthetics options you have learned.    
@@ -255,7 +257,7 @@ top_species_desert %>%
 deserts %>% 
   filter(sex != "NA") %>% #filtering out the NA's in the sex column
   ggplot(aes(x = sex, y = weight, fill = plot_type)) + #creating the plot
-  geom_boxplot(alpha = 0.5) + #creating a boxplot
+  geom_boxplot(alpha = 0.5, na.rm = T) + #creating a boxplot
   labs(title = "Weight by Sex",
        x = "Sex",
        y = "Weight",
