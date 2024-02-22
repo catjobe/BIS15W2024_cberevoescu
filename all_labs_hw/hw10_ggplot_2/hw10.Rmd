@@ -210,12 +210,12 @@ deserts %>%
 
 #### It appears that as weight increases, so does hindfoot length, but based on the grouping of the data points that may not be a true association.      
 
-#### Overplotting was clearly an issue, so I resolved this using the `geom_jitter()` argument.    
+#### Overplotting was clearly an issue, so I tried to resolve this using the `geom_jitter()` argument.    
 
 ```{r}
 deserts %>% 
   ggplot(aes(x = weight, y = hindfoot_length)) + #creating the plot
-  geom_jitter(na.rm = T) + #reducing overplotting
+  geom_jitter(na.rm = T, size = 0.2) + #reducing overplotting
   labs(title = "Hindfoot Length vs Weight",
        x = "Weight",
        y = "Hindfoot Length") + #adding labels
