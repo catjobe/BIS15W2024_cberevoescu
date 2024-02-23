@@ -833,6 +833,260 @@ axes. Then add the <code>geom</code> type to describe how we want our
 data represented. Lastly, add aesthetics.</p>
 </div>
 </div>
+<div id="lab-11" class="section level1">
+<h1>Lab 11</h1>
+<div id="bar-plots" class="section level2">
+<h2>Bar Plots</h2>
+<p>Barplots count the number of observations in a categorical
+variable.</p>
+<div id="geom_col." class="section level3">
+<h3><code>geom_col</code>.</h3>
+<pre class="r"><code>#dataframe %&gt;% 
+  #count(variable, sort=T) %&gt;% 
+  #ggplot(aes(x=variable, y=variable2))+
+  #geom_col()+
+  #coord_flip()</code></pre>
+</div>
+<div id="geom_bar" class="section level3">
+<h3><code>geom_bar</code></h3>
+<pre class="r"><code>#dataframe %&gt;% 
+  #ggplot(aes(x=variable))+
+  #geom_bar()+
+  #coord_flip()</code></pre>
+</div>
+<div id="note-the-following-code-cancels-scientific-notation-for-the-session" class="section level3">
+<h3>NOTE: The following code cancels scientific notation for the
+session:</h3>
+<pre class="r"><code>options(scipen=999)</code></pre>
+<p>Can add <code>scale_y_log10()</code> to scale the data.</p>
+<p>Can adjust x-axis labels to make them more readable with
+<code>reorder</code>:</p>
+<pre class="r"><code>#life_history %&gt;% 
+  #group_by(order) %&gt;% 
+  #summarize(mean_mass=mean(mass, na.rm=T)) %&gt;% 
+  #ggplot(aes(x=reorder(order, mean_mass), y=mean_mass))+ #reorder the x-axis
+  #geom_col()+
+  #coord_flip()+
+  #scale_y_log10()</code></pre>
+</div>
+</div>
+<div id="scatterplots" class="section level2">
+<h2>Scatterplots</h2>
+<p>Scatterplots allow for comparisons of two continuous variables.</p>
+<pre class="r"><code>#life_history %&gt;% 
+  #ggplot(aes(x=gestation, y=wean_mass))+
+  #geom_jitter(na.rm=T)+ #geom_jitter instead of geom_point to avoid overplotting
+  #scale_y_log10()</code></pre>
+</div>
+<div id="boxplots" class="section level2">
+<h2>Boxplots</h2>
+<p>Box plots helps visualize a range of values; the x-axis typically has
+something categorical and the y-axis is the range.</p>
+<pre class="r"><code>#life_history %&gt;% 
+  #ggplot(aes(x=order, y=mass))+
+  #geom_boxplot(na.rm=T)+
+  #coord_flip()</code></pre>
+</div>
+<div id="aesthetics-labels" class="section level2">
+<h2>Aesthetics: Labels</h2>
+<p>Add a line of best fit with <code>geom_smooth</code>:</p>
+<pre class="r"><code>#elephants %&gt;% 
+  #ggplot(aes(x=age, y=height)) + 
+  #geom_point() + 
+  #geom_smooth(method=lm, se=F)</code></pre>
+<p>Adding and Moving/Resizing Labels:</p>
+<pre class="r"><code>#elephants %&gt;% 
+  #ggplot(aes(x=age, y=height)) + 
+  #geom_point() + 
+  #geom_smooth(method=lm, se=F)+
+  #labs(title=&quot;Elephant Age vs. Height&quot;,
+       #x=&quot;Age&quot;,
+       #y=&quot;Height&quot;)+
+  #theme(plot.title=element_text(size=rel(1.5), hjust=.5))</code></pre>
+<p><code>fill</code> is a common grouping option that colors in
+barplots.</p>
+<pre class="r"><code>#elephants %&gt;% 
+  #ggplot(aes(x=sex, fill=sex))+
+  #geom_bar()</code></pre>
+<p><code>size</code> adjusts the size of points relative to a continuous
+variable.</p>
+<pre class="r"><code>#life_history %&gt;% 
+  #ggplot(aes(x=gestation, y=log10(mass), size=mass))+
+  #geom_point(na.rm=T)</code></pre>
+<p>Coloring points by a categorical variable:</p>
+<pre class="r"><code>#p+geom_point(aes(color=thermoregulation), size=1.5)</code></pre>
+<p>Mapping shapes to another categorical variable:</p>
+<pre class="r"><code>#p+geom_point(aes(shape=thermoregulation, color=thermoregulation), size=1.5) # we use color here and not fill because we are not filling a shape</code></pre>
+<p>Building stacked bar plots:</p>
+<pre class="r"><code>#homerange %&gt;% 
+  #ggplot(aes(x = taxon, fill = trophic.guild)) + 
+  #geom_bar() +
+  #coord_flip() +
+  #labs(title = &quot;Observations by Taxon in Homerange Data&quot;,
+       #x = &quot;Taxonomic Group&quot;,
+       #fill = &quot;Trophic Guild&quot;) #fill is the legend title</code></pre>
+<p>Counts shown side-by-side by specifying
+<code>position=&quot;dodge&quot;</code>:</p>
+<pre class="r"><code>#homerange %&gt;% 
+  #ggplot(aes(x = taxon, fill = trophic.guild)) + 
+  #geom_bar(position = &quot;dodge&quot;) +
+  #labs(title = &quot;Observations by Taxon in Homerange Data&quot;,
+       #x = &quot;Taxonomic Group&quot;,
+       #fill = &quot;Trophic Guild&quot;) +
+  #coord_flip()</code></pre>
+<p>Orienting plots vertically:</p>
+<pre class="r"><code>#homerange %&gt;% 
+  #ggplot(aes(x = taxon, fill = trophic.guild)) +
+  #geom_bar(position = &quot;dodge&quot;) +
+  #theme(axis.text.x = element_text(angle = 60, hjust = 1)) + #angle is the angle of the text
+  #labs(title = &quot;Observations by Taxon in Homerange Data&quot;,
+       #x = &quot;Taxonomic Group&quot;,
+       #fill= &quot;Trophic Guild&quot;)</code></pre>
+<p>Scaling all bars to a percentage:</p>
+<pre class="r"><code>#homerange %&gt;% 
+  #ggplot(aes(x = taxon, fill = trophic.guild))+
+  #geom_bar(position = position_fill())+ 
+  #scale_y_continuous(labels = scales::percent)+
+  #coord_flip()</code></pre>
+<p>Using <code>group</code> to make individual box plots for each
+taxon:</p>
+<pre class="r"><code>#homerange %&gt;% 
+  #ggplot(aes(x = class, y = log10.mass, group = taxon)) +
+  #geom_boxplot()</code></pre>
+<p>Using <code>fill</code> to associate the different taxa with a color
+coded key:</p>
+<pre class="r"><code>#homerange %&gt;% 
+  #ggplot(aes(x = class, y = log10.mass, fill = taxon)) +
+  #geom_boxplot()</code></pre>
+</div>
+</div>
+<div id="lab-12" class="section level1">
+<h1>Lab 12</h1>
+<div id="line-plots" class="section level2">
+<h2>Line Plots</h2>
+<p>Line plots are great when you need to show changes over time.</p>
+<pre class="r"><code>#deserts %&gt;% 
+  #filter(species_id==&quot;DM&quot; | species_id==&quot;DS&quot;) %&gt;% 
+  #mutate(year = as.factor(year)) %&gt;%
+  #group_by(year, species_id) %&gt;% 
+  #summarise(n=n(), .groups=&#39;keep&#39;) %&gt;% 
+  #ggplot(aes(x=year, y=n, group=species_id, color=species_id))+
+  #geom_line()+
+  #geom_point(shape=2)+ # you can experiment with shapes
+  #theme(axis.text.x = element_text(angle = 60, hjust = 1))+
+  #labs(title = &quot;Number of samples for species DM &amp; DS&quot;,
+       #x = &quot;Year&quot;,
+       #fill = &quot;n&quot;)</code></pre>
+</div>
+<div id="histograms" class="section level2">
+<h2>Histograms</h2>
+<p>Histograms show the distribution of continuous variables.</p>
+<pre class="r"><code>#homerange %&gt;% 
+  #ggplot(aes(x = log10.mass)) +
+  #geom_histogram(color = &quot;black&quot;, fill = &quot;turquoise4&quot;, bins=10)+
+  #labs(title = &quot;Distribution of Body Mass&quot;)</code></pre>
+</div>
+<div id="density-plots" class="section level2">
+<h2>Density plots</h2>
+<p>Density plots are similar to histograms but they use a smoothing
+function to make the distribution more even and clean looking. They do
+not use bins.</p>
+<p>Plotting both the histogram and the density curve.</p>
+<pre class="r"><code>#homerange %&gt;% 
+  #ggplot(aes(x=log10.mass)) +
+  #geom_histogram(aes(y = after_stat(density)), fill = &quot;deepskyblue4&quot;, alpha = 0.4, color = &quot;black&quot;)+
+  #geom_density(color = &quot;red&quot;)+
+  #labs(title = &quot;Distribution of Body Mass&quot;)</code></pre>
+</div>
+<div id="creating-categories-with-mutate-and-case_when" class="section level2">
+<h2>Creating Categories with mutate and case_when()</h2>
+<p><code>case_when()</code> is a function from <code>dplyr</code>. It
+allows us to calculate a new variable from other variables, using
+<code>case_when()</code> within <code>mutate()</code> to do
+this.<code>case_when()</code> allows us to specify multiple
+conditions.</p>
+<pre class="r"><code>#homerange &lt;- homerange %&gt;% 
+             #mutate(mass_category = case_when(log10.mass &lt;= 1.75 ~ &quot;small&quot;,
+                                              #log10.mass &gt; 1.75 &amp; log10.mass &lt;= 2.75 ~ &quot;medium&quot;,
+                                              #log10.mass &gt; 2.75 ~ &quot;large&quot;))</code></pre>
+</div>
+<div id="ggplot-themes" class="section level2">
+<h2>ggplot themes</h2>
+<p>There are many options to change the theme of your plots within
+ggplot. Have a look: [here]<a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="uri">https://ggplot2.tidyverse.org/reference/ggtheme.html</a>).</p>
+<p>Example:</p>
+<pre class="r"><code>#p + theme_linedraw()+
+  #theme(axis.text.x = element_text(angle = 60, hjust=1))+
+  #labs(title = &quot;Observations by Taxon in Homerange Data&quot;,
+       #x = NULL,
+       #y= &quot;n&quot;,
+       #fill= &quot;Trophic Guild&quot;)</code></pre>
+</div>
+<div id="legends" class="section level2">
+<h2>Legends</h2>
+<p>Options for manipulating legends <a href="http://www.sthda.com/english/wiki/ggplot2-legend-easy-steps-to-change-the-position-and-the-appearance-of-a-graph-legend-in-r-software">here</a>.</p>
+</div>
+<div id="using-ggthemes" class="section level2">
+<h2>Using <code>ggthemes</code></h2>
+<p><a href="https://yutannihilation.github.io/allYourFigureAreBelongToUs/">ggthemes</a>.
+Some of these are nice because they are designed to mimic the look of
+popular publications.</p>
+</div>
+<div id="rcolorbrewer" class="section level2">
+<h2>RColorBrewer</h2>
+<p>The <a href="http://colorbrewer2.org/#type=sequential&amp;scheme=BuGn&amp;n=3">R
+Color Brewer</a> website helps with the color palettes. Two
+guidelines:</p>
+<p>+<code>scale_colour_brewer()</code> is for points<br />
++<code>scale_fill_brewer()</code> is for fills</p>
+</div>
+<div id="manually-setting-colors" class="section level2">
+<h2>Manually Setting Colors</h2>
+<p>Using <code>paleteer</code> to build a custom palette for
+consistency.</p>
+<p>To access the <code>paleteer</code> collection, add it to a new
+object:</p>
+<pre class="r"><code>#colors &lt;- paletteer::palettes_d_names</code></pre>
+<p>Setting and Displaying the palettes. <code>paleteer</code> is a
+collection of popular palettes.</p>
+<pre class="r"><code>#my_palette &lt;- paletteer_d(&quot;ggsci::nrc_npg&quot;)</code></pre>
+<pre class="r"><code>#barplot(rep(1,6), axes=FALSE, col=my_palette)</code></pre>
+<p>Identify <code>my_palette</code> as part of
+<code>scale_fill_manual()</code>:</p>
+<pre class="r"><code>#p+scale_fill_manual(values=my_palette)+
+  #theme(legend.position = &quot;bottom&quot;,
+        #axis.text.x = element_text(angle = 60, hjust=1))+
+  #labs(title = &quot;Observations by Taxon in Homerange Data&quot;,
+       #x = NULL,
+       #y= &quot;n&quot;,
+       #fill= &quot;Trophic Guild&quot;)</code></pre>
+</div>
+<div id="faceting" class="section level2">
+<h2><a href="https://ggplot2-book.org/facet.html">Faceting</a></h2>
+<p>Allows the creation of multi-panel plots for easy comparison.</p>
+<p><code>facet_wrap()</code> makes a ribbon of panels by a specified
+categorical variable and allows control over arrangement.</p>
+<pre class="r"><code>#homerange %&gt;% 
+  #ggplot(aes(x=taxon, y=log10.mass))+
+  #geom_boxplot()+
+  #facet_wrap(~trophic.guild, ncol=2)+
+  #theme(axis.text.x = element_text(angle = 60, hjust=1))</code></pre>
+<p><code>facet_grid()</code> allows control over the faceted variable;
+it can be arranged in rows or columns. rows~columns.</p>
+<pre class="r"><code>#homerange %&gt;% 
+  #ggplot(aes(x=taxon, y=log10.mass))+
+  #geom_boxplot()+
+  #facet_grid(trophic.guild~.)+
+  #theme(axis.text.x = element_text(angle = 60, hjust=1))</code></pre>
+<p><code>facet_grid()</code> allows comparison of two categorical
+variables (a~b; a is rows, b is columns).</p>
+<pre class="r"><code>#homerange %&gt;% 
+  #ggplot(aes(x=taxon, y=log10.mass))+
+  #geom_boxplot()+
+  #facet_grid(trophic.guild~thermoregulation)+
+  #theme(axis.text.x = element_text(angle = 60, hjust=1))</code></pre>
+</div>
+</div>
 
 
 

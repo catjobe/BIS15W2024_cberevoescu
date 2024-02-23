@@ -568,4 +568,338 @@ Rules:
 
 First call the ggplot function, identify the data, and specify the axes. Then add the `geom` type to describe how we want our data represented. Lastly, add aesthetics.     
 
+# Lab 11    
+
+## Bar Plots
+
+Barplots count the number of observations in a categorical variable.    
+
+### `geom_col`.   
+
+```{r}
+#dataframe %>% 
+  #count(variable, sort=T) %>% 
+  #ggplot(aes(x=variable, y=variable2))+
+  #geom_col()+
+  #coord_flip()
+```
+
+### `geom_bar`
+
+```{r}
+#dataframe %>% 
+  #ggplot(aes(x=variable))+
+  #geom_bar()+
+  #coord_flip()
+```
+
+### NOTE: The following code cancels scientific notation for the session:    
+
+```{r}
+options(scipen=999)
+```
+
+Can add `scale_y_log10()` to scale the data.   
+
+Can adjust x-axis labels to make them more readable with `reorder`:    
+
+```{r}
+#life_history %>% 
+  #group_by(order) %>% 
+  #summarize(mean_mass=mean(mass, na.rm=T)) %>% 
+  #ggplot(aes(x=reorder(order, mean_mass), y=mean_mass))+ #reorder the x-axis
+  #geom_col()+
+  #coord_flip()+
+  #scale_y_log10()
+```
+
+## Scatterplots    
+
+Scatterplots allow for comparisons of two continuous variables.    
+ 
+```{r}
+#life_history %>% 
+  #ggplot(aes(x=gestation, y=wean_mass))+
+  #geom_jitter(na.rm=T)+ #geom_jitter instead of geom_point to avoid overplotting
+  #scale_y_log10()
+```
+
+## Boxplots    
+
+Box plots helps visualize a range of values; the x-axis typically has something categorical and the y-axis is the range.    
+
+```{r}
+#life_history %>% 
+  #ggplot(aes(x=order, y=mass))+
+  #geom_boxplot(na.rm=T)+
+  #coord_flip()
+```
+
+## Aesthetics: Labels    
+
+Add a line of best fit with `geom_smooth`:   
+
+```{r}
+#elephants %>% 
+  #ggplot(aes(x=age, y=height)) + 
+  #geom_point() + 
+  #geom_smooth(method=lm, se=F)
+```
+
+Adding and Moving/Resizing Labels:   
+
+```{r}
+#elephants %>% 
+  #ggplot(aes(x=age, y=height)) + 
+  #geom_point() + 
+  #geom_smooth(method=lm, se=F)+
+  #labs(title="Elephant Age vs. Height",
+       #x="Age",
+       #y="Height")+
+  #theme(plot.title=element_text(size=rel(1.5), hjust=.5))
+```
+
+`fill` is a common grouping option that colors in barplots.    
+
+```{r}
+#elephants %>% 
+  #ggplot(aes(x=sex, fill=sex))+
+  #geom_bar()
+```
+
+`size` adjusts the size of points relative to a continuous variable.    
+
+```{r}
+#life_history %>% 
+  #ggplot(aes(x=gestation, y=log10(mass), size=mass))+
+  #geom_point(na.rm=T)
+```
+
+Coloring points by a categorical variable:   
+
+```{r}
+#p+geom_point(aes(color=thermoregulation), size=1.5)
+```
+
+Mapping shapes to another categorical variable:   
+
+```{r}
+#p+geom_point(aes(shape=thermoregulation, color=thermoregulation), size=1.5) # we use color here and not fill because we are not filling a shape
+```
+
+Building stacked bar plots:   
+
+```{r}
+#homerange %>% 
+  #ggplot(aes(x = taxon, fill = trophic.guild)) + 
+  #geom_bar() +
+  #coord_flip() +
+  #labs(title = "Observations by Taxon in Homerange Data",
+       #x = "Taxonomic Group",
+       #fill = "Trophic Guild") #fill is the legend title
+```
+
+Counts shown side-by-side by specifying `position="dodge"`:     
+
+```{r}
+#homerange %>% 
+  #ggplot(aes(x = taxon, fill = trophic.guild)) + 
+  #geom_bar(position = "dodge") +
+  #labs(title = "Observations by Taxon in Homerange Data",
+       #x = "Taxonomic Group",
+       #fill = "Trophic Guild") +
+  #coord_flip()
+```
+
+Orienting plots vertically:    
+
+```{r}
+#homerange %>% 
+  #ggplot(aes(x = taxon, fill = trophic.guild)) +
+  #geom_bar(position = "dodge") +
+  #theme(axis.text.x = element_text(angle = 60, hjust = 1)) + #angle is the angle of the text
+  #labs(title = "Observations by Taxon in Homerange Data",
+       #x = "Taxonomic Group",
+       #fill= "Trophic Guild")
+```
+
+Scaling all bars to a percentage:    
+
+```{r}
+#homerange %>% 
+  #ggplot(aes(x = taxon, fill = trophic.guild))+
+  #geom_bar(position = position_fill())+ 
+  #scale_y_continuous(labels = scales::percent)+
+  #coord_flip()
+```
+
+Using `group` to make individual box plots for each taxon:    
+
+```{r}
+#homerange %>% 
+  #ggplot(aes(x = class, y = log10.mass, group = taxon)) +
+  #geom_boxplot()
+```
+
+Using `fill` to associate the different taxa with a color coded key:
+
+```{r}
+#homerange %>% 
+  #ggplot(aes(x = class, y = log10.mass, fill = taxon)) +
+  #geom_boxplot()
+```
+
+# Lab 12    
+
+## Line Plots   
+
+Line plots are great when you need to show changes over time.   
+
+```{r}
+#deserts %>% 
+  #filter(species_id=="DM" | species_id=="DS") %>% 
+  #mutate(year = as.factor(year)) %>%
+  #group_by(year, species_id) %>% 
+  #summarise(n=n(), .groups='keep') %>% 
+  #ggplot(aes(x=year, y=n, group=species_id, color=species_id))+
+  #geom_line()+
+  #geom_point(shape=2)+ # you can experiment with shapes
+  #theme(axis.text.x = element_text(angle = 60, hjust = 1))+
+  #labs(title = "Number of samples for species DM & DS",
+       #x = "Year",
+       #fill = "n")
+```
+
+## Histograms     
+
+Histograms show the distribution of continuous variables.   
+
+```{r}
+#homerange %>% 
+  #ggplot(aes(x = log10.mass)) +
+  #geom_histogram(color = "black", fill = "turquoise4", bins=10)+
+  #labs(title = "Distribution of Body Mass")
+```
+
+## Density plots   
+
+Density plots are similar to histograms but they use a smoothing function to make the distribution more even and clean looking. They do not use bins.    
+
+Plotting both the histogram and the density curve.    
+
+```{r message=FALSE}
+#homerange %>% 
+  #ggplot(aes(x=log10.mass)) +
+  #geom_histogram(aes(y = after_stat(density)), fill = "deepskyblue4", alpha = 0.4, color = "black")+
+  #geom_density(color = "red")+
+  #labs(title = "Distribution of Body Mass")
+```
+
+## Creating Categories with mutate and case_when()    
+
+`case_when()` is a function from `dplyr`. It allows us to calculate a new variable from other variables, using `case_when()` within `mutate()` to do this.`case_when()` allows us to specify multiple conditions.    
+
+```{r}
+#homerange <- homerange %>% 
+             #mutate(mass_category = case_when(log10.mass <= 1.75 ~ "small",
+                                              #log10.mass > 1.75 & log10.mass <= 2.75 ~ "medium",
+                                              #log10.mass > 2.75 ~ "large"))
+```
+
+## ggplot themes   
+
+There are many options to change the theme of your plots within ggplot. Have a look: [here]https://ggplot2.tidyverse.org/reference/ggtheme.html).  
+
+Example:   
+
+```{r}
+#p + theme_linedraw()+
+  #theme(axis.text.x = element_text(angle = 60, hjust=1))+
+  #labs(title = "Observations by Taxon in Homerange Data",
+       #x = NULL,
+       #y= "n",
+       #fill= "Trophic Guild")
+```
+
+## Legends    
+
+Options for manipulating legends [here](http://www.sthda.com/english/wiki/ggplot2-legend-easy-steps-to-change-the-position-and-the-appearance-of-a-graph-legend-in-r-software).    
+
+## Using `ggthemes`   
+
+[ggthemes](https://yutannihilation.github.io/allYourFigureAreBelongToUs/). Some of these are nice because they are designed to mimic the look of popular publications.    
+
+## RColorBrewer   
+
+The [R Color Brewer](http://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3) website helps with the color palettes. Two guidelines:    
+
++`scale_colour_brewer()` is for points  
++`scale_fill_brewer()` is for fills 
+
+## Manually Setting Colors    
+
+Using `paleteer` to build a custom palette for consistency.    
+
+To access the `paleteer` collection, add it to a new object:    
+
+```{r}
+#colors <- paletteer::palettes_d_names
+```
+
+Setting and Displaying the palettes. `paleteer` is a collection of popular palettes.   
+
+```{r}
+#my_palette <- paletteer_d("ggsci::nrc_npg")
+```
+
+```{r}
+#barplot(rep(1,6), axes=FALSE, col=my_palette)
+```
+
+Identify `my_palette` as part of `scale_fill_manual()`:    
+
+```{r}
+#p+scale_fill_manual(values=my_palette)+
+  #theme(legend.position = "bottom",
+        #axis.text.x = element_text(angle = 60, hjust=1))+
+  #labs(title = "Observations by Taxon in Homerange Data",
+       #x = NULL,
+       #y= "n",
+       #fill= "Trophic Guild")
+```
+
+## [Faceting](https://ggplot2-book.org/facet.html)    
+
+Allows the creation of multi-panel plots for easy comparison.  
+
+`facet_wrap()` makes a ribbon of panels by a specified categorical variable and allows control over arrangement.      
+
+```{r}
+#homerange %>% 
+  #ggplot(aes(x=taxon, y=log10.mass))+
+  #geom_boxplot()+
+  #facet_wrap(~trophic.guild, ncol=2)+
+  #theme(axis.text.x = element_text(angle = 60, hjust=1))
+```
+
+`facet_grid()` allows control over the faceted variable; it can be arranged in rows or columns. rows~columns. 
+
+```{r}
+#homerange %>% 
+  #ggplot(aes(x=taxon, y=log10.mass))+
+  #geom_boxplot()+
+  #facet_grid(trophic.guild~.)+
+  #theme(axis.text.x = element_text(angle = 60, hjust=1))
+```
+
+`facet_grid()` allows comparison of two categorical variables (a~b; a is rows, b is columns).    
+
+```{r}
+#homerange %>% 
+  #ggplot(aes(x=taxon, y=log10.mass))+
+  #geom_boxplot()+
+  #facet_grid(trophic.guild~thermoregulation)+
+  #theme(axis.text.x = element_text(angle = 60, hjust=1))
+```
+
 
