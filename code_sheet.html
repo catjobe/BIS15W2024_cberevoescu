@@ -666,6 +666,19 @@ across multiple variables.</p>
 <p>versus using across()</p>
 <pre class="r"><code>#penguins %&gt;%
   #summarize(across(c(species, island, sex), n_distinct))</code></pre>
+<p>For continuous variables:</p>
+<pre class="r"><code>#penguins %&gt;%
+  #summarize(across(contains(&quot;mm&quot;), mean, na.rm=T))</code></pre>
+<p>Summarizing across all variables:</p>
+<pre class="r"><code>#penguins %&gt;%
+  #summarise_all(n_distinct)</code></pre>
+<p>Operators also work:</p>
+<pre class="r"><code>#penguins %&gt;%
+  #summarize(across(!c(species, island, sex, year), 
+                   #mean, na.rm=T))</code></pre>
+<p>All of the other dplyr operators also work:</p>
+<pre class="r"><code>#penguins %&gt;%
+  #summarise(across(starts_with(&quot;bill&quot;), n_distinct))</code></pre>
 </div>
 </div>
 <div id="lab-8" class="section level1">

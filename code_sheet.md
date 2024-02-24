@@ -516,6 +516,40 @@ versus using across()
   #summarize(across(c(species, island, sex), n_distinct))
 ```
 
+For continuous variables:    
+
+
+```r
+#penguins %>%
+  #summarize(across(contains("mm"), mean, na.rm=T))
+```
+
+Summarizing across all variables:    
+
+
+```r
+#penguins %>%
+  #summarise_all(n_distinct)
+```
+
+Operators also work:    
+
+
+```r
+#penguins %>%
+  #summarize(across(!c(species, island, sex, year), 
+                   #mean, na.rm=T))
+```
+
+All of the other dplyr operators also work:    
+
+
+```r
+#penguins %>%
+  #summarise(across(starts_with("bill"), n_distinct))
+```
+
+
 # Lab 8
 
 ## `nanair` package    
