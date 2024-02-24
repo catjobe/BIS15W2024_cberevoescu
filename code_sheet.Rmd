@@ -485,6 +485,22 @@ Using `naniar` to replace a specific value (like -999) with NA across the entire
   #mutate(variable=na_if(variable, "not measured"))
 ```
 
+## Visualizing NAs
+
+`visdat` used to visualize the proportion of different classes of data, including missing data. But, it is limited by size.   
+
+```{r}
+#library(visdat)
+```
+
+```{r}
+#vis_dat(life_history) #classes of data, helps to identify which variables have large amounts of missing data
+```
+
+```{r}
+#vis_miss(life_history) #looking at only the missing data
+```
+
 ## Dealing with NA's in advance- nuclear option   
 
 ```{r}
