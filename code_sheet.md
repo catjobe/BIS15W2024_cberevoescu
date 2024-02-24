@@ -550,7 +550,17 @@ All of the other dplyr operators also work:
 ```
 
 
-# Lab 8
+# Lab 8   
+
+##`purrr` package     
+
+This will give you a quick summary of the number of NA's in each variable.    
+
+
+```r
+#life_history %>% 
+  #map_df(~ sum(is.na(.)))
+```
 
 ## `nanair` package    
 
