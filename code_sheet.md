@@ -69,6 +69,7 @@ library(naniar)
 
 ```r
 library(gtools)
+library(ggthemes)
 ```
 
 ## Working Directory     
