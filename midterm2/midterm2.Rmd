@@ -1,0 +1,323 @@
+---
+title: "Midterm 2 W24"
+author: "Catrinel Berevoescu"
+date: "`r Sys.Date()`"
+output:
+  html_document: 
+    keep_md: yes
+  pdf_document: default
+---
+
+## Instructions
+Answer the following questions and complete the exercises in RMarkdown. Please embed all of your code and push your final work to your repository. Your code must be organized, clean, and run free from errors. Remember, you must remove the `#` for any included code chunks to run. Be sure to add your name to the author header above. 
+
+Your code must knit in order to be considered. If you are stuck and cannot answer a question, then comment out your code and knit the document. You may use your notes, labs, and homework to help you complete this exam. Do not use any other resources- including AI assistance.  
+
+Don't forget to answer any questions that are asked in the prompt. Some questions will require a plot, but others do not- make sure to read each question carefully.  
+
+For the questions that require a plot, make sure to have clearly labeled axes and a title. Keep your plots clean and professional-looking, but you are free to add color and other aesthetics.  
+
+Be sure to follow the directions and upload your exam on Gradescope.    
+
+## Background     
+
+In the `data` folder, you will find data about shark incidents in California between 1950-2022. The [data](https://catalog.data.gov/dataset/shark-incident-database-california-56167) are from: State of California- Shark Incident Database.   
+
+## Load the libraries  
+
+```{r message=FALSE, warning=FALSE}
+library("tidyverse")
+library("janitor")
+library("naniar")
+```
+
+## Load the data    
+
+Run the following code chunk to import the data.    
+
+```{r message=FALSE, warning=FALSE}
+sharks <- read_csv("data/SharkIncidents_1950_2022_220302.csv") %>% clean_names()
+```
+
+## Questions   
+
+### 1. (1 point) Start by doing some data exploration using your preferred function(s). What is the structure of the data? Where are the missing values and how are they represented?  
+
+Structure of the Data:    
+
+```{r}
+glimpse(sharks)
+```
+How NA's Are Represented:    
+
+```{r}
+miss_var_summary(sharks)
+```
+
+The missing data is in the variables wfl_case_number, time latitude, longitude, and confirmed_source.    
+
+```{r}
+summary(sharks)
+```
+
+It appears that the NA's (the missing values) are represented by NA, Unknown, and Unkown (which is probably a typo) in this data set.   
+
+### 2. (1 point) Notice that there are some incidents identified as "NOT COUNTED". These should be removed from the data because they were either not sharks, unverified, or were provoked. It's OK to replace the `sharks` object.   
+
+```{r}
+sharks <- sharks %>% 
+  filter(incident_num != "NOT COUNTED") #removing incidents identified as "NOT COUNTED" in the data
+sharks
+```
+
+### 3. (3 points) Are there any "hotspots" for shark incidents in California? Make a plot that shows the total number of incidents per county. Which county has the highest number of incidents?   
+
+```{r}
+sharks %>% 
+  group_by(county) %>% 
+  summarize(n_incidents = n()) %>% 
+  arrange(desc(n_incidents))
+```
+
+Plot that Shows the Total Number of Incidents per County:   
+
+```{r}
+sharks %>% 
+  ggplot(aes(x = county, fill = county)) +
+  geom_bar() +
+  coord_flip() +
+  labs(title = "Total Number of Shark Incidents by County",
+       x = "County",
+       y = "Number of Incidents",
+       fill = "County") +
+  theme(plot.title = element_text(size = rel(1.3), hjust = 0.5))
+```
+
+#### It appears that the county of San Diego is a hotspot for shark injuries, with the highest total number of shark incidents in the dataset, 23.   
+
+### 4. (3 points) Are there months of the year when incidents are more likely to occur? Make a plot that shows the total number of incidents by month. Which month has the highest number of incidents?    
+
+```{r}
+sharks %>% 
+  group_by(month) %>% 
+  summarize(n_incidents = n()) %>% 
+  arrange(desc(n_incidents))
+```
+
+Plot that Shows the Total Number of Incidents by Month:   
+
+```{r}
+sharks %>% 
+  mutate(month = as.factor(month)) %>%
+  ggplot(aes(x = month, fill = month)) +
+  geom_bar() +
+  labs(title = "Total Number of Shark Incidents by Month",
+       x = "Month",
+       y = "Number of Incidents",
+       fill = "Month") +
+  theme(plot.title = element_text(size = rel(1.3), hjust = 0.5))
+```
+
+#### There DOES appear to be months in which more shark injuries occur. The month with the HIGHEST total number of shark incidents appears to be month 10 with 36 incidents.  
+
+### 5. (3 points) How do the number and types of injuries compare by county? Make a table (not a plot) that shows the number of injury types by county. Which county has the highest number of fatalities?   
+
+Table with Number and Types of Injuries by County:   
+
+```{r}
+sharks %>%
+  count(injury, county) 
+```
+
+Table with Number of Injury Types by County:   
+
+```{r}
+sharks %>%
+  group_by(county) %>% 
+  summarize(n_injury_types = n_distinct(injury)) #finding only the number of injury types represented for each county in the data
+```
+
+Finding the Number of Fatalities per County:  
+
+```{r}
+sharks %>%
+  filter(injury == "fatal") %>% 
+  group_by(county) %>% 
+  summarize(n_fatalities = n()) %>% 
+  arrange(desc(n_fatalities))
+```
+
+Plot (Only For Visualization) with Number of Injury Types by County:   
+
+```{r}
+sharks %>% 
+  ggplot(aes(x = county, fill = county)) +
+  geom_bar() +
+  facet_grid(injury~.) +
+  labs(title = "Number of Injury Types by County",
+       x = "County",
+       y = "Number of Injuries",
+       fill = "County") +
+  theme(plot.title = element_text(size = rel(1.3), hjust = 0.5), axis.text.x = element_text(angle = 60, hjust = 1))  
+```
+
+#### The county with the LARGEST number of fatalities is San Luis Obispo county, with 3 fatalities.   
+
+### 6. (2 points) In the data, `mode` refers to a type of activity. Which activity is associated with the highest number of incidents?   
+
+```{r}
+sharks %>% 
+  group_by(mode) %>% 
+  summarize(n_incidents = n()) %>% 
+  arrange(desc(n_incidents))
+```
+
+```{r}
+sharks %>% 
+  ggplot(aes(x = mode, fill = mode)) +
+  geom_bar() +
+  coord_flip() +
+  labs(title = "Number of Incidents by Activity",
+       x = "Activity",
+       y = "Number of Incidents",
+       fill = "Activity") +
+  theme(plot.title = element_text(size = rel(1.3), hjust = 0.5))
+```
+
+#### The activity associated with the HIGHEST number of shark incidents is Surfing / Boarding, with 80 shark incidents reported.   
+
+### 7. (4 points) Use faceting to make a plot that compares the number and types of injuries by activity. (hint: the x axes should be the type of injury) 
+
+```{r}
+sharks %>% 
+  ggplot(aes(x = injury, fill = injury)) +
+  geom_bar() +
+  facet_wrap(mode~.) +
+  labs(title = "Number and Type of Injuries by Activity",
+       x = "Injury Type",
+       y = "Number of Injuries",
+       fill = "Injury Type") +
+  theme(plot.title = element_text(size = rel(1.3), hjust = 0.5), axis.text.x = element_text(angle = 60, hjust = 1))  
+```
+
+### 8. (1 point) Which shark species is involved in the highest number of incidents?   
+
+```{r}
+sharks %>%
+  group_by(species) %>% 
+  summarize(n_incidents = n()) %>% 
+  arrange(desc(n_incidents))
+```
+
+```{r}
+sharks %>% 
+  filter(species != "Unknown") %>% 
+  ggplot(aes(x = species, fill = species)) +
+  geom_bar() +
+  coord_flip() +
+  labs(title = "Number of Incidents by Shark Species",
+       x = "Species",
+       y = "Number of Incidents",
+       fill = "Species") +
+  theme(plot.title = element_text(size = rel(1.3), hjust = 0.5))
+```
+
+#### The shark species associated with the largest number of incidents is the "White" Shark (Great White Shark).    
+
+### 9. (3 points) Are all incidents involving Great White's fatal? Make a plot that shows the number and types of injuries for Great White's only.  
+
+Plot that Shows the Number and Type of Injuries for Great White's only:   
+
+```{r}
+sharks %>% 
+  filter(species == "White") %>% #filtering by Great White sharks
+  ggplot(aes(x = injury, fill = injury)) +
+  geom_bar() +
+  labs(title = "Number and Types of Injuries for the Great White Shark",
+       x = "Injury Type",
+       y = "Number of Incidents",
+       fill = "Injury Type") +
+  theme(plot.title = element_text(size = rel(1.3), hjust = 0.5))
+```
+
+#### NO, NOT all of the incidents involving Great White Sharks are fatal. The Great White Shark actually caused more injuries that fell into the major, minor and none injury type categories than injuries that were fatal.    
+
+## Background   
+
+Let's learn a little bit more about Great White sharks by looking at a small dataset that tracked 20 Great White's in the Fallaron Islands. The [data](https://link.springer.com/article/10.1007/s00227-007-0739-4) are from: Weng et al. (2007) Migration and habitat of white sharks (_Carcharodon carcharias_) in the eastern Pacific Ocean.
+
+## Load the data   
+
+```{r message=FALSE, warning=FALSE}
+white_sharks <- read_csv("data/White sharks tracked from Southeast Farallon Island, CA, USA, 1999 2004.csv", na = c("?", "n/a")) %>% clean_names()
+```
+
+### 10. (1 point) Start by doing some data exploration using your preferred function(s). What is the structure of the data? Where are the missing values and how are they represented?    
+
+Structure of the Data:
+
+```{r}
+glimpse(white_sharks)
+```
+
+Finding the NA's:   
+
+```{r}
+miss_var_summary(white_sharks)
+```
+
+It appears that there are NA's in the sex, maturity, longitude, and latitude columns of the `white_sharks` dataset.    
+
+```{r}
+summary(white_sharks)
+```
+
+It appears that NA's are represented by NAs in this dataset.   
+
+### 11. (3 points) How do male and female sharks compare in terms of total length? Are males or females larger on average? Do a quick search online to verify your findings. (hint: this is a table, not a plot).  
+
+```{r}
+white_sharks %>% 
+  filter(sex != "NA") %>% #removing the NA's in the sex column that I found in question 10
+  group_by(sex) %>% 
+  summarize(average_length = mean(total_length_cm, na.rm = T)) %>% 
+  arrange(desc(average_length))
+```
+
+#### It appears that females are LARGER than males on average, with the females' average length of 462.0000	cm as compared to the males' average length of 425.0909	cm. Based on [Smithsonian's](https://ocean.si.edu/ocean-life/sharks-rays/how-big-are-great-white-sharks#:~:text=The%20average%20female%20is%2015,our%20great%20white%20shark%20overview.) page on  Great White Sharks that I found during my brief search, I can verify my findings - female great white sharks are larger than male great white sharks, with the average female great white sharks reaching 15-16 feet long, while the average males reaching 11-13 feet long.      
+
+### 12. (3 points) Make a plot that compares the range of total length by sex.   
+
+Plot that compares range of total length of Great White sharks by sex:   
+
+```{r}
+white_sharks %>% 
+  filter(sex != "NA") %>% 
+  ggplot(aes(x = sex, y = total_length_cm, fill = sex)) +
+  geom_boxplot(alpha = 0.5) +
+  labs(title = "Range of Great White Shark Total Length by Sex",
+       x = "Sex",
+       y = "Total Length (cm)",
+       fill = "Sex") +
+  theme(plot.title = element_text(size = rel(1.3), hjust = 0.5))
+```
+
+### 13. (2 points) Using the `sharks` or the `white_sharks` data, what is one question that you are interested in exploring? Write the question and answer it using a plot or table.
+
+#### One question that I am interested in exploring for the `white_sharks` dataset: What is the relationship between shark incident and maturity by sex - what sex and maturity level of Great White sharks is involved in the largest number of incidents?   
+
+```{r}
+white_sharks %>% 
+  filter(maturity != "N/A", sex != "NA") %>% #removing the NA's from the data
+  ggplot(aes(x = sex, fill = maturity)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_gray() +
+  labs(title = "Comparing Number of Great White Shark Incidents by Maturity and Sex",
+       x = "Sex",
+       y = "Number of Incidents",
+       fill = "Maturity") +
+  theme(plot.title = element_text(size = rel(1.3), hjust = 0.5))
+```
+
+#### It appears that mature, male great white sharks are responsible for the largest number of incidents.   
+
