@@ -53,6 +53,22 @@ library("janitor")
 
 ```r
 library("skimr")
+library("RColorBrewer")
+library("paletteer")
+library(naniar)
+```
+
+```
+## 
+## Attaching package: 'naniar'
+## 
+## The following object is masked from 'package:skimr':
+## 
+##     n_complete
+```
+
+```r
+library(gtools)
 ```
 
 ## Working Directory     
