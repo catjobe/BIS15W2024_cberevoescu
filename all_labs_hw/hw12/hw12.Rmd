@@ -67,10 +67,6 @@ bbox_grizzly <- make_bbox(long_grizzly, lat_grizzly, f = 0.03)
 ### 3. Load a map from `stamen` in a terrain style projection and display the map.  
 
 ```{r}
-register_stadiamaps("07354f1a-0151-4ac7-bd7f-8a231527ccbf", write = FALSE)
-```
-
-```{r}
 map_grizzly <- get_stadiamap(bbox_grizzly, maptype = "stamen_terrain", zoom = 7) #loading the map
 ```
 
