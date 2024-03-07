@@ -11,9 +11,9 @@ ui <- dashboardPage(
                 
                 fluidRow(box(title = "Variables", width = 3, #controlling box width
                              
-                             selectInput("x", "Select Variable", choices = c("Academic_Yr", "Campus", "Category"), selected = "Academic_Yr"),
+                             selectInput("x", "Select Campus", choices = unique(UC_admit$Campus), hr()),
                              
-                             selectInput("y", "Select Campus", choices = unique(UC_admit$Campus), hr()),
+                             selectInput("y", "Select Ethnicity", choices = unique(UC_admit$Ethnicity), hr()),
                              
                              radioButtons("z", "Select Category", choices = c("Enrollees", "Admits", "Applicants"), 
                                           selected = "Enrollees")
@@ -34,13 +34,15 @@ server <- function(input, output, session) {
                 
                 UC_admit %>%    
                         mutate(Academic_Yr = as.factor(Academic_Yr)) %>% 
-                        filter(Campus == input$y) %>% 
+                        filter(Campus == input$x) %>% 
+                        filter(Ethnicity == input$y) %>% 
                         filter(Category == input$z) %>% 
-                        ggplot(aes_string(x = "Academic_Yr", y = "FilteredCountFR", fill = input$x)) +
+                        ggplot(aes_string(x = "Academic_Yr", y = "FilteredCountFR", fill = "Academic_Yr")) +
                         geom_col() +
                         labs(title = "Enrollment by Year",
                              x = "Year",
-                             y = "Enrollment Number") +
+                             y = "Enrollment Number",
+                             fill = "Year") +
                         theme(plot.title = element_text(size = rel(1.3), hjust = 0.5), axis.text.x = element_text(angle = 60, hjust = 1))
                 
         })
