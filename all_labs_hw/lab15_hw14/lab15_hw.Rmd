@@ -30,11 +30,13 @@ library(dplyr)
 ```{r}
 blood_count <- read_csv("data/blood_count_dataset.csv") %>% clean_names() #ensuring the dataset has the correct name
 ```
-### 2. Get a Summary of the data set.   
+
+### 2. Geting a Summary of the data set.   
 
 ```{r}
 glimpse(blood_count)
 ```
+
 ### 3. Finding the minimum, maximum, and mean of the red blood cell counts by gender.  
 
 ```{r}
@@ -45,7 +47,7 @@ blood_count %>%
             max = max(red_blood_cells))
 ```
 
-### 4. Finding the mean of columns 3-9 for males.     
+### 4. Finding the mean value of columns 3-9 for males.     
 
 ```{r}
 options(scipen = 999, digits = 2)
@@ -58,7 +60,7 @@ blood_count %>%
   colMeans(na.rm = TRUE)
 ```
 
-### 5. Finding the mean of columns 3-9 for females.     
+### 5. Finding the mean value of columns 3-9 for females.     
 
 ```{r}
 blood_count %>% 
@@ -68,8 +70,6 @@ blood_count %>%
 ```
 
 ### 6. Creating boxplots of the blood count tests values by sex.   
-
-```{r}
 
 ```{r}
 blood_count %>%
@@ -86,7 +86,7 @@ blood_count %>%
   theme(plot.title = element_text(size = rel(1.5), hjust = 0.5))
 ```
 
-### 7. 
+### 7. Creating a new object with a new age group column.   
 
 ```{r}
 grouped_bc <- blood_count %>%
@@ -100,20 +100,24 @@ head(grouped_bc)
 
 ```
 
-8. 
-```{r}
-#blood_count %>%
-  #pivot_longer(cols = 3:9, names_to = "Test", values_to = "Values") %>%
-  #ggplot(ase(x = Age_Group, y = values, fill = Age_Group)) +
-  #geom_boxplot() +
-  #facet_wrap( Test, scales = "free") +  # Facet by the "Test" variable
-  #labs(title = "Boxplot of Blood Count Tests by Age Group",
-       #x = "Age Group",
-       #y = "Values")
+### 8. Creating a Boxplot of Blood Count Tests by Age Group.  
 
+```{r}
+grouped_bc %>%
+  pivot_longer(3:9, names_to = "test", values_to = "values") %>%
+  ggplot(aes(x = age_group, y = values, fill = age_group)) +
+  geom_boxplot() +
+  facet_wrap(~test, scales = "free") +  # Facet by the "test" variable
+  labs(title = "Boxplot of Blood Count Tests by Age Group",
+       x = "Age Group",
+       y = "Values",
+       fill = "Age Group") +
+  theme(plot.title = element_text(size = rel(1.5), hjust = 0.5))
 ```
 
-9. What are two drawbacks and two benefits of AI?
+### 9. What are two drawbacks and two benefits of AI?
+
+#### Two drawbacks to using AI are that code created using AI can be messy and not totally accurate, while appearing to be so (can be misleading), and the resulting broken code can be difficult to troubleshoot. Two benefits of AI are that it can be used to automate repetitive and simple tasks, and it can be used to deal with large numbers of big data sets quickly and efficiently.   
 
 ### 10. Do you think you will use AI for coding in the future? Why or why not?   
 
