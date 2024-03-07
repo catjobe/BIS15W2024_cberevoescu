@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 output:
   html_document: 
     theme: spacelab
-    keep_md: true
+    keep_md: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -98,7 +98,7 @@ See hw_13_app_q2.R file:
 
 ```{r}
 ui <- dashboardPage(
-  dashboardHeader(title = "UC Admissions by Ethnicity"),
+  dashboardHeader(title = "Admissions by Ethnicity"),
   dashboardSidebar(disable=T),
   dashboardBody(
           
