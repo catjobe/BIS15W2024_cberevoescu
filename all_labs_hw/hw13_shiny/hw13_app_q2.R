@@ -5,7 +5,7 @@ library(shinydashboard)
 UC_admit <- read_csv("data/UC_admit.csv")
 
 ui <- dashboardPage(
-        dashboardHeader(title = "UC Admissions by Ethnicity"),
+        dashboardHeader(title = "Admissions by Ethnicity"),
         dashboardSidebar(disable=T),
         dashboardBody(
                 
