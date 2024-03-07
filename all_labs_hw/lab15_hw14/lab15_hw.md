@@ -70,7 +70,7 @@ blood_count <- read_csv("data/blood_count_dataset.csv") %>% clean_names() #ensur
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 ```
 
-### 2. Geting a Summary of the data set.   
+### 2. Getting a Summary of the data set.   
 
 
 ```r

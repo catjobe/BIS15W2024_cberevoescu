@@ -31,7 +31,7 @@ library(dplyr)
 blood_count <- read_csv("data/blood_count_dataset.csv") %>% clean_names() #ensuring the dataset has the correct name
 ```
 
-### 2. Geting a Summary of the data set.   
+### 2. Getting a Summary of the data set.   
 
 ```{r}
 glimpse(blood_count)
