@@ -1,7 +1,7 @@
 ---
 title: "Extra Credit W24"
 author: "Catrinel Berevoescu"
-date: "2024-03-05"
+date: "2024-03-08"
 output:
   html_document: 
     keep_md: true
@@ -363,7 +363,31 @@ global_sharks %>%
 
 ### 6. (3 points) Make a plot that shows the range of age for the individuals that are attacked. Make sure to restrict sex to M or F (some of the codes used are not clear). You will also need to find a way to manage the messy age column.
 
-Plot that Shows Range of Age of Attacked Individuals:   
+#### Plot that Shows Range of Age of Attacked Individuals (Not Sex Separated):    
+
+
+```r
+global_sharks %>% 
+        filter(sex == "M" | sex == "F") %>% #restricting sex to M or F
+        mutate(age = as.numeric(age)) %>% 
+        filter(age != "NA") %>% 
+        ggplot(aes(x = age)) + 
+        geom_boxplot() +
+        labs(title = "Range of Age for Attacks",
+             x = "Age") +
+        theme(plot.title = element_text(size = rel(1.3), hjust = 0.5))
+```
+
+```
+## Warning: There was 1 warning in `mutate()`.
+## ℹ In argument: `age = as.numeric(age)`.
+## Caused by warning:
+## ! NAs introduced by coercion
+```
+
+![](extra_credit_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
+
+#### Plot that Shows Range of Age of Attacked Individuals by Sex:   
 
 
 ```r
@@ -373,7 +397,7 @@ global_sharks %>%
         filter(age != "NA") %>% 
         ggplot(aes(x = sex, y = age, fill = sex)) + 
         geom_boxplot() +
-        labs(title = "Range of Age for Attacks",
+        labs(title = "Range of Age for Attacks by Sex",
              x = "Sex",
              y = "Age",
              fill = "Sex") +
@@ -387,7 +411,7 @@ global_sharks %>%
 ## ! NAs introduced by coercion
 ```
 
-![](extra_credit_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
+![](extra_credit_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
 
 ### 7. (3 points) In the United States, what are the top 5 states where shark attacks have been recorded since 1950? Make a plot that compares the number of incidents for these 5 states.   
 
@@ -411,7 +435,7 @@ global_sharks %>%
         theme(plot.title = element_text(size = rel(1.3), hjust = 0.5))
 ```
 
-![](extra_credit_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
+![](extra_credit_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
 
 #### Thus the top 5 states with the largest number of shark incidents since 1950 are North Carolina, South Carolina, Hawaii, California, and Florida.  
 
@@ -493,7 +517,7 @@ great_white_sharks %>%
   theme(plot.title = element_text(size = rel(1.3), hjust = 0.5))
 ```
 
-![](extra_credit_files/figure-html/unnamed-chunk-20-1.png)<!-- -->
+![](extra_credit_files/figure-html/unnamed-chunk-21-1.png)<!-- -->
 
 ### 10. (3 points) Using the `global_sharks` data, what is one question that you are interested in exploring? Write the question and answer it using a plot or table.  
 
@@ -534,6 +558,6 @@ global_sharks %>%
         theme(plot.title = element_text(size = rel(1.3), hjust = 0.5))
 ```
 
-![](extra_credit_files/figure-html/unnamed-chunk-22-1.png)<!-- -->
+![](extra_credit_files/figure-html/unnamed-chunk-23-1.png)<!-- -->
 
 #### It seems that for most of these top dangerous activities, unprovoked attacks are more common, with the exception of Fishing.   
