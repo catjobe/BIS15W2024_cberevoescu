@@ -1,7 +1,7 @@
 ---
 title: "BIS15L_AI_hmwk"
 author: "Catrinel Berevoescu"
-date: "2024-03-07"
+date: "2024-03-12"
 output: 
   html_document: 
     keep_md: true
@@ -19,7 +19,7 @@ Again make sure to use the formatting conventions of RMarkdown to make your repo
 
 
 ```r
-library(tidyverse)
+library(tidyverse) #loading the libraries
 ```
 
 ```
@@ -56,7 +56,7 @@ library(dplyr)
 
 
 ```r
-blood_count <- read_csv("data/blood_count_dataset.csv") %>% clean_names() #ensuring the dataset has the correct name
+blood_count <- read_csv("data/blood_count_dataset.csv") %>% clean_names() #uploading the data set, and cleaning the variable names
 ```
 
 ```
@@ -70,11 +70,11 @@ blood_count <- read_csv("data/blood_count_dataset.csv") %>% clean_names() #ensur
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 ```
 
-### 2. Getting a Summary of the data set.   
+### 2. Getting a Summary of the data set `blood_count`.   
 
 
 ```r
-glimpse(blood_count)
+glimpse(blood_count) #using the glimpse() function to get a summary of the `blood-count` data set
 ```
 
 ```
@@ -96,8 +96,8 @@ glimpse(blood_count)
 
 ```r
 blood_count %>% 
-  group_by(gender) %>% 
-  summarize(min = min(red_blood_cells),
+  group_by(gender) %>% #grouping by the variable `gender`
+  summarize(min = min(red_blood_cells), #generating a statistical summary of the `red_blood_cells` variable by gender
             mean = mean(red_blood_cells),
             max = max(red_blood_cells))
 ```
@@ -114,15 +114,15 @@ blood_count %>%
 
 
 ```r
-options(scipen = 999, digits = 2)
+options(scipen = 999, digits = 2) #canceling the use of scientific notation
 ```
 
 
 ```r
 blood_count %>% 
-  filter(gender == "Male") %>%
-  select(3:9) %>%
-  colMeans(na.rm = TRUE)
+  filter(gender == "Male") %>% #filtering the data set by only males
+  select(3:9) %>% #selecting columns 3 through 9
+  colMeans(na.rm = TRUE) #finding column means, removing NA's
 ```
 
 ```
@@ -137,9 +137,9 @@ blood_count %>%
 
 ```r
 blood_count %>% 
-  filter(gender == "Female")  %>% 
-  select(3:9) %>%
-  colMeans(na.rm = T)
+  filter(gender == "Female")  %>% #filtering the data set by only females
+  select(3:9) %>% #selecting columns 3 through 9
+  colMeans(na.rm = T) #finding column means, removing NA's
 ```
 
 ```
@@ -154,17 +154,17 @@ blood_count %>%
 
 ```r
 blood_count %>%
-  pivot_longer(-c(age, gender), 
+  pivot_longer(-c(age, gender), #pivoting the data set to a long format, with blood count test type in one column and values in another
                names_to = "test", 
                values_to = "values") %>%
-  ggplot(aes(x = gender, y = values, fill = gender)) +
-  geom_boxplot() +
-  facet_wrap(~test) +
+  ggplot(aes(x = gender, y = values, fill = gender)) + #creating the plot
+  geom_boxplot() + #creating a box plot
+  facet_wrap(~test) + #using facet_wrap() with the `test` variable for ease of viewing
   labs(title = "Boxplot of Blood Count Tests",
        x = "Test",
        y = "Values",
-       fill = "Gender") +
-  theme(plot.title = element_text(size = rel(1.5), hjust = 0.5))
+       fill = "Gender") + #adding labels
+  theme(plot.title = element_text(size = rel(1.5), hjust = 0.5)) #changing the title size and location
 ```
 
 ![](lab15_hw_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
@@ -173,14 +173,14 @@ blood_count %>%
 
 
 ```r
-grouped_bc <- blood_count %>%
+grouped_bc <- blood_count %>% #creating a new object with a new column for age group
   mutate(age_group = case_when(
     age >= 20 & age <= 29 ~ "20s",
     age >= 30 & age <= 39 ~ "30s",
     age >= 40 & age <= 49 ~ "40s",
     age >= 50 & age <= 59 ~ "50s",
-    age >= 60 & age <= 70 ~ "60s")) # there were only 4 people in 70s, so I combined it with 60s
-head(grouped_bc)
+    age >= 60 & age <= 70 ~ "60s")) #there were only 4 people in 70s, so I combined it with 60s
+head(grouped_bc) #checking the first few rows of the new object
 ```
 
 ```
@@ -201,22 +201,25 @@ head(grouped_bc)
 
 ```r
 grouped_bc %>%
-  pivot_longer(3:9, names_to = "test", values_to = "values") %>%
-  ggplot(aes(x = age_group, y = values, fill = age_group)) +
-  geom_boxplot() +
-  facet_wrap(~test, scales = "free") +  # Facet by the "test" variable
+  pivot_longer(3:9, 
+               names_to = "test", 
+               values_to = "values") %>% #pivoting the dataset to a long format, with blood count test type in one column and values in another
+  ggplot(aes(x = age_group, y = values, fill = age_group)) + #creating the plot
+  geom_boxplot() + #creating a box plot
+  facet_wrap(~test, scales = "free") +  #using facet_wrap() with the `test` variable
   labs(title = "Boxplot of Blood Count Tests by Age Group",
        x = "Age Group",
        y = "Values",
-       fill = "Age Group") +
-  theme(plot.title = element_text(size = rel(1.5), hjust = 0.5))
+       fill = "Age Group") + #adding labels
+  theme(plot.title = element_text(size = rel(1.5), hjust = 0.5)) #adjusting the size and location of the title
 ```
 
 ![](lab15_hw_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
 
 ### 9. What are two drawbacks and two benefits of AI?
 
-#### Two drawbacks to using AI are that code created using AI can be messy and not totally accurate, while appearing to be so (can be misleading), and the resulting broken code can be difficult to troubleshoot. Two benefits of AI are that it can be used to automate repetitive and simple tasks, and it can be used to deal with large numbers of big data sets quickly and efficiently.   
+#### Two drawbacks to using AI are that (1) code created using AI can be messy and not totally accurate, while appearing to be so (and can therefore be misleading), and (2) the resulting broken code can be difficult to troubleshoot.   
+#### Two benefits of AI are that (1) it can be used to automate repetitive and simple tasks, and (2) it can be used to deal with large numbers of big data sets quickly and efficiently.   
 
 ### 10. Do you think you will use AI for coding in the future? Why or why not?   
 
