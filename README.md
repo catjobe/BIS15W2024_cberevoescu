@@ -3,7 +3,7 @@
 ### Welcome to Catrinel's Data Science Repository!
 
 ## Homework   
-My HW Assignments are all stored in their respective folders within the all_labs_hw folder.    
+My HW Assignments are all stored in their respective folders within the all_labs_hw folder (note that hw 15 was sent directly to the professor as instructed).     
 
 ## Contact Info
 [Catrinel Berevoescu Email, school](cjberevoescu@ucdavis.edu)  
